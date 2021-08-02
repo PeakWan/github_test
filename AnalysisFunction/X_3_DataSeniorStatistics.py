@@ -24,6 +24,7 @@
 #v1.0.18 更新说明： 多模型分层、单因素多因素分析定类变量增加控制
 #v1.0.19 更新说明：hz 更改smooth_curve_fitting_analysis（平滑曲线（线性相加模型）分析）plt.legend(loc='auto')中auto 改成best
 #v1.0.19 更新说明：hz 更改two_groups_roc（ROC曲线）多分类问题及处理原先二分类只能处理0,1问题
+#v1.0.20 更新说明：hz 更改R_cox_regression,中时间依赖Roc 分位点整数问题R代码修改
 
 import datetime
 import time
@@ -80,7 +81,7 @@ Cluster_method={'KMeans':'KMeans(K均值聚类)'
         ,'AgglomerativeClustering':'AgglomerativeClustering(自底而上的层次聚类)'
         ,'GMM':'mixture.GaussianMixture(基于高斯混合模型的最大期望聚类)'}
 
-dict_models={'logit':'二元logistics回归','ols':'线性回归','poisson':'泊松回归','rlm':'稳健线性模型','glm':'广义线性模型','cox':'cox回归'}
+dict_models={'logit':'二元logistics回归','mulclass':'有序多分类logistics回归','ols':'线性回归','poisson':'泊松回归','rlm':'稳健线性模型','glm':'广义线性模型','cox':'cox回归'}
 #计算标准误
 def _standard_error(sample):
     std=np.std(sample,ddof=0)
@@ -111,14 +112,14 @@ def is_filter(n):
     return str(n) not in filter_lis
 
 
-def variables_control(df,variable_list,method=""):
-    if method=='logit': count_max=10
-    elif method == 'ols': count_max = 10
-    elif method == 'cox': count_max = 10
-    else:count_max=10
+def variables_control(df,variable_list,method=""):##测试临时由10修改为15   20210715
+    if method=='logit': count_max=15
+    elif method == 'ols': count_max = 15
+    elif method == 'cox': count_max = 15
+    else:count_max=15
     for variable in variable_list:
         if len(df[variable].unique())>count_max:
-            return(variable+'变量的分类项过多(N>10)，建议转变为连续变量或哑变量后进行分析。')
+            return(variable+'变量的分类项过多(N>15)，建议转变为连续变量或哑变量后进行分析。')
     return False
 
 def get_variables(value, split_symbol):
@@ -1113,7 +1114,8 @@ def trend_regression(df_input, categorical_exposure_variables, continuous_exposu
             print(traceback.print_exc())
             list_error.append(continuous_exposure_variable)
     str_result = '观察自变量' + ','.join((categorical_exposure_variables+continuous_exposure_variables)) + '的变化趋势与因变量' + str(dependent_variable) + '之间的关系，\n'
-    str_result+= '定类变量将自动转化为定量变量进行趋势性检验，定量变量将转自动分为3组进行趋势线检验\n'
+    #str_result+= '定类变量将自动转化为定量变量进行趋势性检验，定量变量将转自动分为3组进行趋势线检验\n'
+    str_result+= '定类变量将自动转化为定量变量进行趋势性检验，定量变量(连续型)将自动分为3等分组进行趋势线检验\n'
     str_result += '构建' + dict_models[model_name] + '模型\n'
     if len(list_error)>0:
         str_result +=','.join(list_error)+'无法进行趋势分析'

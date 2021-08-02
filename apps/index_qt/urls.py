@@ -3,6 +3,8 @@ from django.conf.urls import url
 from apps.index_qt import views
 
 urlpatterns = [
+    url(r'^method_desc/(?P<method_name>\S+)/$', views.MethodDescrible.as_view(), name="method_desc"),
+    url(r'^pile_echarts/$', views.PileEcharts.as_view(), name="pile_echarts"),  # echarts图表页面
     url(r'^index/$', views.Index_qtView.as_view(), name="index_qt"),  # 前台主页面
     url(r'^$', views.Index_sy.as_view(), name="index_sy"),  # 首页
     # url(r'^$', views.Index_qtView.as_view(), name="index_qt"),  # 前台主页面

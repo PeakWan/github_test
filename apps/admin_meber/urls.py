@@ -3,7 +3,10 @@ from django.conf.urls import url
 from apps.admin_meber import views
 
 urlpatterns = [
-
+    url(r'^method_detail/$', views.MethodDetail.as_view(), name="method_detail"), # 方法详情
+    url(r'^method_edit/(?P<id>\d+)/$', views.MethodEdit.as_view(), name="method_edit"), # 方法管理页面编辑
+    url(r'^method_add/$', views.MethodAdd.as_view(), name="method_add"), # 方法添加
+    url(r'^method_del/$', views.MethodDel.as_view(), name="method_del"), # 方法删除
     url(r'^member_list/$', views.MemberList.as_view(), name="list"), # 会员管理页面
     
     url(r'^member_list_edit/(?P<id>\d+)/$', views.MemberListEdit.as_view(), name="member_list_edit"), # 会员管理页面编辑

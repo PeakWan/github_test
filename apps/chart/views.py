@@ -19,10 +19,11 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from libs.get import get_s,loop_add,write,read, filtering_view
 
-from AnalysisFunction.X_5_SmartPlot import pie_graph, forest_plot, box_plot, scatter_plot,horizontal_bar_plot, violin_plot, rel_plot, strip_plot, stackbar_plot, comparison_plot, point_line_plot, dist_plot
+from AnalysisFunction.X_5_SmartPlot import pie_graph, forest_plot, box_plot, scatter_plot,horizontal_bar_plot, violin_plot, rel_plot, strip_plot, stackbar_plot, comparison_plot, point_line_plot, dist_plot,pile_plot
 from apps.index_qt.models import File_old, Browsing_process, Member, MemberType
 from rest_framework.views import APIView
 from apps.index_qt.jwt_token import MyBaseAuthentication
+
 
 class PieGraph(APIView):
     """分类排序饼图"""
@@ -32,8 +33,8 @@ class PieGraph(APIView):
         context = {
             'value': 'single',
             'project_id': project_id,
-            "begin" : "chart"
-            
+            "begin": "chart"
+
         }
         return render(request, 'index/flbt.html', context=context)
 
@@ -50,6 +51,11 @@ class PieGraph(APIView):
         font = int(json_data.get('font'))
         # 获取初始角度
         startangle = int(json_data.get('startangle'))
+        # 获取图片风格
+        palette_style = json_data.get('palette_style')
+        # 数据筛选
+        filter_data = json_data.get("filter")
+
         if not all([feature]):
             return http.JsonResponse({'code': 1001, 'error': '参数不能为空'})
         number = int(number)
@@ -57,7 +63,6 @@ class PieGraph(APIView):
         file_path = None
         if number == 0:
             # 查询数据库原始文件
-            print(project_id)
             file = File_old.objects.get(id=project_id, user_id=request.user.id)
             file_path = file.path_pa
         elif number == 1:
@@ -84,13 +89,8 @@ class PieGraph(APIView):
         except Exception as e:
             print(e)
             return http.JsonResponse({'code': 1002, 'error': '上传文件有误请重新上传'})
-        ##新增echarts图表数据：
-        col = feature
-        vc = df[col].value_counts(dropna=False)
-        data = json.dumps(dict(zip(vc.index, vc)), ensure_ascii=False)
-        feature = json.dumps({'feature': col + '分布图'}, ensure_ascii=False)
-        ##以下是原代码，全部注释掉
-        '''
+        if filter_data:
+            df = filtering_view(df, json_data)
         # 分析成功保存图片
         end = '/'
         uuid01 = uuid.uuid1()
@@ -100,24 +100,26 @@ class PieGraph(APIView):
         else:
             string = file_path[:file_path.rfind(end)]
             string2 = string[:string.rfind(end)]
-            
+
         string3 = string2 + '/pie_graph' + str(uuid01)
-        
+
         try:
             os.mkdir(string3)
         except Exception as e:
             print(e)
         print(string3)
-        
-        savepath = string3+'/'
+
+        savepath = string3 + '/'
         print(savepath, "savepath")
         # 分析函数
         try:
-            info = pie_graph(df, feature, top_num, font_size=font, startangle=startangle, title="饼图",path=savepath)
+            info = pie_graph(df, feature, top_num, font_size=font, startangle=startangle, title="饼图", path=savepath,
+                             palette_style=palette_style)
         except Exception as e:
             print(e)
             return http.JsonResponse({'code': 1003, 'error': '分析失败，请填写正确的变量'})
-
+        if isinstance(info, str):
+            return http.JsonResponse({'code': 1004, 'error': info})
         # 保存图片
         plts = info
         # # 设置图片大小
@@ -162,14 +164,12 @@ class PieGraph(APIView):
             browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id, order=1,
                                                        file_old_id=project_id)
             project = browsing.id
-        data = {
+        context = {
             'project': project,
-            'plt': pltlist[0]
+            'img': [pltlist[0]],
+            'isBig':True
         }
-        
-        return http.JsonResponse({'code': 200, 'error': '分析成功', 'data': data})
-        '''
-        return http.JsonResponse({'code': 200, 'error': '分析成功', 'feature':feature,'data':data,'name':'flbt'})
+        return http.JsonResponse({'code': 200, 'error': '分析成功', 'context': context})
 class HorizontalBarPlot(APIView):
     """水平柱状图"""
     
@@ -1224,11 +1224,120 @@ class StackbarPlot(APIView):
             browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id, order=1,
                                                        file_old_id=project_id)
             project = browsing.id
+        context = {
+            'project': project,
+            'img': [pltlist[0]],
+            'isBig':True
+        }
+        return http.JsonResponse({'code': 200, 'error': '分析成功', 'context': context})
+
+class Pile(APIView):
+    """堆积柱状图"""
+    authentication_classes = [MyBaseAuthentication, ]
+
+    def get(self, request, project_id):
+        context = {
+            'value': 'pile',
+            'project_id': project_id,
+            "begin": "echarts",
+            "name": 'pile'
+        }
+        return render(request, 'index/pile.html', context=context)
+
+    def post(self, request, project_id):
+        # 接收json数据
+        json_data = json.loads(request.body.decode())
+        # 获取名称列
+        x = json_data.get('x')
+        # 获取哪种数据
+        y = json_data.get('y')
+        number = json_data.get('number')
+        # 数据筛选
+        filter_data = json_data.get("filter")
+
+        if not all([x, y]):
+            return http.JsonResponse({'code': 1001, 'error': '参数不能为空'})
+        # 判断数据是原始数据还是处理后的数据
+        file_path = None
+        number = int(number)
+        if number == 0:
+            # 查询数据库原始文件
+            file = File_old.objects.get(id=project_id, user_id=request.user.id)
+            file_path = file.path_pa
+        elif number == 1:
+            try:
+                process = Browsing_process.objects.get(user_id=request.user.id, file_old_id=project_id, is_latest=1)
+            except Exception as e:
+                return http.JsonResponse({'code': 1002, 'error': '你还没有处理过数据，所有没有最新数据噢'})
+            re_d = eval(process.process_info)
+            file_path = re_d.get("df_result")
+        try:
+            # 读取文件
+            # 查询该用户的用户等级
+            grade = Member.objects.get(user_id=request.user.id)
+            # 查询当前用户的等级
+            member = MemberType.objects.get(id=grade.member_type_id)
+            try:
+                df_r = read(file_path)
+                df = df_r.iloc[0:int(member.number)]
+            except Exception as e:
+                print(e)
+                return http.JsonResponse({'code': 1002, 'error': '上传文件有误请重新上传'})
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 1002, 'error': '上传文件有误请重新上传'})
+
+        if filter_data:
+            df = filtering_view(df, json_data)
+        end = '/'
+        uuid01 = uuid.uuid1()
+        if number == 0:
+            old_file_path = file_path
+            string2 = old_file_path[:old_file_path.rfind(end)]
+        else:
+            string = file_path[:file_path.rfind(end)]
+            string2 = string[:string.rfind(end)]
+        string3 = string2 + '/pile_plot' + str(uuid01)
+        try:
+            os.mkdir(string2 + '/pile_plot' + str(uuid01))
+        except Exception as e:
+            print(e)
+        savepath = string3 + '/'
+        # 分析函数
+        info=None
+        try:
+            info = pile_plot(df_input=df, x_=x, y_=y)
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 1003, 'error': '分析失败，请填写正确的变量'})
+        # 将数据保存到数据库
+        browsing_process = {}
+        browsing_process['name'] = 'Echarts堆叠图'
+        browsing_process['plt'] = ''
+        # # 查询所有之前的顺序
+        try:
+            process = Browsing_process.objects.filter(user_id=request.user.id, file_old_id=project_id).aggregate(
+                Max('order'))
+            print(process)
+            if process:
+                order = int(process['order__max']) + 1
+                print(order)
+                browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id,
+                                                           order=order,
+                                                           file_old_id=project_id)
+                project = browsing.id
+
+        except Exception as e:
+            print(e)
+            browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id, order=1,
+                                                       file_old_id=project_id)
+            project = browsing.id
         data = {
             'project': project,
-            'plt': pltlist[0]
+            'img': info,
+            'isBig':True
         }
-        return http.JsonResponse({'code': 200, 'error': '分析成功', 'data': data})       
+        return http.JsonResponse({'code': 200, 'error': '分析成功', 'data': data,'echarts':'true'})
 
 class DistPlot(APIView):
     """频率分布直方图"""
@@ -1354,11 +1463,13 @@ class DistPlot(APIView):
             browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id, order=1,
                                                        file_old_id=project_id)
             project = browsing.id
-        data = {
+        context = {
             'project': project,
-            'plt': pltlist[0]
+            'img': [pltlist[0]],
+            'isBig':True
+            # 'str':""
         }
-        return http.JsonResponse({'code': 200, 'error': '分析成功', 'data': data})       
+        return http.JsonResponse({'code': 200, 'error': '分析成功', 'context': context})
 class ComparisonPlot(APIView):
     """比较图"""
     authentication_classes = [MyBaseAuthentication, ]
@@ -1506,11 +1617,13 @@ class ComparisonPlot(APIView):
             browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id, order=1,
                                                        file_old_id=project_id)
             project = browsing.id
-        data = {
+        context = {
             'project': project,
-            'plt': pltlist[0]
+            'img': [pltlist[0]],
+            'isBig':True,
+            'str':""
         }
-        return http.JsonResponse({'code': 200, 'error': '分析成功', 'data': data})       
+        return http.JsonResponse({'code': 200, 'error': '分析成功', 'context': context})
         
 
 class Pointlineplot(APIView):
@@ -1662,11 +1775,12 @@ class Pointlineplot(APIView):
             browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id, order=1,
                                                       file_old_id=project_id)
             project = browsing.id
-        data = {
+        context = {
             'project': project,
-            'plt': pltlist[0]
+            'img': [pltlist[0]],
+            'isBig':True
         }
-        return http.JsonResponse({'code': 200, 'error': '分析成功', 'data': data})       
+        return http.JsonResponse({'code': 200, 'error': '分析成功', 'context': context})
 
 
 

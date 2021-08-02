@@ -3,6 +3,7 @@
 
 """
 2020/11/19 by Owen Yang
+##hz 修改机器学习验证集和测试集结果一致问题  ML_Classfication
 
 
 外部可引用函数:
@@ -150,6 +151,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.svm import LinearSVR
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
 
 
 from sklearn.mixture import GaussianMixture
@@ -621,7 +623,7 @@ def ML_Classfication(
     df_train_result = pd.DataFrame([mean_dic_train, stdv_dic_train], index=['Mean', 'SD'])
     df_train_result = df_train_result.applymap(lambda x: round_dec(x, d=decimal_num))
     df_valid_result = pd.DataFrame([mean_dic_valid, stdv_dic_valid], index=['Mean', 'SD'])
-    df_valid_result = df_train_result.applymap(lambda x: round_dec(x, d=decimal_num))
+    df_valid_result = df_valid_result.applymap(lambda x: round_dec(x, d=decimal_num))
 
     _, _, _, df_test_result = classification_metric_evaluate(clf, Xtest, Ytest, binary)
     df_test_result  = df_test_result.applymap(lambda x: round_dec(x, d=decimal_num))
@@ -960,6 +962,7 @@ def two_groups_classfication_multimodels(
         'RandomForestClassifier' : 'RandomForest',
         'SVC' : 'SVM',
         'MLPClassifier' : 'MLP',
+        'GaussianNB': 'GaussianNB',
         'AdaBoostClassifier' : 'AdaBoost',  
 
         'KNeighborsClassifier' : 'KNN',        

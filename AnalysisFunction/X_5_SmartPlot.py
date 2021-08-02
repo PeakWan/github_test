@@ -329,6 +329,24 @@ def point_line_plot(df_input, features, group, path, hue_=None, kind='scatter', 
         return {'error': 'hue分组不能超过10'}
     return plot_name_list
 
+#Echarts堆叠图
+def pile_plot(df_input, x_, y_):
+    #data_num 按数值获取分组列数据
+    data_num = pd.crosstab(df_input[x_], df_input[y_])
+    #data_rate 0 按百分比按行/当列总和获取分组列数据
+    data_rate = data_num.div(data_num.sum(0))
+    #获取y_name列表
+    yListName = list(map(lambda x: str(y_) + "_" + str(x), list(data_num.columns)))
+    #格式化y轴值名称
+    xListName = list(map(lambda x: str(x_) + "_" + str(x), list(data_num.index)))
+    #数值型数据
+    data = []
+    #百分比数据
+    rate=[]
+    for i in range(len(xListName)):
+        data.append(list(data_num.iloc[i]))
+        rate.append(list(map(lambda x: round(x *100,2), list(data_rate.iloc[i]))))
+    return {"xListName":xListName,"yListName":yListName,"data":data,"rate":rate}
 
 def stackbar_plot(df_input, x_, y_, path, direction='horizon', palette_style='nejm'):
     """

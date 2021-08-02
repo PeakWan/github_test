@@ -183,7 +183,7 @@ class Normality(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -192,9 +192,9 @@ class Normality(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
  
@@ -365,15 +365,15 @@ class StatisticView(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         try:
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -655,6 +655,8 @@ class MissDeleteView(APIView):
         :return:
         """
         # 接收参数
+
+
         json_data = json.loads(request.body.decode())
         # 获取参数
         select = json_data.get('selevt')
@@ -858,7 +860,7 @@ class MissDeleteView(APIView):
         data = {
             "form": form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
 
         # 返回页面
@@ -1478,8 +1480,8 @@ class MissDataFilling(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s,
-            'plts':pltlist
+            'str': str_s,
+            'img':pltlist
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -1705,7 +1707,7 @@ class GetVarView(APIView):
             # 'input_o_desc': input_o_desc,
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -1931,7 +1933,7 @@ class GetVifView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -2163,7 +2165,7 @@ class DataBalanceView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -2406,7 +2408,7 @@ class PsmMatchinView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -2621,7 +2623,7 @@ class DummiesView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -2904,7 +2906,7 @@ class GroupRecodingView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -3129,7 +3131,7 @@ class DataStandardizationView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
         # 返回页面
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': data}, cls=NpEncoder))
@@ -3465,9 +3467,9 @@ class AbnormalView(APIView):
             for num in range(len(c['总数'])):
                 for i in range(len(list(c)) + 1):
                     if i == 0:
-                        input_o_desc['info'].append({str(c.iloc[num].name): c.iloc[num].name})
+                        input_o_desc['info'].append({str(i): c.iloc[num].name})
                     else:
-                        input_o_desc['info'][num][str(list(c)[i - 1])] = c.iloc[num][i - 1]
+                        input_o_desc['info'][num][str(i)] = c.iloc[num][i - 1]
         # 原始计量数据描述
         a = info[3]
         before = {}
@@ -3489,9 +3491,9 @@ class AbnormalView(APIView):
             for num in range(len(a['总数'])):
                 for i in range(len(list(a)) + 1):
                     if i == 0:
-                        before['info'].append({str(a.iloc[num].name): a.iloc[num].name})
+                        before['info'].append({str(i): a.iloc[num].name})
                     else:
-                        before['info'][num][str(list(a)[i - 1])] = a.iloc[num][i - 1]
+                        before['info'][num][str(i)] = a.iloc[num][i - 1]
 
         # 结果分类数据描述
         d = info[4]
@@ -3514,9 +3516,9 @@ class AbnormalView(APIView):
             for num in range(len(d['总数'])):
                 for i in range(len(list(d)) + 1):
                     if i == 0:
-                        result_o_desc['info'].append({str(d.iloc[num].name): d.iloc[num].name})
+                        result_o_desc['info'].append({str(i): d.iloc[num].name})
                     else:
-                        result_o_desc['info'][num][str(list(d)[i - 1])] = d.iloc[num][i - 1]
+                        result_o_desc['info'][num][str(i)] = d.iloc[num][i - 1]
 
         # 结果计量数据描述
         b = info[5]
@@ -3538,9 +3540,9 @@ class AbnormalView(APIView):
             for num in range(len(b['总数'])):
                 for i in range(len(list(b)) + 1):
                     if i == 0:
-                        after['info'].append({str(b.iloc[num].name): b.iloc[num].name})
+                        after['info'].append({str(i): b.iloc[num].name})
                     else:
-                        after['info'][num][str(list(b)[i - 1])] = b.iloc[num][i - 1]
+                        after['info'][num][str(i)] = b.iloc[num][i - 1]
         # 将浏览过程添加到数据库
         pltlist = loop_add(plts, "abnormal_deviation_process", route01, str(uuid01))
         # 写入数据
@@ -3599,9 +3601,10 @@ class AbnormalView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s,
-            'plt': pltlist[0],
-            'plt2': pltlist[1]
+            'str': str_s,
+            'img':[pltlist[0],pltlist[1]]
+            # 'plt': pltlist[0],
+            # 'plt2': pltlist[1]
         }
         # else:
         #     data = {
@@ -4022,7 +4025,7 @@ class Survival(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -4031,9 +4034,9 @@ class Survival(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(list(a.iloc[n])[y])
+                            dict_x[index] = str(list(a.iloc[n])[y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -4332,9 +4335,9 @@ class ManipulateView(APIView):
             for num in range(len(a['总数'])):
                 for i in range(len(list(a)) + 1):
                     if i == 0:
-                        before['info'].append({str(a.iloc[num].name): str(a.iloc[num].name)})
+                        before['info'].append({str(i): str(a.iloc[num].name)})
                     else:
-                        before['info'][num][str(list(a)[i - 1])] = str(a.iloc[num][i - 1])
+                        before['info'][num][str(i)] = str(a.iloc[num][i - 1])
 
         # 结果分类数据描述
         d = info[4]
@@ -4357,9 +4360,9 @@ class ManipulateView(APIView):
             for num in range(len(d['总数'])):
                 for i in range(len(list(d)) + 1):
                     if i == 0:
-                        result_o_desc['info'].append({str(d.iloc[num].name): str(d.iloc[num].name)})
+                        result_o_desc['info'].append({str(i): str(d.iloc[num].name)})
                     else:
-                        result_o_desc['info'][num][str(list(d)[i - 1])] = str(d.iloc[num][i - 1])
+                        result_o_desc['info'][num][str(i)] = str(d.iloc[num][i - 1])
 
         # 结果计量数据描述
         b = info[5]
@@ -4381,9 +4384,9 @@ class ManipulateView(APIView):
             for num in range(len(b['总数'])):
                 for i in range(len(list(b)) + 1):
                     if i == 0:
-                        after['info'].append({str(b.iloc[num].name): str(b.iloc[num].name)})
+                        after['info'].append({str(i): str(b.iloc[num].name)})
                     else:
-                        after['info'][num][str(list(b)[i - 1])] = str(b.iloc[num][i - 1])
+                        after['info'][num][str(i)] = str(b.iloc[num][i - 1])
 
         # 将浏览过程添加到数据库
         end = "/"
@@ -4440,7 +4443,7 @@ class ManipulateView(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s,
+            'str': str_s,
         }
         return http.JsonResponse({'code': 200, 'error': '分析成功', 'context': data})
         # 返回页面
@@ -4532,9 +4535,9 @@ class Transform(APIView):
             for num in range(len(c['总数'])):
                 for i in range(len(list(c)) + 1):
                     if i == 0:
-                        input_o_desc['info'].append({str(c.iloc[num].name): c.iloc[num].name})
+                        input_o_desc['info'].append({str(i): c.iloc[num].name})
                     else:
-                        input_o_desc['info'][num][str(list(c)[i - 1])] = c.iloc[num][i - 1]
+                        input_o_desc['info'][num][str(i)] = c.iloc[num][i - 1]
         # 原始计量数据描述
         a = info[3]
         before = {}
@@ -4556,9 +4559,9 @@ class Transform(APIView):
             for num in range(len(a['总数'])):
                 for i in range(len(list(a)) + 1):
                     if i == 0:
-                        before['info'].append({str(a.iloc[num].name): a.iloc[num].name})
+                        before['info'].append({str(i): a.iloc[num].name})
                     else:
-                        before['info'][num][str(list(a)[i - 1])] = a.iloc[num][i - 1]
+                        before['info'][num][str(i)] = a.iloc[num][i - 1]
 
         # 结果分类数据描述
         d = info[4]
@@ -4581,9 +4584,9 @@ class Transform(APIView):
             for num in range(len(d['总数'])):
                 for i in range(len(list(d)) + 1):
                     if i == 0:
-                        result_o_desc['info'].append({str(d.iloc[num].name): d.iloc[num].name})
+                        result_o_desc['info'].append({str(i): d.iloc[num].name})
                     else:
-                        result_o_desc['info'][num][str(list(d)[i - 1])] = d.iloc[num][i - 1]
+                        result_o_desc['info'][num][str(i)] = d.iloc[num][i - 1]
 
         # 结果计量数据描述
         b = info[5]
@@ -4605,9 +4608,9 @@ class Transform(APIView):
             for num in range(len(b['总数'])):
                 for i in range(len(list(b)) + 1):
                     if i == 0:
-                        after['info'].append({str(b.iloc[num].name): b.iloc[num].name})
+                        after['info'].append({str(i): b.iloc[num].name})
                     else:
-                        after['info'][num][str(list(b)[i - 1])] = b.iloc[num][i - 1]
+                        after['info'][num][str(i)] = b.iloc[num][i - 1]
 
         # 将浏览过程添加到数据库
         end = "/"
@@ -4666,7 +4669,7 @@ class Transform(APIView):
         data = {
             'form': form,
             'project': project,
-            'str_result': str_s
+            'str': str_s
         }
 
         # 返回页面

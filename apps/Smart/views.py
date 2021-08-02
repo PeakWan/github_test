@@ -206,7 +206,7 @@ class Zhfx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -215,9 +215,9 @@ class Zhfx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -403,9 +403,9 @@ class Sjms(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
-                            dict_x[i] = str(d.iloc[num][y])
+                            dict_x[index] = str(d.iloc[num][y])
                             y += 1
                         result_o_desc['info'].append(dict_x)
             # print(11111111111111111111111111111111)
@@ -431,7 +431,7 @@ class Sjms(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -440,9 +440,9 @@ class Sjms(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -641,7 +641,7 @@ class Fxqx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -650,9 +650,9 @@ class Fxqx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -862,7 +862,7 @@ class Xgx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -871,9 +871,9 @@ class Xgx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -1043,7 +1043,7 @@ class Gxx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -1052,9 +1052,9 @@ class Gxx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -1268,7 +1268,7 @@ class Fcsjy(APIView):
                     dict_x = {}  # 'name': a.iloc[n].name
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -1277,9 +1277,9 @@ class Fcsjy(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
             # 服务器上面
@@ -1486,15 +1486,15 @@ class Kfjy(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         try:
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
             print("========22222========")
@@ -1682,7 +1682,7 @@ class Zws(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -1691,9 +1691,9 @@ class Zws(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -2063,16 +2063,16 @@ class D_fc(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
 
                         try:
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -2462,7 +2462,7 @@ class Dcbj(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
                             # 最多添加八个数据
                             # if y == 8:
@@ -2471,9 +2471,9 @@ class Dcbj(APIView):
                                 if dict_x[i]:
                                     t = str(uuid.uuid1())
                                     i = str(i) + t
-                                    dict_x[i] = str(a.iloc[n][y])
+                                    dict_x[index] = str(a.iloc[n][y])
                             except Exception as e:
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                             y += 1
                         before['info'].append(dict_x)
 
@@ -2727,15 +2727,15 @@ class Znfx(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
                             try:
                                 if dict_x[i]:
                                     t = str(uuid.uuid1())
                                     i = str(i) + t
-                                    dict_x[i] = str(a.iloc[n][y])
+                                    dict_x[index] = str(a.iloc[n][y])
                             except Exception as e:
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                             y += 1
                         before['info'].append(dict_x)
 
@@ -2759,7 +2759,7 @@ class Znfx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -2768,9 +2768,9 @@ class Znfx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(d.iloc[n][y])
+                                dict_x[index] = str(d.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(d.iloc[n][y])
+                            dict_x[index] = str(d.iloc[n][y])
                         y += 1
                     result_o_desc['info'].append(dict_x)
             print(33333)
@@ -2797,7 +2797,7 @@ class Znfx(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
                             # 最多添加八个数据
                             # if y == 8:
@@ -2806,9 +2806,9 @@ class Znfx(APIView):
                                 if dict_x[i]:
                                     o = str(uuid.uuid1())
                                     i = str(i) + o
-                                    dict_x[i] = str(t.iloc[n][y])
+                                    dict_x[index] = str(t.iloc[n][y])
                             except Exception as e:
-                                dict_x[i] = str(t.iloc[n][y])
+                                dict_x[index] = str(t.iloc[n][y])
                             y += 1
                         third['info'].append(dict_x)
             print(44444)
@@ -3047,7 +3047,7 @@ class MultiView(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
                             # 最多添加八个数据
                             # if y == 8:
@@ -3056,9 +3056,9 @@ class MultiView(APIView):
                                 if dict_x[i]:
                                     t = str(uuid.uuid1())
                                     i = str(i) + t
-                                    dict_x[i] = str(d.iloc[n][y])
+                                    dict_x[index] = str(d.iloc[n][y])
                             except Exception as e:
-                                dict_x[i] = str(d.iloc[n][y])
+                                dict_x[index] = str(d.iloc[n][y])
                             # print("============================",y,"=================================")
                             y += 1
                         result_o_desc['info'].append(dict_x)
@@ -3298,7 +3298,7 @@ class Dys(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
                             # 最多添加八个数据
                             # if y == 8:
@@ -3307,9 +3307,9 @@ class Dys(APIView):
                                 if dict_x[i]:
                                     t = str(uuid.uuid1())
                                     i = str(i) + t
-                                    dict_x[i] = str(d.iloc[n][y])
+                                    dict_x[index] = str(d.iloc[n][y])
                             except Exception as e:
-                                dict_x[i] = str(d.iloc[n][y])
+                                dict_x[index] = str(d.iloc[n][y])
                             # print("============================",y,"=================================")
                             y += 1
                         result_o_desc['info'].append(dict_x)
@@ -3360,7 +3360,6 @@ class Dys(APIView):
                 "img": pltlist,
                 "text": "tableDescriptionImg",
                 'str': str_s
-
             }
 
         except Exception as e:
@@ -3554,9 +3553,9 @@ class Startification(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
-                            dict_x[i] = d.iloc[num][y]
+                            dict_x[index] = d.iloc[num][y]
                             y += 1
                         result_o_desc['info'].append(dict_x)
 
@@ -3788,9 +3787,9 @@ class Smooth(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
-                            dict_x[i] = d.iloc[num][y]
+                            dict_x[index] = d.iloc[num][y]
                             y += 1
                         result_o_desc['info'].append(dict_x)
 
@@ -3886,8 +3885,9 @@ class Qsfx(APIView):
         dependent_feature = json_data.get('dependent_feature')
         # # 获取小数位
         # formater = json_data.get('formater')
-        categorical_independent_variables_ref = json_data.get('categorical_independent_variables_ref')
+        # categorical_independent_variables_ref = json_data.get('categorical_independent_variables_ref')
         # 获取回归模型名称
+        categorical_independent_variables_ref = None
         model_name = json_data.get('model_name')
         # 获取调整变量1
         adjust_features_1 = json_data.get('adjust_features_1')
@@ -3908,8 +3908,9 @@ class Qsfx(APIView):
         if time_variable == "":
             time_variable = None
         if not categorical_independent_variables_ref:
-            for x in range(len(exposure_feature_list)):
-                categorical_independent_variables_ref.append(None)
+            # for x in range(len(exposure_feature_list)):
+            #     categorical_independent_variables_ref.append(None)
+            print(categorical_independent_variables_ref)
         else:
             ref = []
             for x in categorical_independent_variables_ref:
@@ -4040,9 +4041,9 @@ class Qsfx(APIView):
                         dict_x = {}
                         y = 0
                         # 制定第一行 所有列的所有info数据
-                        for i in name:
+                        for index,i in enumerate(name):
                             i = str(i)
-                            dict_x[i] = d.iloc[num][y]
+                            dict_x[index] = d.iloc[num][y]
                             y += 1
                         result_o_desc['info'].append(dict_x)
 

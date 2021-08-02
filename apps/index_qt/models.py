@@ -212,3 +212,14 @@ class LoginHistory(models.Model):
     class Meta:
         db_table = 'tb_login_history'
         verbose_name = "用户登录记录"
+        
+class MethodDesc(models.Model):
+    method_name = models.CharField(max_length=255, verbose_name='方法名称', default=None)
+    method_desc = models.CharField(max_length=65535, verbose_name='方法描述', default=None)
+    method_url = models.CharField(max_length=255, verbose_name='方法链接', default=None)
+    class Meta:
+        db_table = "tb_method_desc"
+        verbose_name = '方法描述'
+        verbose_name_plural = verbose_name
+    def __str__(self):
+        return f'method_name={self.method_name} method_desc={self.method_desc}'    

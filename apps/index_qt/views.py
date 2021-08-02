@@ -20,7 +20,7 @@ from django.urls import reverse
 from django.views import View
 from django import http
 from django_redis import get_redis_connection
-from apps.index_qt.models import User, File_old, Member,Help,Analysis, LoginHistory
+from apps.index_qt.models import User, File_old, Member,Help,Analysis, LoginHistory,MethodDesc
 from libs.get import get_s, loop_add, write, read,member_check
 from django import http
 from django.core.paginator import Paginator, EmptyPage
@@ -857,6 +857,21 @@ def  delFile():
             print("成功删除"+str(element[0])+"的项目id")
         except FileNotFoundError as e:
             print(e + "项目"+str(element[0])+"删除失败")    
+
+class PileEcharts(View):
+    def get(self, request):
+        return render(request, 'index/pile-echarts.html')            
+
+class MethodDescrible(APIView):
+    
+    def get(self, request,method_name):
+        method_obj=list(MethodDesc.objects.filter(method_name__contains=method_name).values())
+        if(len(method_obj)<1):
+            return HttpResponse(json.dumps({'retCode': '200', 'retMsg': '未查找到相应的方法名称', 'data': "暂无方法描述"}))
+        method_desc=method_obj[0]["method_desc"]
+        data={"methodDesc":method_desc}
+        #data = {"methodDesc": "我是方法描述"}
+        return HttpResponse(json.dumps({'retCode': '200', 'retMsg': '方法描述', 'data': data}))            
             
             
         

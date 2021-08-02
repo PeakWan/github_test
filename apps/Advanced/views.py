@@ -30,7 +30,7 @@ from django import http
 from django.views import View
 from django_redis import get_redis_connection
 
-from libs.get import get_s, loop_add, write, read, filtering_view
+from libs.get import get_s, loop_add, write, read, filtering_view,get_table
 
 from AnalysisFunction.X_1_DataGovernance import _feature_get_n_b, data_standardization
 from rest_framework.views import APIView
@@ -208,8 +208,8 @@ class Loghg(APIView):
                     dict_x = {'&emsp;': a.iloc[n].name}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        dict_x[i] = str(a.iloc[n][y])
+                    for index,i in enumerate(name):
+                        dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     # print(dict_x)
                     before['info'].append(dict_x)
@@ -451,16 +451,16 @@ class Xxhg(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         try:
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -656,7 +656,7 @@ class Roc(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -665,9 +665,9 @@ class Roc(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -782,7 +782,7 @@ class Coxfx(APIView):
             return http.JsonResponse({'code': 1015, 'error': 'ref参数数量大于定类多选框'})
         list01 = []
         try:
-            for i in timequant:
+            for i in timequant[0].split(','):
                 if i:
                     list01.append(float(i))
         except Exception as e:
@@ -928,7 +928,7 @@ class Coxfx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -937,9 +937,9 @@ class Coxfx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -1154,15 +1154,15 @@ class Zydpx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         try:
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -1375,7 +1375,7 @@ class Blmx(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # print(str(a.iloc[n][y]), type(a.iloc[n][y]),"1111111111111------------111111111111")
                         # 最多添加八个数据
@@ -1385,9 +1385,9 @@ class Blmx(APIView):
                             if dict_x[i]:
                                 t = str(uuid.uuid1())
                                 i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
+                                dict_x[index] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
+                            dict_x[index] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -1594,122 +1594,10 @@ class Jqxxfl(APIView):
             str_s = str_s.replace("\n", "<br/>")
             # print("=============---------======111")
             # 获取返还给页面的df数据
-            a = df_result
-            before = {}
-            before["name"] = key_list[0]
-            if list(a):
-                # 保存第一列的列名
-                before['Listing'] = []
-                name = list(a)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                print(name)
-                print(len(list(a)) + 1)
-                for i in range(len(list(a)) + 1):
-                    if i == 0:
-                        before['Listing'].append('&emsp;')
-                    else:
-                        before['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                print(before)
-                # 添加数据
-                before['info'] = []
-                for n in range(len(a[name[1]])):
-                    dict_x = {'&emsp;': a.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[i]:
-                                t = str(uuid.uuid1())
-                                i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
-                        except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
-                        y += 1
-                    before['info'].append(dict_x)
-            b = df_result_2
-            second = {}
-            second["name"] = key_list[1]
-            if list(b):
-                # 保存第一列的列名
-                second['Listing'] = []
-                name = list(b)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                # 循环列名
-                for i in range(len(list(b)) + 1):
-                    if i == 0:
-                        second['Listing'].append('&emsp;')
-                    else:
-                        second['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                # 添加数据
-                second['info'] = []
-                for n in range(len(b[name[1]])):
-                    dict_x = {'&emsp;': b.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[i]:
-                                t = str(uuid.uuid1())
-                                i = str(i) + t
-                                dict_x[i] = str(b.iloc[n][y])
-                        except Exception as e:
-                            dict_x[i] = str(b.iloc[n][y])
-                        y += 1
-                    second['info'].append(dict_x)
-
-                    # 把得到的图片保存c
-            
-            c = df_result_3
-            three = {}
-            three["name"] = key_list[2]
-            if list(c):
-                # 保存第一列的列名
-                three['Listing'] = []
-                name = list(c)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                # 循环列名
-                for i in range(len(list(c)) + 1):
-                    if i == 0:
-                        three['Listing'].append('&emsp;')
-                    else:
-                        three['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                # 添加数据
-                three['info'] = []
-                for n in range(len(c[name[1]])):
-                    dict_x = {'&emsp;': c.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[i]:
-                                t = str(uuid.uuid1())
-                                i = str(i) + t
-                                dict_x[i] = str(c.iloc[n][y])
-                        except Exception as e:
-                            dict_x[i] = str(c.iloc[n][y])
-                        y += 1
-                    three['info'].append(dict_x)
-
-                    # 把得到的图片保存
-            
+            before=get_table(df_result, key_list[0])
+            second=get_table(df_result_2, key_list[1])
+            three=get_table(df_result_3, key_list[2])
+            form = [before, second, three]
             # 返回前端 图片的静态路径
             pltlist = loop_add(plts, "机器学习分类", string_tp, id)
 
@@ -1755,10 +1643,6 @@ class Jqxxfl(APIView):
                                                            order='1',
                                                            file_old_id=project_id)
                 project = browsing.id
-
-            # 把返回结果数据封装到列表里面
-            form = [before, second,three]
-            # print(form)
             context = {
                 'project': project,
                 'img': pltlist,
@@ -1920,86 +1804,10 @@ class Jqxxhg(APIView):
             str_s = str_s.replace("\n", "<br/>")
             # print("=============---------======111")
             # 获取返还给页面的df数据
-            a = df_result
-            before = {}
-            before["name"] = key_list[0]
-            if list(a):
-                # 保存第一列的列名
-                before['Listing'] = []
-                name = list(a)
-                print(len(name))
-                print(len(list(a)) + 1)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                # 循环列名
-                for i in range(len(list(a)) + 1):
-                    if i == 0:
-                        before['Listing'].append('&emsp;')
-                    else:
-                        before['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                # 添加数据
-                before['info'] = []
-                for n in range(len(a[name[1]])):
-                    dict_x = {'&emsp;': a.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[i]:
-                                t = str(uuid.uuid1())
-                                i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
-                        except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
-                        y += 1
-                    before['info'].append(dict_x)
+            before = get_table(df_result, key_list[0])
+            second = get_table(df_result_2, key_list[1])
+            form = [before, second]
 
-            b = df_result_2
-            second = {}
-            second["name"] = key_list[1]
-            if list(b):
-                # 保存第一列的列名
-                second['Listing'] = []
-                name = list(b)
-                print(len(name))
-                print(len(list(b)) + 1)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                # 循环列名
-                for i in range(len(list(b)) + 1):
-                    if i == 0:
-                        second['Listing'].append('&emsp;')
-                    else:
-                        second['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                # 添加数据
-                second['info'] = []
-                for n in range(len(b[name[1]])):
-                    dict_x = {'&emsp;': b.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[i]:
-                                t = str(uuid.uuid1())
-                                i = str(i) + t
-                                dict_x[i] = str(b.iloc[n][y])
-                        except Exception as e:
-                            dict_x[i] = str(b.iloc[n][y])
-                        y += 1
-                    second['info'].append(dict_x)
-
-                    # 把得到的图片保存
-            # 返回前端 图片的静态路径
             pltlist = loop_add(plts, "机器学习回归", string_tp, id)
 
             # 写入数据
@@ -2214,7 +2022,7 @@ class Jqxxjl(APIView):
                     dict_x = {}
                     y = 0
                     # 制定第一行 所有列的所有info数据
-                    for i in name:
+                    for index,i in enumerate(name):
                         i = str(i)
                         # 最多添加八个数据
                         # if y == 8:
@@ -2222,9 +2030,9 @@ class Jqxxjl(APIView):
                         try:
                             if dict_x[str(i)]:
                                 i = str(i) + "2"
-                                dict_x[str(i)] = str(a.iloc[n][y])
+                                dict_x[str(index)] = str(a.iloc[n][y])
                         except Exception as e:
-                            dict_x[str(i)] = str(a.iloc[n][y])
+                            dict_x[str(index)] = str(a.iloc[n][y])
                         y += 1
                     before['info'].append(dict_x)
 
@@ -2464,7 +2272,7 @@ class D_roc(APIView):
             try:
 
                 eventlet.monkey_patch(thread=False)
-                time_limit = 30  # set timeout time 3s
+                time_limit = 300  # set timeout time 3s
                 success = None
                 with eventlet.Timeout(time_limit, False):
 
@@ -2502,80 +2310,9 @@ class D_roc(APIView):
             str_s = str_s.replace("\n", "<br/>")
             # print("=============---------======111")
             # 获取返还给页面的df数据
-            a = df_result
-            before = {}
-            before["name"] = key_list[0]
-            if list(a):
-                # 保存第一列的列名
-                before['Listing'] = []
-                name = list(a)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                # 循环列名
-                for i in range(len(list(a)) + 1):
-                    if i == 0:
-                        before['Listing'].append('&emsp;')
-                    else:
-                        before['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                # 添加数据
-                before['info'] = []
-                for n in range(len(a[name[1]])):
-                    dict_x = {'&emsp;': a.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[i]:
-                                t = str(uuid.uuid1())
-                                i = str(i) + t
-                                dict_x[i] = str(a.iloc[n][y])
-                        except Exception as e:
-                            dict_x[i] = str(a.iloc[n][y])
-                        y += 1
-                    before['info'].append(dict_x)
-
-            b = df_result_2
-            second = {}
-            second["name"] = key_list[1]
-            if list(b):
-                # 保存第一列的列名
-                second['Listing'] = []
-                name = list(b)
-                # list01 = ['count', 'skewness', 'kurtosis', 'standarderror', 'statistics', 'p', 'method ']
-                # 循环列名
-                for i in range(len(list(b)) + 1):
-                    if i == 0:
-                        second['Listing'].append('&emsp;')
-                    else:
-                        second['Listing'].append(name[i - 1])
-                    # if i == 8:
-                    #     break
-                # 添加数据
-                second['info'] = []
-                for n in range(len(b[name[1]])):
-                    dict_x = {'&emsp;': b.iloc[n].name}
-                    y = 0
-                    # 制定第一行 所有列的所有info数据
-                    for i in name:
-                        i = str(i)
-                        # 最多添加八个数据
-                        # if y == 8:
-                        #     break
-                        try:
-                            if dict_x[str(i)]:
-                                i = str(i) + "2"
-                                dict_x[str(i)] = str(b.iloc[n][y])
-                        except Exception as e:
-                            dict_x[str(i)] = str(b.iloc[n][y])
-                        y += 1
-                    second['info'].append(dict_x)
-
-                    # 把得到的图片保存
+            before = get_table(df_result, key_list[0])
+            second = get_table(df_result_2, key_list[1])
+            form = [before, second]
             # 返回前端 图片的静态路径
             pltlist = loop_add(plts, "分类多模型综合分析", string_tp, id)
 
@@ -2618,8 +2355,6 @@ class D_roc(APIView):
                 project = browsing.id
 
             # 把返回结果数据封装到列表里面
-            form = [before, second]
-            # img=[plt_file,plt_file2]
             context = {
                 'project': project,
                 'img': pltlist,
@@ -2956,7 +2691,7 @@ class Nri(APIView):
             else:
                 string = file_path[:file_path.rfind(end)]
                 string3 = string[:string.rfind(end)]
-            # strint3路径 为用户创的 项目下面 
+            # strint3路径 为用户创的 项目下面
 
             # string2 为图片的静态路径
             string_tp = string3[string3.rfind(end01):]
@@ -2973,17 +2708,23 @@ class Nri(APIView):
 
             savepath = file_s + '/'
             try:
-                re = R_NRI_ana(df_input=df, pstd=pstd, pnew=pnew, gold=gold, cut=cut, path = savepath, decimal_num=int(decimal_num))
+                print(222222222)
+                print(pstd)
+                print(gold)
+                print(cut)
+                print(decimal_num)
+                re = R_NRI_ana(df_input=df, pstd=pstd, pnew=pnew, gold=gold, cut=cut, path=savepath,
+                               decimal_num=int(decimal_num))
 
 
             except Exception as e:
+                # print(1111111111111)
                 print(e)
                 return http.JsonResponse({'code': 1005, 'error': '分析失败，请选择正确变量'})
-            try:
-                if re['error']:
-                    return http.JsonResponse({'code': 1005, 'error': re['error']})
-            except Exception as e:
-                print('正常')
+            # 提取df
+            print(44444444444444)
+            print(re)
+            print(55555555555)
             # save_data = re[3]
             df_result = re[0]
             plts = re[2]
@@ -3098,6 +2839,255 @@ class Nri(APIView):
             print(e)
             return http.JsonResponse({'code': 1006, 'error': '网络延迟，请稍后再试！！！'})
         return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': context}, cls=NpEncoder))
+
+#Rcs
+class Rcs(APIView):
+    authentication_classes = [MyBaseAuthentication, ]
+    def get(self, request, project_id, data_id):
+        context = get_s(request, project_id, data_id)
+        # 单选加多选
+        # context["value"] = "All"
+        context["value"] = "rcs"
+        context["begin"] = "end"
+        context["name"] = "rcs"
+        return render(request, 'index/rcs.html', context=context)
+
+    def post(self, request, project_id, data_id):
+
+        """
+        接收传的列名
+        :param request:
+        :return:
+        """
+        # 接收json数据
+        json_data = json.loads(request.body.decode())
+        pstd = json_data.get("pstd")
+        pnew = json_data.get("pnew")
+        gold = json_data.get("gold")
+        cut = json_data.get("cut")
+        # 获取小数位
+        decimal_num = json_data.get("num_select")
+        # 获取是否保存结果
+        log_save = json_data.get('save')
+        # 原始还是处理后的数据
+        num = json_data.get("number")
+        id = uuid.uuid1()
+        id = str(id)
+        print(cut)
+        if cut:
+            cut01 = []
+            cut02 = cut[0].split(',')
+            for i in cut02:
+                cut01.append(float(i))
+            cut = cut01
+        # 数据筛选
+        filter_data = json_data.get("filter")
+
+        if not log_save:
+            log_save = 0
+        else:
+            log_save = int(log_save)
+
+        # 获取传的列名
+        if num == 0:
+            # 获取数据库的对象
+            user = File_old.objects.get(id=project_id)
+            # 获取原文件的路径
+            file_path = user.path_pa
+
+        elif num == 1:
+            try:
+                process = Browsing_process.objects.get(user_id=request.user.id, file_old_id=project_id, is_latest=1)
+            except Exception as e:
+                return HttpResponse(json.dumps({'code': 202, 'error': '你还没有处理过数据，所有没有最新数据噢'}))
+            re_d = eval(process.process_info)
+            file_path = re_d.get("df_result")
+        try:
+
+            # 打开文件
+            # 查询该用户的用户等级
+            try:
+                grade = Member.objects.get(user_id=request.user.id)
+                # 查询当前用户的等级
+                member = MemberType.objects.get(id=grade.member_type_id)
+            except Exception as e:
+                return http.JsonResponse({'code': 1002, 'error': '会员查询失败，请重试'})
+
+            df_r = read(file_path)
+            df = df_r.iloc[0:int(member.number)]
+
+            # # 写入数据
+
+            end01 = "/static/"
+            end = "/"
+            # 本地代码上面
+            # end = "\\"
+            if int(num) == 0:
+                string3 = file_path[:file_path.rfind(end)]
+            else:
+                string = file_path[:file_path.rfind(end)]
+                string3 = string[:string.rfind(end)]
+            # strint3路径 为用户创的 项目下面
+
+            # string2 为图片的静态路径
+            string_tp = string3[string3.rfind(end01):]
+
+            # file_s 为这方法存图片以及df表的文件夹  绝对路径
+            file_s = string3 + "/" + "NRI" + id
+
+            try:
+                # 创建存图片和df表的文件夹的文件夹
+                os.makedirs(file_s)
+            except Exception as e:
+                print(e)
+                return HttpResponse(json.dumps({'code': '1003', 'error': '创建失败'}, cls=NpEncoder))
+
+            savepath = file_s + '/'
+            try:
+                print(222222222)
+                print(pstd)
+                print(gold)
+                print(cut)
+                print(decimal_num)
+                re = R_NRI_ana(df_input=df, pstd=pstd, pnew=pnew, gold=gold, cut=cut, path = savepath, decimal_num=int(decimal_num))
+
+
+            except Exception as e:
+                # print(1111111111111)
+                print(e)
+                return http.JsonResponse({'code': 1005, 'error': '分析失败，请选择正确变量'})
+            # 提取df
+            print(44444444444444)
+            print(re)
+            print(55555555555)
+            # save_data = re[3]
+            df_result = re[0]
+            plts = re[2]
+            str_s = re[1]
+            str_s = str_s.replace("\n", "<br/>")
+            # 计量数据描述
+            a = df_result
+            before = {}
+            if list(a):
+                # 保存第一列的列名
+                before['Listing'] = []
+                name = list(a)
+                name[0] = '&emsp;'
+                # 循环列名s
+                for i in range(len(list(a))):
+                    before['Listing'].append(name[i])
+                # 添加数据
+                before['info'] = []
+                for n in range(len(a[name[1]])):
+                    dict_x = {'&emsp;': a.iloc[n].name}
+                    y = 0
+                    # 制定第一行 所有列的所有info数据
+                    for i in name:
+                        dict_x[i] = str(a.iloc[n][y])
+                        y += 1
+                    print(dict_x)
+                    before['info'].append(dict_x)
+            # 把得到的图片保存
+            # 返回前端 图片的静态路径
+            pltlist = loop_add(plts, "NRI", string_tp, id)
+
+            df_file = file_s + '/' + 'dfresult222.pkl'
+            write(df_result, df_file)
+
+            # save_files = file_s + '/' + 'df_result.pkl'
+            # write(save_data, save_files)
+
+            browsing_process = {'name': 'NRI', 'df_result': df_file, 'str_result': str_s}
+            for i in range(len(pltlist)):
+                if i == 0:
+                    name = 'plt'
+                    browsing_process[name] = pltlist[i]
+                else:
+                    name = 'plt' + str(i + 1)
+                    browsing_process[name] = pltlist[i]
+            if int(log_save) == 1:
+                # 找到之前的处理后的数据替换掉
+                try:
+                    # 找到这个项目的最新处理的数据
+                    latest_data = Browsing_process.objects.get(file_old=project_id, is_latest=1)
+                    if latest_data:
+                        # 修改数据结果
+                        latest_data.is_latest = 0
+                        latest_data.save()
+                except Exception as e:
+                    print(e)
+                try:
+                    process = Browsing_process.objects.filter(user_id=request.user.id, file_old_id=project_id).latest(
+                        'order')
+                    # print(process)
+                    if process:
+                        order = int(process.order) + 1
+                        print(order)
+                        browsing = Browsing_process.objects.create(process_info=browsing_process,
+                                                                   user_id=request.user.id,
+                                                                   order=order,
+                                                                   file_old_id=project_id)
+                        project = browsing.id
+                        browsing.is_latest = 1
+                        browsing.save()
+
+
+                except Exception as e:
+                    browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id,
+                                                               order=1,
+
+                                                               file_old_id=project_id)
+                    browsing.is_latest = 1
+                    browsing.save()
+                    project = browsing.id
+
+            else:
+                try:
+                    process = Browsing_process.objects.filter(user_id=request.user.id, file_old_id=project_id).latest(
+                        'order')
+                    # print(process)
+                    if process:
+                        order = int(process.order) + 1
+                        print(order)
+                        browsing = Browsing_process.objects.create(process_info=browsing_process,
+                                                                   user_id=request.user.id,
+                                                                   order=order,
+                                                                   file_old_id=project_id)
+                        project = browsing.id
+
+                except Exception as e:
+                    print(e)
+                    browsing = Browsing_process.objects.create(process_info=browsing_process, user_id=request.user.id,
+                                                               order=1,
+                                                               file_old_id=project_id)
+                    project = browsing.id
+            form = [before]
+            plt_list = pltlist
+            context = {
+                'img': plt_list,
+                'project': project,
+                "form": form,
+                "text": "tableDescriptionIImages1",
+                'str': str_s
+            }
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 1006, 'error': '网络延迟，请稍后再试！！！'})
+        return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': context}, cls=NpEncoder))
+
+class Dca(APIView):
+    authentication_classes = [MyBaseAuthentication, ]
+    def get(self, request, project_id, data_id):
+        context = get_s(request, project_id, data_id)
+        context["value"] = "dca"
+        context["begin"] = "end"
+        context["name"] = "dca"
+        return render(request, 'index/dca.html', context=context)
+
+    def post(self, request, project_id, data_id):
+        json_data = json.loads(request.body.decode())
+        return HttpResponse(json.dumps({'code': '200', 'error': '分析成功', 'context': ""}, cls=NpEncoder))
+
 
 
 

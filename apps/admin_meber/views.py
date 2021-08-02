@@ -1,11 +1,12 @@
 import json
 import uuid
+import math
 import pymysql
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
 from dateutil.relativedelta import relativedelta
-from apps.index_qt.models import Member, User, MemberType, Browsing_process, Help
+from apps.index_qt.models import Member, User, MemberType, Browsing_process, Help,MethodDesc
 from django import http
 from django.core.paginator import Paginator, EmptyPage
 from PIL import Image
@@ -14,7 +15,7 @@ from django.core import serializers
 import datetime
 
 class MemberList(View):
-    #返回列表页面  test git 
+    #返回列表页面
     def get(self, request):
         return render(request, 'admin/member-list.html')
 
@@ -25,7 +26,7 @@ class MemberList(View):
         page_num = json_data.get('page')
 
         try:
-            user = User.objects.filter(username__contains=username)
+            user = User.objects.filter(Q(username__contains=username)|Q(mobile__contains=username))
             memberList = Member.objects.filter(user__in=user)
             if vipRank:
                 memberList = Member.objects.filter(Q(user__in=user) & (Q(member_type__id=vipRank)))
@@ -885,4 +886,97 @@ class usernumStatistics(View):
         data = Tool.getData(sql, None)
         dataListMap = Tool.tupleToMapList(data, ['userLoginNum', 'userName'])
         return http.JsonResponse({'code': 200, 'error': '查询成功', "context": dataListMap})
+        
+#方法详情
+class MethodDetail(View):
+    #返回方法详情页面
+    def get(self, request):
+        return render(request, 'admin/method-detail.html')
+    # 返回方法详情列表
+    def post(self, request):
+        json_data = json.loads(request.body.decode())
+        method_name = json_data.get("methodName")
+        page_num = json_data.get('page')
+        try:
+            length = MethodDesc.objects.filter(method_name__contains=method_name).count()
+            if length < 1:
+                return http.JsonResponse({'code': 1002, 'error': '您输入的方法名不存在，请重新输入'})
+            total_page=math.ceil(length/5)
+            methodList = list(MethodDesc.objects.filter(method_name__contains=method_name).values()[(page_num-1)*5:page_num*5])
+            context = {
+                'length': length, #总数
+                'result': methodList, #结果集
+                'total_page': total_page,  # 总页数
+                'page_num': page_num,  # 当前页码
+            }
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 1003, 'error': '系统错误'})
+        return http.JsonResponse({'code': 200, 'error': '查询成功', "context": context})
+
+#方法编辑
+class MethodEdit(View):
+    #打开方法编辑页面
+    def get(self, request,id):
+        try:
+            method_obj = list(MethodDesc.objects.filter(id=id).values())
+            context={}
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 500, 'error': "获取方法信息失败"})
+        return render(request, 'admin/method-edit.html',context=method_obj[0])
+    #修改方法信息
+    def post(self, request, id):
+        json_data = json.loads(request.body.decode())
+        method_id = json_data.get("method_id")
+        method_name = json_data.get("method_name")
+        method_desc = json_data.get("method_desc")
+        method_url = json_data.get('method_url')
+        try:
+            method_obj = MethodDesc.objects.get(id=method_id)
+            method_obj.method_name=method_name
+            method_obj.method_desc = method_desc
+            method_obj.method_url = method_url
+            method_obj.save()
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 500, 'error': '修改方法信息失败'})
+        return http.JsonResponse({'code':200, 'error':"修改成功"})
+
+#方法添加
+class MethodAdd(View):
+    def get(self, request):
+        return render(request, 'admin/method-add.html')
+
+    def post(self, request):
+        json_data = json.loads(request.body.decode())
+        method_name = json_data.get("method_name")
+        method_desc = json_data.get("method_desc")
+        method_url = json_data.get("method_url")
+        # 校验参数
+        if not all([method_name, method_desc, method_url]):
+            return http.JsonResponse({'code': 500, 'error': '参数不能为空'})
+        # 添加方法信息
+        try:
+            method_obj = MethodDesc.objects.create(method_name=method_name, method_desc=method_desc,
+                                                   method_url=method_url)
+            method_obj.save()
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 500, 'error': '添加方法失败'})
+        return http.JsonResponse({'code': 200, 'error': "添加成功"})   
+
+class MethodDel(View):
+    #方法删除
+    def post(self, request):
+        try:
+            json_data = json.loads(request.body.decode())
+            arr_box = json_data.get("arr_box")
+            MethodDesc.objects.filter(id__in=arr_box).delete()
+        except Exception as e:
+            print(e)
+            return http.JsonResponse({'code': 500, 'error': '删除方法失败'})
+        return http.JsonResponse({'code': 200, 'error': "删除方法成功"})        
+        
+        
 

@@ -19,6 +19,7 @@
 # v1.0.12 更新说明：cox 优化，新增入参 timepreinc,timeprelist
 # v1.0.12 更新说明：logist\liner\cox增加定类变量控制
 # v1.0.13 更新说明：更新R_logistic_regression（更新有序多分类算法）
+#v 1.0.14 更新说明：增加R_RCS_ana算法
 
 import pandas as pd
 import rpy2.robjects as ro
@@ -64,7 +65,7 @@ def R_logistic_regression(df_input, dependent_variable, continuous_independent_v
 #V1.0.3：更改转变factor变量的方式
 #V1.0.4：增加描述
 #V1.0.5：增加有序多分类方法,最多支持5个有序类
-LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,cate=NULL, cat_ref_lev=NULL,method="ALL", nomogram = "yes",mod='logist',savePath,round= 2){
+LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,cate=NULL, cat_ref_lev=NULL,method="ALL", nomogram = "yes",mod='logit',savePath,round= 2){
   # input:
   # mydata:dataframe 需处理的数据
   # target:str 应变量
@@ -111,7 +112,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
   # 建立模型
   formula <- paste0(target,'~',paste(feature,collapse = '+'))
   # logistic 模型
-  if(mod=='logist'){
+  if(mod=='logit'){
     fit <- glm(as.formula(formula),data=mydata,family = binomial())
     # 变量选择。 outputfit为输出模型
     # 将下面改为switch
@@ -161,7 +162,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
   }
   
   # 画nomogram， 想法是从最优模型中得到formula，代入lrm命令中
-  if((nomogram=="yes")&(mod=='logist')){
+  if((nomogram=="yes")&(mod=='logit')){
     tryCatch({
       ddist <<- datadist(mydata)
       options(datadist='ddist')
@@ -179,7 +180,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
       print('变量系数过大，无法生成列线图。')
     })
   }
-  if((nomogram=="yes")&(mod!='logist')){
+  if((nomogram=="yes")&(mod!='logit')){
     tryCatch({
       ddist <<- datadist(mydata)
       options(datadist='ddist')
@@ -212,7 +213,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
   # return(results)
   
   # 画ROC曲线
-  if(mod=='logist'){
+  if(mod=='logit'){
     gfit <- roc(as.formula(paste0(target,'~predict(outputfit)')), data = mydata)
     ROCname <- paste0("ROC",mytime,"_",rand,".jpeg")
     jpeg(file=paste0(savePath,ROCname),width=5,height=5,units="in",res=600)
@@ -229,7 +230,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
     
   }
  #--------添加描述---------------
-  if(mod=='logist'){
+  if(mod=='logit'){
     coefstat <- NULL
     for(i in 2:nrow(summ$coefficients)){
       coefstat[i] <- paste0('变量',rownames(summ$coefficients)[i],'的系数为',round(summ$coefficients[i,1],round),',p值为',
@@ -277,7 +278,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
   }
   
   #------添加预测结果----------
-    if(mod=='logist'){
+    if(mod=='logit'){
       results$data<- data.frame(mydata %>% predict(outputfit, ., type="response")  %>%  mutate(origdata,.))
     }else{
       results$data<- data.frame(mydata %>% predict(outputfit, ., type="prob")  %>%  mutate(origdata,.))
@@ -314,7 +315,7 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
     dv_unique = pd.unique(df_input[dependent_variable])
 #    if set(dv_unique) != set([0, 1]):
 #        return {'error': '应变量只允许取值为0、1的二分类数据。' + str(dependent_variable) + ':' + str(dv_unique)}
-    if model_name == 'logist' and set(dv_unique) != set([0, 1]):
+    if model_name == 'logit' and set(dv_unique) != set([0, 1]):
         return {'error': '二元logistics模型中应变量只允许取值为0、1的二分类数据。如要继续建模请选择其他模型' + str(dependent_variable) + ':' + str(dv_unique)}
     elif model_name =='mulclass'and len(dv_unique)>5:
         return {'error': '有序多分类模型中应变量类别数目最多5个。' + str(dependent_variable) + ':' + str(dv_unique)}
@@ -330,18 +331,19 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
         interaction = ro.StrVector(interaction_effects_variables)
         result = LogReg(mydata=r_df, feature_con=feature_con, feature_cat=feature_cat, interaction=interaction,
                         cate=cat, cat_ref_lev=cat_ref_lev,
-                        target=target, method=step_method, nomogram="no",mod='logist', savePath=savePath, round=decimal_num)
+                        target=target, method=step_method, nomogram="no",mod=model_name, savePath=savePath, round=decimal_num)
 
     else:
         result = LogReg(mydata=r_df, feature_con=feature_con, feature_cat=feature_cat,
                         cate=cat, cat_ref_lev=cat_ref_lev,
-                        target=target, method=step_method, nomogram="yes", mod='logist',savePath=savePath, round=decimal_num)
+                        target=target, method=step_method, nomogram="yes", mod=model_name,savePath=savePath, round=decimal_num)
     list_plot_path = []
     with localconverter(ro.default_converter + ro.pandas2ri.converter):
         df_pred_temp = ro.conversion.rpy2py(result.rx2('data'))
         df_result = ro.conversion.rpy2py(result.rx2('coefs'))
         str_result = tuple(result.rx2('descrip'))[0]
-        list_plot_path.append(tuple(result.rx2('roc'))[0])
+        if model_name =='logit':
+            list_plot_path.append(tuple(result.rx2('roc'))[0])
         if len(interaction_effects_variables) == 0:
             try:
                 list_plot_path.append(tuple(result.rx2('nomo'))[0])
@@ -349,18 +351,19 @@ LogReg <- function(mydata,target, feature_con,feature_cat, interaction = NULL,ca
                 print(e)
     df_result = df_result.reset_index(drop=True)
     df_pred_temp = df_pred_temp.reset_index(drop=True)
-    df_pred = pd.concat([df_origin, df_pred_temp[['.']]], axis=1)
+    #df_pred = pd.concat([df_origin, df_pred_temp[['.']]], axis=1)
+    df_pred = pd.concat([df_origin, df_pred_temp.iloc[:,-1]], axis=1)
     pred_name = 'pred_' + str(datetime.datetime.now().hour) + str(datetime.datetime.now().minute) + str(
         datetime.datetime.now().second)
-    df_pred.rename(columns={".": pred_name}, inplace=True)
-    try:
-        froest_plot_path = x5r.R_froest_plot(df_input=df_result.iloc[1:, :], title='OR(95%CI)', name='name', mean="OR",
-                                             lowerb="OR下限", upperb="OR上限", savePath=savePath, grawid=3, tickfont=1,
-                                             xlabfont=1, style=style, zero=1)
-    except Exception as e:
-        print(e)
-        froest_plot_path = ''
-    list_plot_path.append(froest_plot_path)
+    #df_pred.rename(columns={".": pred_name}, inplace=True)
+    #try:
+    #    froest_plot_path = x5r.R_froest_plot(df_input=df_result.iloc[1:, :], title='OR(95%CI)', name='name', mean="OR",
+    #                                         lowerb="OR下限", upperb="OR上限", savePath=savePath, grawid=3, tickfont=1,
+    #                                         xlabfont=1, style=style, zero=1)
+    #except Exception as e:
+    #    print(e)
+    #    froest_plot_path = ''
+    #list_plot_path.append(froest_plot_path)
     str_result = str_result.replace('@', '\n')
     df_result.rename(columns={'OR下限': 'OR下限(95%CI)', 'OR上限': 'OR上限(95%CI)'}, inplace=True)
     return df_result, str_result, list_plot_path, df_pred
@@ -755,9 +758,13 @@ def R_cox_regression(df_input, sta_variable, tim_variable, continuous_independen
           # 时间依赖ROC分段
           if(timeroc=="yes"){
             if(!is.null(timequant)){
-              mydata$lp <- predict(fit, type ="lp")
-              #print(head(mydata$lp))
-              timedep <- quantile(mydata[,tim],probs=timequant)
+                mydata$lp <- predict(fit, type ="lp")
+                if(mean(timequant)<1){
+                    timedep <- quantile(mydata[,tim],probs=timequant)
+                }else
+                if(mean(timequant)>1){
+                    timedep <- timequant 
+                }# 下接ROC.marginal
               ROC.marginal<-timeROC(T=mydata[,tim],
                                     marker = mydata$lp,
                                     delta=mydata[,sta],
@@ -1180,3 +1187,95 @@ def R_NRI_ana(df_input, pstd, pnew, gold, cut, path, decimal_num=3):
         list_plot_path.append(tuple(result.rx2('picname'))[0])  # 图片
     df_result = df_result.reset_index(drop=False)
     return df_result, str_result, list_plot_path
+    
+    
+    
+def R_RCS_ana(df_input, timevariable, statusvariable, feature_con, savePath,k=4,ti=0 ,decimal_num=3):
+    """
+    mydata:dataframe 需处理的数据
+    timevariable:str 时间变量
+    statusvariable: str 状态变量
+    feature_con: str 一个定量自变量
+    k:  节点数目 default=4
+    ti： 设置参考点，也就是HR为1的点，常见的为中位数(default)或者临床有意义的点
+    savePath:str 图片保存路径
+    round:int 小数点位数
+
+    return:
+    results$rcs: strVector RCS图片路径
+    results$descrip:strVector 描述结果
+    """
+    RCS = ro.r('''
+#V1.0.5
+#Author yuanke
+#date 2021-7-12
+
+#V1.0.2：第一版RCS限制性样条
+RCS <- function(mydata,timevariable,statusvariable,feature_con,k=4,ti=0,savePath,round= 2
+                ){
+  # input:
+  # mydata:dataframe 需处理的数据
+  # timevariable:str 时间变量
+  # statusvariable: str 状态变量
+  # feature_con: str 一个定量自变量
+  # k:  节点数目 default=4
+  # ti： 设置参考点，也就是HR为1的点，常见的为中位数(default)或者临床有意义的点
+  # savePath:str 图片保存路径
+  # round:int 小数点位数
+  # return:
+  # results$rcs: strVector RCS图片路径
+  # results$descrip:strVector 描述结果
+  library(ggplot2)
+  library(rms) 
+  library(dplyr)
+  results <- list() #结果
+  mytime <- format(Sys.time(), "%b_%d_%H_%M_%S_%Y")  #时间
+  rand <- sample(1:100,1)
+  #开始正式画图
+  mydt<-data.frame(mydata[timevariable],mydata[statusvariable],mydata[feature_con])
+  colnames(mydt)<-c('time','status','yinsu')
+  dd <<- datadist(mydt) #为后续程序设定数据环境
+  options(datadist='dd') #为后续程序设定数据环境
+  if (ti==0) ti <- median(mydt[,3])
+  #拟合cox回归模型，注意这里的R命令是“cph”，而不是常见的生存分析中用到的“coxph"命令
+  formula <- paste0('Surv(',timevariable,',',statusvariable,')','~','rcs(',feature_con,',',k,')')
+  k<<-k
+  fit<- cph(Surv(time,status)~rcs(yinsu,k),data=mydt) 
+  dd$limits$yinsu[2] <- ti
+  #这里是设置参考点，也就是HR为1的点，常见的为中位数或者临床有意义的点 
+  fit=update(fit)
+  HR <- Predict(fit,yinsu,fun=exp,ref.zero = TRUE)#只是返回exp
+  P1<-ggplot(HR) #用ggplot2直接画图
+  #画图
+  P2<-ggplot()+geom_line(data=HR, aes(yinsu,yhat),linetype="solid",size=1,alpha = 0.7,colour="red")+
+    geom_ribbon(data=HR, aes(yinsu,ymin = lower, ymax = upper),alpha = 0.1,fill="red")
+  #进一步设置图形
+  P2<-P2+theme_classic()+geom_hline(yintercept=1, linetype=2,size=1)+ 
+    labs(title = "RCS", x=feature_con, y="HR (95%CI)") 
+  rcsname <- paste0("RCS",mytime,"_",rand,".jpeg")
+  jpeg(file=paste0(savePath,rcsname),width=7,height=8,units="in",res=600)
+  plot(P2)
+  dev.off()
+  results$rcs <- rcsname
+  anv<-anova(fit)#下面对非线性进行检验，调出p值
+  des <- paste0('模型的P-Nonlinear为',round(anv[2,3],round),',',
+                case_when(
+                  anv[2,3]<0.05 ~ paste0(feature_con,'与',statusvariable,'之间存在非线性关系'),
+                  anv[2,3]>=0.05 ~ paste0(feature_con,'与',statusvariable,'之间存在线性关系,建议使用线性回归')
+                )
+                )
+  results$descrip <- des
+  return(results)
+}    
+    ''')
+    with localconverter(ro.default_converter + ro.pandas2ri.converter):
+        r_mydata = ro.conversion.py2rpy(df_input)
+    timevariable_r = timevariable
+    statusvariable_r = statusvariable
+    feature_con_r = feature_con
+    result = RCS(mydata=r_mydata,timevariable=timevariable_r, statusvariable=statusvariable_r, feature_con=feature_con_r, k=k,ti=ti, savePath=savePath, round=decimal_num)
+    list_plot_path = []
+    with localconverter(ro.default_converter + ro.pandas2ri.converter):
+        str_result = tuple(result.rx2('describe'))[0]  # 描述
+        list_plot_path.append(tuple(result.rx2('rcs'))[0])  # 图片
+    return str_result, list_plot_path
