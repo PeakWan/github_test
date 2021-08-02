@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SPSSAU - 在线SPSS分析软件</title>
+    <meta http-equiv="x-ua-compatible" content="IE=Edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="Description" content="SPSSAU - 在线SPSS分析软件，三步完成SPSS数据分析，并且提供智能化分析文字报告，图表一应俱全"/>
+    <meta name="Keywords" content="SPSSAU - 在线SPSS分析软件 数据分析 相关分析 回归分析  因子分析  方差分析"/>
+    <link rel="stylesheet" type="text/css" href="../../static/index_uplod/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/index_uplod/css/jBox.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/index_uplod/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/index_uplod/css/pagination.css"/>
+    {#	<link rel="stylesheet" type="text/css" href="../../static/index_uplod/css/normalize.css" />#}
+    {#	<link href="favicon.png" rel="shortcut icon" />#}
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b38deea7f42062110344d3d919186ae0";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+
+    <script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+
+    <script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+
+    <script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+
+    <script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+
+    <script src="{{ static('index/js/app.js') }}"></script>
+
+    <script src="{{ static('index/js/app-custom.js') }}"></script>
+    <script src="{{ static('js/jquery.cookie.js') }}"></script>
+
+
+</head>
+<style>
+    #u_f {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+
+    #u_f input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    #u_f:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+
+    .navbar-default > #left-aside {
+        float: left;
+        margin-left: 10px;
+        width: 34%;
+    }
+
+    .navbar-default > #left-aside .upload {
+        position: relative;
+        padding: 4px 22px;
+        border: 1px solid #999;
+        text-decoration: none;
+        color: #666;
+        display: inline-block;
+        margin-top: 18px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .navbar-default > .left-aside .upload > .change {
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+</style>
+<body style="background-color: #ebeef5;">
+
+<div class="paythebill">
+
+
+    <div class="tablediv" id="tabledivlist" style="padding: 35px 15px;">
+        <nav class="navbar navbar-default">
+            <div class="titletr" id="left-aside">
+                {#                    <span class="upload" id="u_f">#}
+                {#                                        上传#}
+                {#                        <input type="file" class="change" multiple="multiple" name="upfile" id="fileId" value="">#}
+                {#                        <input type="hidden" name="code" id="code" value="">#}
+                {#                    </span>#}
+                {{ csrf_input }}
+                <span class="upload" id="u_f">
+                                        上传
+                        <input type="file" class="change" multiple="multiple" name="upfile" id="fileId" value="">
+                        <input type="hidden" name="code" id="code" value="">
+                    </span>
+            </div>
+
+            <table border="1" cellpadding="0" cellspacing="0">
+                <tbody>
+
+                {% if info %}
+                    {% for foo in info %}
+                        <tr>
+                            <td>{{ foo.time }}</td>
+                            <td>{{ foo.name }}</td>
+                            <td><a href="">立即分析</a></td>
+                            <td><a class="deetea" href="#">删除</a></td>
+                        </tr>
+                    {% endfor %}
+
+
+                {% endif %}
+
+                </tbody>
+            </table>
+        </nav>
+    </div>
+
+    <div class="M-box1" style="margin: 30px auto;">
+
+    </div>
+</div>
+<div class="boxshdow">
+
+</div>
+<div class="deletefloat dialog_hint delete" style="display:none">
+    <p>提示</p>
+    <p class="rowss">数据删除后不能恢复，请确认！</p>
+    <div class="rows">
+        <input class="inputyes rows_input" type="button" name="" value="确定">
+        <input class="inputno rows_input" type="button" name="" value="取消">
+    </div>
+</div>
+<div class="deletefloat dialog_hint beyond" style="display:none">
+    <p>提示</p>
+    <p class="rowss"></p>
+    <div class="rows">
+        <input class="inputno1 rows_input" type="button" name="" value="关闭">
+    </div>
+</div>
+<div class="deletefloat reminder">
+    <span>提示</span>
+    <p>上传数据类型出错！</p>
+    <div>
+        <input class="inputyess" type="button" name="" value="确定">
+    </div>
+</div>
+<script type="text/javascript">
+
+    document.getElementById('fileId').onchange = function () {
+        if (this.value != '') {
+            upload(this);
+        }
+    };
+
+    function upload(ele) {
+        var name = ele.files[0];
+        var xhr = new XMLHttpRequest();
+        var fd = new FormData();
+        fd.append('name', name);
+        var csrf = $("input[name='csrfmiddlewaretoken']").val();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+                alert(responseText);
+                var strToObj = JSON.parse(xhr.responseText);
+                alert(strToObj);
+
+            }
+        };
+        xhr.open('POST', '/upload/');
+        xhr.setRequestHeader("X-CSRFToken", csrf);
+        xhr.send(fd);
+    }
+
+</script>
+</body>
+
+</html>

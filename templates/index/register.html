@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=9;IE=8;IE=7;IE=EDGE">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=9;IE=8;IE=7;IE=EDGE">
+    <meta http-equiv="X-UA-Compatible" content="IE=8;IE=9;IE=10;IE=11;IE=12;IE=7;IE=6;IE=5;IE=EDGE"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>智能分析平台-注册</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ static('css/reset.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('css/main.css') }}">
+    <script type="text/javascript" src="{{ static('js/vue-2.5.16.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/axios-0.18.0.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    
+<!--[if lt IE 8]>-->
+
+    <!--<script src="http://www.json.org/json2.js"></script>-->
+<!--<![endif]-->
+    <style>
+
+        /* 清除浮动 */
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .r_con {
+            position: fixed;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255,255,255,.8);
+            padding: 30px;
+            border-radius: 10px;
+            width: auto;
+        }
+        .reg_form {
+            width: 300px;
+            margin: 30px 0 0 30px;
+            float: left;
+            position: relative;
+        }
+        .reg_form li label {
+            width: 75px;
+            height: 40px;
+            line-height: 40px;
+            float: left;
+            font-size: 14px;
+            color: #ffffff;
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .reg_sub_input {
+            width: 600px;
+        }
+        .reg_form li input {
+            background-color: rgba(255,255,255,.3);
+        }
+        .page-bg {
+            background-position: center;
+            background-repeat: no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background-image: url("{{ static('images/1325.jpg') }}");
+        }
+        .logo {
+            position: fixed;
+            top: 0;
+            left: 10px;
+            width: 200px;
+            height: 100px;
+            margin: 0;
+            background-size: cover;
+            background-position: center;
+            background-image: url('{{ static('images/logo2.jpg') }}');
+        }
+        .f_l {
+            position: fixed;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .f_l p:nth-child(1) {
+            font-size: 32px;
+            line-height: 1.25;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .f_l p:nth-child(2) {
+            font-size: 16px;
+            line-height: 1.25;
+            color: white;
+        }
+        .get_code_btn {
+            position:absolute;
+            right:0;
+            top:0;
+            height:40px;
+            width:80px;
+            border-radius:2px;
+            background-color:#27aaf2;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:14px;
+            cursor:pointer;
+        }
+        .get_code_btn.disabled {
+            background-color: #c1c1c1;
+        }
+        .get_code_btn:not(.disabled):hover {
+          background-color: #2a95f8;
+      }
+    </style>
+</head>
+
+<body style="background-color: #DDDDDD">
+<div id="app">
+    <!-- bg -->
+    <div class="page-bg"></div>
+    <a href="/">
+    <div class="logo"></div>
+    <a/>
+    <div class="f_l">
+        <p>针对临床研究人员的一站式医学统计分析平台</p>
+        <p>-提供数据治理、数据统计、机器学习分析、智能文章生成服务</p>
+    </div>
+    <div class="r_con fr">
+        <div class="reg_form clearfix">
+            <form id="reg_form" >
+                {{ csrf_input }}
+                <ul>
+                    <li>
+                        <input type="text" v-model="username" @blur="check_username" name="username"
+                               id="user_name" placeholder="请输入用户名">
+                        <span class="error_tip" v-show="error_name">[[ error_name_message ]]</span>
+                    </li>
+                    <li>
+                        <input type="password" v-model="password" @blur="check_password" name="password"
+                               id="pwd" placeholder="请输入密码">
+                        <span class="error_tip" v-show="error_password">请输入8-20位的密码</span>
+                    </li>
+                    <li>
+                        <input type="password" v-model="password2" @blur="check_password2" name="password2"
+                               id="cpwd" placeholder="请再次输入密码">
+                        <span class="error_tip" v-show="error_password2">两次输入的密码不一致</span>
+                    </li>
+                    <li>
+                        <input type="text" v-model="mobile"  @blur="check_mobile" name="mobile" id="phone"
+                               placeholder="请输入手机号码">
+                        <span class="error_tip" v-show="error_mobile">[[ error_mobile_message ]]</span>
+                    </li>
+                    <li>
+                        <input type="text" v-model="image_code" @blur="check_image_code" name="image_code"
+                               id="pic_code" class="msg_input" placeholder="请输入图片验证码">
+                        <img :src="image_code_url" @click="generate_image_code" alt="图形验证码" class="pic_code">
+                        <input type="hidden" :value="image_code_url" name="uuid" id="input_f">
+                        <span class="error_tip" v-show="error_image_code">[[ error_image_code_message ]]</span>
+                    </li>
+                    <li style="position:relative;">
+                        <input type="text" v-model="sms_code"  @blur="check_sms_code" name="sms_code" id="sms_code"
+                               placeholder="请输入验证码">
+                        <span class="error_tip" v-show="error_sms_code">[[ error_sms_code_message ]]</span>
+                        <div class="get_code_btn" :class="{'disabled':countdown == '发送' ? false : true}" 
+                        v-text="countdown" @click="send_sms_code"></div>
+                    </li>
+                    <li class="reg_sub">
+                        <input type="button" class="reg_sub_input" value="立 即 注 册" @click="tijiao">
+                    </li>
+                    <li style="height:30px;display:flex;justify-content:left;align-items:center;width:100%;flex-direction: row-reverse;">
+                         <a href="{{ url("index_qt:login") }}" style="color:#333;">请登录</a>已有账号？
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    
+    <!-- <div class="footer no-mp">
+        <p>CopyRight © 2020 All Rights Reserved</p>
+        <p>电话：010-****888 京ICP备*******8号</p>
+    </div> -->
+</div>
+
+<script type="text/javascript" src="{{ static('js/host.js') }}"></script>
+<script type="text/javascript" src="{{ static('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ static('js/register.js') }}"></script>
+<script type="text/javascript" charset="utf-8">
+    // var img = $('#img').attr('src');
+    // var img = $("#img_f").attr("src");
+    // alert (img)
+    // $("#input_f").val(img);
+    // function change() {
+    //     var img = $("#img_f").attr("src");
+    // $("#input_f").val(img);
+
+    // }
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,427 @@
+{% extends 'index/base.html' %}
+{% block title %}
+数据标准化
+{% endblock %}
+{% block choice %}
+<!-- 引入单选框 -->
+<link rel="stylesheet" id="css-s_border" href="{{ static('index/css/ss_border.css') }}"/>
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/all-common.css') }}" />
+
+<style>
+    /* 多选框 */
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    .selection-container {
+        margin-top: 52px;
+        margin-left: 37px;
+        height: 350px;
+    }
+    .select-box {
+        height: 200px;
+        overflow: scroll;
+        width: 160px;
+        float: left;
+        background: #ffff;
+        border: 1px solid #ebeef5;
+        border-radius: 4px;
+    }
+    #select-box_right {
+        margin-left: 62px;
+        overflow: hidden;
+        width: 160px;
+        float: left;
+        background: #ffff;
+        border: 1px solid #ebeef5;
+        border-radius: 4px;
+    }
+    .arrows-box {
+        /* float: left; */
+        position: relative;
+        left: -2px;
+    }
+    .select-content {
+        width: 100%;
+    }
+    .select-box-title {
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        font-family: "微软雅黑";
+        padding: 0 6%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        background: #ffffff;
+        border-bottom: 1px solid #ebeef5;
+        box-sizing: border-box;
+        color: #000;
+    }
+    .select-box-title label:before {
+        left: -14px !important;
+        top: 4px !important;
+    }
+    .select-box-title label:after {
+        left: -10px !important;
+        top: 5px !important;
+    }
+    .checkboxs {
+        vertical-align: middle;
+    }
+    .unselect-ul {
+        padding: 10px 0;
+    }
+    .selected-ul {
+        padding: 10px 0;
+    }
+    .select-content li {
+        padding: 5px 15px;
+        font-size: 12px;
+        font-family: "微软雅黑";
+    }
+    .select-box input[type='checkbox'] {
+        position: absolute;
+        left: 13px;
+        top: 3px;
+        width: 20px;
+        height: 20px;
+        opacity: 0;
+    }
+    .select-box label {
+        position: absolute;
+        left: 30px;
+        top: 9px;
+        height: 20px;
+        line-height: 20px;
+    }
+    .select-box span {
+        color: #767370;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+    .select-box label:before {
+        content: '';
+        position: absolute;
+        left: -18px;
+        top: -3px;
+        width: 16px;
+        height: 15px;
+        border: 1px solid #ddd;
+        border-radius: 1px;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+    }
+    .select-box label:after {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: -2px;
+        width: 4px;
+        height: 8px;
+        border: 0;
+        border-right: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        background: #fff;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+    }
+    .select-box input[type='checkbox']:checked+label:before {
+        background: #00A0E8;
+        border-color: #00A0E8;
+    }
+    .select-box input[type='checkbox']:checked+label:after {
+        background: #00A0E8;
+    }
+    .arrow-btns {
+        width: 80px;
+        position: absolute;
+        left: 149px;
+        top: 79px;
+    }
+    .btn-cursor {
+        background-color: #409eff !important;
+        border: 1px solid #409EFF !important;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+    }
+    .btn-cursor svg {
+        fill: #fff !important;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+    }
+    .arrow-btn {
+        display: block;
+        position: relative;
+        width: 47px;
+        height: 30px;
+        /* border-radius: 25px; */
+        background: #eee;
+        margin: 0 auto 5px;
+        cursor: pointer;
+        border: 1px solid #dcdfe6;
+        background-color: #fbfbfb;
+        color: #c0c4cc;
+        outline: none;
+    }
+    .arrow-btn svg {
+        /* padding: 11px; */
+        width: 17px;
+        height: 17px;
+        color: white;
+        fill: #C0C4CC;
+    }
+    #z-nav>li>ul.nav-subnav {
+        /*display: flex;*/
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+        width: 107px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        /*display: flex;*/
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #header-navbar-collapse>.help-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20%;
+        color: #333333;
+    }
+    #header-navbar-collapse>.index {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 35%;
+        color: #333333;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    #rightmodel>.begin-button {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .navbar-default>.left-aside {
+        float: left;
+        margin-left: 10px;
+        width: 34%;
+    }
+    .navbar-default>.container-fluid {
+        width: 58%;
+        float: right;
+    }
+    .navbar-default>.left-aside .upload {
+        position: relative;
+        padding: 4px 22px;
+        border: 1px solid #999;
+        text-decoration: none;
+        color: #666;
+        display: inline-block;
+        margin-top: 18px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .navbar-default>.left-aside .upload>.change {
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    #middle-table>.accrow {
+        margin-left: 29px;
+        font-size: 32px;
+    }
+    .select-input {
+        margin-top: 35px;
+        text-align: center;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 原始分类数数据 */
+    #front {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #fronts {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 原始分类数数据 */
+    #original {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #originals {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    .select-transfer{
+        margin-top: 25px;
+        padding-left: 18px;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<!-- End header -->
+<main class="app-layout-content">
+<div id="rightmodel">
+	<h1>变量选择</h1>
+{% endblock %}
+
+{% block main03 %}
+<!-- 下拉框 -->
+<div class="select-input">
+<span>选择填补方法</span>&nbsp;&nbsp;&nbsp;
+<select name="" id="dataStand"  style="width:200px;
+height: 35px;
+outline: none;
+border: 1px solid #dddd;
+text-indent: 1em;">
+<option value="StandardScaler" selected>标准化(将样本的均值变为0,方差变为1)</option>
+<option value="Normalizer">正则化(将每个样本缩放到单位范数)</option>
+<option value="MinMaxScaler">MinMaxScaler(样本会缩放到[0,1])</option>
+<option value="MaxAbsScaler">MaxAbsScaler(样本会缩放到[-1,1])</option>
+<option value="RobustScaler">RobustScaler(通过四分位间距缩放数据)</option>
+<option value="sqrt">平方根</option>
+<option value="ln">以自然数e为底的对数</option>
+<option value="log2">以2位底的对数</option>
+<option value="log10">以10为底的对数</option>
+</select>
+</div>
+{% endblock %}
+{% block main04 %}
+<div id="middle-table">
+{% endblock %}
+{% block description %}数据标准化是临床研究中常用的数据预处理方法，对于非正态、偏态的变量进行相应的标准化方法，平台提供了常见的9中数据标准化方法。{% endblock %}
+{% block mian02 %}
+
+</div>
+</main>
+{% endblock %}
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+{% block center_script %}
+<!-- 点击下拉弹出 input -->
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            App.initHelpers('slick');
+        });
+    </script>
+{% endblock %}

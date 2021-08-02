@@ -1,0 +1,692 @@
+{% extends 'index/base.html' %}
+{% block title %}
+多因素方差分析
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    .input_fu {
+       text-align: center;
+       margin-top: 25px;
+   }
+   #input_f {
+       height: 45px;
+       border-radius: 5px;
+       border: transparent;
+   }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .select-options {
+        margin-top: 24px;
+    }
+    .select-options form {
+        width: 100%;
+        height: 100%;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 400px;
+        height: 400px;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .select-transfer{
+        margin-top: 25px;
+        padding-left: 18px;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+    {% endblock %}
+    
+    {% block main03 %}
+
+        <div class="click-button">
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">
+                原始的数据
+            </button>
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">
+                处理的数据
+            </button>
+        </div>
+        <div class="finnally-button">
+            {{ csrf_input }}
+            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" 
+                name="{{ project_id }}" id="begin">开始分析</button>
+            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="save-jg"
+                >结果保存</button>
+        </div>
+
+        <div class="input_fu">
+            <input type="text" id="input_f" placeholder="请输入数字形式以逗号隔开">
+        </div>
+        
+    </div>
+   {% endblock %}
+   {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+方差分析：又称“变异数分析”或“F检验”，用于两个及两个以上样本均数差别的显著性检验。  常用来研究一个控制变量的不同水平是否对观测变量产生了显著影响
+
+
+
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+<script>
+    var arr = [];
+    var spanText;
+    function upload() {
+        var normalityId = $('#begin').attr('name');
+        // 要传的项目id normalityId
+        // alert(normalityId)
+        // alert(111111111111111)
+        var normalityName = $('#transfer-right .transfer-data li .transfer-form-checkbox').find('span').text();
+        // normalityName 单选里的列名
+        // alert(normalityName)
+        // alert(222222222222222)
+        // normalityName 第二个单选里的列名
+        var normalityName2 = $('#transfer-right2 .transfer-data2 li .transfer-form-checkbox2').find('span').text();
+        var normalityType = $('.click-button').find('.opacity').index();
+        // 获取到用户要求的原始数据还是最新数据
+        // alert(normalityType)
+        // alert(3333333333333333)
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+        // console.log(normalityName);
+        // 多选
+        // var serect = $("#select-box_right .select-content .selected-ul li").find('span').text().join(',');
+        // for (var i = 0; i < $("#select-box_right .select-content .selected-ul li").length; i++) {
+        //     spanText = $("#select-box_right .select-content .selected-ul li").eq(i).find('span').text();
+        //     arr.push(spanText);
+        // }
+        // console.log(arr);
+        // 获取 input框 数字数据
+        var num = $("#input_f").val();
+        // alert(num)
+        // alert(55555555555555555)
+        // 赋值
+        var pram = {
+            name: normalityName,
+            number: normalityType,
+            group: normalityName2,
+            num: num,
+            csrfmiddlewaretoken: csrfmiddlewaretoken,
+        };
+        $.ajax({
+            url: '/d_fc2/' + normalityId + '/' + normalityType + "/",
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            cache: false,
+            headers: { 'X-CSRFToken': csrfmiddlewaretoken },
+            // 将 JavaScript 值转换为 JSON 字符串 保存在data数据里面
+            data: JSON.stringify(pram),
+            success: function (response) {
+                arr.splice(0);
+                alert(response.error)
+                // console.log(response);
+                $(".middle-table").html('<div class="gj-checkout">' + response.context.str + '</div>')
+                // 把project 赋值给 结果保存按钮的name属性
+                // alert(response.context.project)
+                $('#save-jg').attr('name', response.context.project)
+            },
+            error: function (error) {
+                // console.log(response.error);
+                // console.log(error.error);
+                // alert(error);
+                arr.splice(0);
+                alert(error.error);
+            }
+        })
+    }
+    // 结果保存 
+    function f_save() {
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+        var project_id = $('#save-jg').attr('name');
+        var param = {
+            'project': project_id,
+            'csrfmiddlewaretoken': csrfmiddlewaretoken,
+        };
+        $.ajax({
+            url: '/save_data/',
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json",
+            cache: false,
+            headers: {
+                'X-CSRFToken': csrfmiddlewaretoken
+            },
+            data: JSON.stringify(param),
+            success: function (data) {
+                alert(data.error);
+                console.log(data)
+            }, error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                console.log(errorMsg)
+            }
+        });
+    }
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#demo'
+            , cols: [[
+                { field: 'id', title: 'ID', width: 80, sort: true }
+                , { field: 'username', title: '用户名', width: 120 }
+                , { field: 'email', title: '邮箱', minWidth: 150 }
+                , { field: 'sign', title: '签名', minWidth: 160 }
+                , { field: 'sex', title: '性别', width: 80 }
+                , { field: 'city', title: '城市', width: 100 }
+                , { field: 'experience', title: '积分', width: 80, sort: true }
+            ]]
+            , data: [{
+                "id": "10001"
+                , "username": "杜甫"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "116"
+                , "ip": "192.168.0.8"
+                , "logins": "108"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10002"
+                , "username": "李白"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+                , "LAY_CHECKED": true
+            }, {
+                "id": "10003"
+                , "username": "王勃"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "65"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10004"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "666"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10005"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "86"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10006"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10007"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "16"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10008"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "106"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }],
+            skin: 'line',
+            even: true,
+            page: true,
+            limits: [5, 7, 10],
+            limit: 5
+        });
+    });
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#demo1'
+            , cols: [[
+                { field: 'id', title: 'ID', width: 80, sort: true }
+                , { field: 'username', title: '用户名', width: 120 }
+                , { field: 'email', title: '邮箱', minWidth: 150 }
+                , { field: 'sign', title: '签名', minWidth: 160 }
+                , { field: 'sex', title: '性别', width: 80 }
+                , { field: 'city', title: '城市', width: 100 }
+                , { field: 'experience', title: '积分', width: 80, sort: true }
+            ]]
+            , data: [{
+                "id": "10001"
+                , "username": "杜甫"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "116"
+                , "ip": "192.168.0.8"
+                , "logins": "108"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10002"
+                , "username": "李白"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+                , "LAY_CHECKED": true
+            }, {
+                "id": "10003"
+                , "username": "王勃"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "65"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10004"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "666"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10005"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "86"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10006"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10007"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "16"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10008"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "106"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }],
+            skin: 'line',
+            even: true,
+            page: true,
+            limits: [5, 7, 10],
+            limit: 5
+        });
+    });
+    //数据穿梭框
+    $(document).ready(function () {
+        $('.click-button .layui-btn-radius').eq(0).addClass('opacity');
+    })
+    $('.click-button').find('button').click(function () {
+        $(this).addClass('opacity').siblings().removeClass('opacity');
+    })
+    $('.select-transfer .transfer-box-left .transfer-data').on('click', 'li', function () {
+        var siblingChild = false;
+        $(this).children('.transfer-form-checkbox').toggleClass('transfer-form-check');
+        if ($(this).children('.transfer-form-checkbox').hasClass('transfer-form-check') == true) {
+            siblingChild = true;
+        }
+        if ($(this).children('.transfer-form-checkbox').hasClass('transfer-form-check') == false) {
+            siblingChild = false;
+        }
+        if (siblingChild) {
+            $(this).siblings('li').addClass('disabled');
+        } else {
+            $(this).siblings('li').removeClass('disabled');
+        }
+        btnStatus();
+    })
+    // 动态判断改变btn状态
+    function btnStatus() {
+        var leftBtn = false;
+        var rightBtn = false;
+        for (var i = 0; i < $('.select-transfer .transfer-box-left .transfer-data li').length; i++) {
+            if ($('.select-transfer #transfer-left .transfer-data li').eq(i).find('.transfer-form-checkbox').hasClass('transfer-form-check')) {
+                rightBtn = true;
+            }
+            if ($('.select-transfer #transfer-right .transfer-data li').eq(i).find('.transfer-form-checkbox').hasClass('transfer-form-check')) {
+                leftBtn = true;
+            }
+        }
+        if (rightBtn) {
+            $('.right-button').addClass('green');
+            $('.right-button').removeClass('disabled');
+        } else {
+            $('.right-button').removeClass('green');
+            $('.right-button').addClass('disabled');
+        }
+        if (leftBtn) {
+            $('.left-button').addClass('green');
+            $('.left-button').removeClass('disabled');
+        } else {
+            $('.left-button').removeClass('green');
+            $('.left-button').addClass('disabled');
+        }
+    }
+    //左右移按钮点击事件
+    $('.button-accrow').click(function () {
+        var orgin = ''; var target = ''; var checkLi = ''; var num = false; var cancelLi = '';
+        if ($(this).hasClass('right-button')) {
+            orgin = $('#transfer-left .transfer-data');
+            target = $('#transfer-right .transfer-data');
+        } else {
+            orgin = $('#transfer-right .transfer-data');
+            target = $('#transfer-left .transfer-data');
+            num = true;
+        }
+        checkLi = orgin.find('li'); cancelLi = target.find('li');
+        for (var i = 0; i < checkLi.length; i++) {
+            if ($(checkLi[i]).find('.transfer-form-checkbox').hasClass('transfer-form-check')) {
+                var that = $(checkLi[i]).clone();
+                that.children('.transfer-form-checkbox').removeClass('transfer-form-check');
+                target.append(that);
+                $(checkLi[i]).remove();
+            }
+        }
+        if (num) {
+            for (var i = 0; i < cancelLi.length; i++) {
+                $(cancelLi[i]).removeClass('disabled');
+            }
+            orgin.append("<p class='transfer-none'>无数据</p>");
+        } else {
+            target.find('p').remove();
+        }
+        btnStatus();
+    })
+    //搜索框检索事件
+    $('.select-transfer #transfer-left .transfer-search').find('.transfer-input').on('input', function (e) {
+        var inputVal = e.delegateTarget.value;
+        $('.select-transfer .transfer-box-left .transfer-data').find('li').each(function () {
+            $(this).hide();
+            if ($(this).find('.transfer-form-checkbox').find('span').text().indexOf($.trim(inputVal)) >= 0) {
+                $(this).show();
+            }
+        })
+    })
+    // =======================================================================================================
+    // =======================================================================================================
+    // =======================================================================================================
+    //数据穿梭框 2
+    $('.select-transfer2 .transfer-box-left2 .transfer-data2').on('click', 'li', function () {
+        var siblingChild = false;
+        $(this).children('.transfer-form-checkbox2').toggleClass('transfer-form-check2');
+        if ($(this).children('.transfer-form-checkbox2').hasClass('transfer-form-check2') == true) {
+            siblingChild = true;
+        }
+        if ($(this).children('.transfer-form-checkbox2').hasClass('transfer-form-check2') == false) {
+            siblingChild = false;
+        }
+        if (siblingChild) {
+            $(this).siblings('li').addClass('disabled2');
+        } else {
+            $(this).siblings('li').removeClass('disabled2');
+        }
+        btnStatus2();
+    })
+    // 动态判断改变btn状态
+    function btnStatus2() {
+        var leftBtn = false;
+        var rightBtn = false;
+        for (var i = 0; i < $('.select-transfer2 .transfer-box-left2 .transfer-data2 li').length; i++) {
+            if ($('.select-transfer2 #transfer-left2 .transfer-data2 li').eq(i).find('.transfer-form-checkbox2').hasClass('transfer-form-check2')) {
+                rightBtn = true;
+            }
+            if ($('.select-transfer2 #transfer-right2 .transfer-data2 li').eq(i).find('.transfer-form-checkbox2').hasClass('transfer-form-check2')) {
+                leftBtn = true;
+            }
+        }
+        if (rightBtn) {
+            $('.right-button2').addClass('green2');
+            $('.right-button2').removeClass('disabled2');
+        } else {
+            $('.right-button2').removeClass('green2');
+            $('.right-button2').addClass('disabled2');
+        }
+        if (leftBtn) {
+            $('.left-button2').addClass('green2');
+            $('.left-button2').removeClass('disabled2');
+        } else {
+            $('.left-button2').removeClass('green2');
+            $('.left-button2').addClass('disabled2');
+        }
+    }
+    //左右移按钮点击事件
+    $('.button-accrow2').click(function () {
+        var orgin = ''; var target = ''; var checkLi = ''; var num = false; var cancelLi = '';
+        if ($(this).hasClass('right-button2')) {
+            orgin = $('#transfer-left2 .transfer-data2');
+            target = $('#transfer-right2 .transfer-data2');
+        } else {
+            orgin = $('#transfer-right2 .transfer-data2');
+            target = $('#transfer-left2 .transfer-data2');
+            num = true;
+        }
+        checkLi = orgin.find('li'); cancelLi = target.find('li');
+        for (var i = 0; i < checkLi.length; i++) {
+            if ($(checkLi[i]).find('.transfer-form-checkbox2').hasClass('transfer-form-check2')) {
+                var that = $(checkLi[i]).clone();
+                that.children('.transfer-form-checkbox2').removeClass('transfer-form-check2');
+                target.append(that);
+                $(checkLi[i]).remove();
+            }
+        }
+        if (num) {
+            for (var i = 0; i < cancelLi.length; i++) {
+                $(cancelLi[i]).removeClass('disabled2');
+            }
+            orgin.append("<p class='transfer-none2'>无数据</p>");
+        } else {
+            target.find('p').remove();
+        }
+        btnStatus2();
+    })
+    //搜索框检索事件
+    $('.select-transfer2 #transfer-left2 .transfer-search2').find('.transfer-input2').on('input', function (e) {
+        var inputVal = e.delegateTarget.value;
+        $('.select-transfer2 .transfer-box-left2 .transfer-data2').find('li').each(function () {
+            $(this).hide();
+            if ($(this).find('.transfer-form-checkbox2').find('span').text().indexOf($.trim(inputVal)) >= 0) {
+                $(this).show();
+            }
+        })
+    })
+</script>
+{% endblock %}

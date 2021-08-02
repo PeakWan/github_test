@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        后台管理系统
+    </title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{{ static('admin/css/x-admin.css') }}" media="all">
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('admin/js/jquery.pagination.min.js') }}"></script>
+    <script src="{{ static('admin/js/x-layui.js') }}"></script>
+    <script src="{{ static('admin/lib/layui/layui.js') }}" charset="utf-8"></script>
+    <script type="text/javascript" src="{{ static('js/vue-2.5.16.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/axios-0.18.0.min.js') }}"></script>
+    <style>
+        #pagination {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .ui-pagination-container {
+            overflow: hidden;
+        }
+
+        .ui-pagination-container a {
+            padding: 8px 14px;
+            margin: 2px;
+            display: block;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .ui-pagination-container a:hover {
+            background-color: #3eb8e9;
+            color: white;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>会员管理</cite></a>
+              <a><cite>会员列表</cite></a>
+            </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon"
+                                                                        style="line-height:30px">ဂ</i></a>
+</div>
+{% raw %}
+<div class="x-body" id="vue-app">
+    <div class="layui-form" style="margin-top: 15px;">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" name="username" ref="username" placeholder="请输入用户名" autocomplete="off"
+                       class="layui-input" id="username">
+            </div>
+            <div class="layui-input-inline">
+                <select class="layui-input" style="display: block" id="vipRank">
+                    <option value="">请选择vip等级</option>
+                    <option value="1">普通用户</option>
+                    <option value="2">会员V1</option>
+                    <option value="3">会员V2</option>
+                    <option value="4">会员V3</option>
+                    <option value="5">终身会员</option>
+                </select>
+            </div>
+            <div class="layui-input-inline" style="width:80px">
+                <!--                        {{ csrf_input }}-->
+                <button class="layui-btn" onclick="queryByPage(1)"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+        </div>
+    </div>
+    <div><span class="x-right" id="totalNum" style="line-height:40px">共有数据：{{ length }}条</span></div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                用户名
+            </th>
+            <th>
+                手机
+            </th>
+            <th>
+                会员充值时间
+            </th>
+            <th>
+                会员到期时间
+            </th>
+            <th>
+                会员最近登录时间
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        </thead>
+        <tbody id="replace">
+        <tr v-for="item in item_list">
+            <td>
+                {{ item.ID }}
+            </td>
+            <td>
+                <!--                <u style="cursor:pointer" onclick="member_show('张三','member-show.html','10001','360','400')">-->
+                {{ item.name }}
+                <!--                </u>-->
+            </td>
+            <td>
+                {{ item.phone==undefined?"None":item.phone }}
+            </td>
+            <td>
+                {{ item.member_start==undefined?"None": item.member_start}}
+            </td>
+            <td>
+                {{ item.member_end==undefined?"None":item.member_end }}
+            </td>
+            <td>
+                {{ item.last_login==undefined?"None":item.last_login }}
+            </td>
+            <td class="td-status">
+                            <span class="layui-btn layui-btn-normal layui-btn-mini">
+                                {{ item.state }}
+                            </span>
+            </td>
+            <td class="td-manage">
+                <a title="编辑" href="javascript:;"
+                   @click="x_admin_show('编辑','/admin/member/member_list_edit/'+item.ID+'/','600','400')"
+                   style="text-decoration:none">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagenation">
+        <div id="pagination" class="page clear"></div>
+    </div>
+</div>
+{% endraw %}
+<script>
+    layui.use(['element', 'layer'], function () {
+        $ = layui.jquery;//jquery
+        lement = layui.element();//面包导航
+        layer = layui.layer;//弹出层}
+    })
+
+    function queryByPage(current) {
+        var username = document.getElementById('username').value;
+        var vipRank = document.getElementById('vipRank').value;
+        axios
+            .post('/admin/member/member_list/', {"page": current, "username": username, "vipRank": vipRank})
+            .then(res => {
+                console.log(res)
+                if (res.data.code == 1002) {
+                    alert("您输入的会员不存在，请重新输入")
+                } else {
+                    Main.item_list = res.data.context.result
+                    Main.length = res.data.context.length
+                    $('#pagination').pagination({
+                        currentPage: res.data.context.page_num,
+                        totalPage: res.data.context.total_page,
+                        callback: function (current) {
+                            queryByPage(current)
+                        }
+                    })
+                }
+            });
+    }
+
+    var Main = new Vue({
+        el: '#vue-app',
+        data() {
+            return {
+                item_list: [],
+                length: ''
+            }
+        },
+        methods: {
+            x_admin_show: function (title, url, w, h) {
+                x_admin_show(title, url, w, h)
+            }
+        },
+        created() {
+            var username = document.getElementById('username').value;
+            var vipRank = document.getElementById('vipRank').value;
+            axios
+                .post('/admin/member/member_list/', {"page": 1, "username": username, "vipRank": vipRank})
+                .then(res => {
+                    Main.item_list = res.data.context.result
+                    Main.length = res.data.context.length
+                    $('#pagination').pagination({
+                        currentPage: res.data.context.page_num,
+                        totalPage: res.data.context.total_page,
+                        callback: function (current) {
+                            queryByPage(current)
+                        }
+                    })
+                });
+        }
+    })
+</script>
+</body>
+</html>

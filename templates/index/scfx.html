@@ -1,0 +1,361 @@
+{% extends 'index/base.html' %}
+{% block title %}
+生存分析
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .gj-checkout img{
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    .xgx_input{
+       text-align: center;
+       margin-top: 20px;
+       display: none;
+    }
+    #xgx_input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+    #sort_radio{
+        display: none;
+    }
+
+    .scfx_input{
+        text-align: center;
+        margin-top: 20px;
+        display: none;
+    }
+    .scfx_input span{
+        margin-right: 10px;
+    }
+    #schx_input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+    #model_radio ul{
+        display: block;
+        padding: 0 18px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    #model_radio ul li{
+        margin-top: 10px;
+    }
+    #sort_radio ul{
+        padding: 0 18px;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: flex-start;
+    }
+    #boolean_radio ul{
+        padding: 0 18px;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: flex-start;
+    }
+    .form-control-1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 25px;
+    }
+    .form-control-1 select {
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em
+    }
+    .form-control-1 input[type=radio] {
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+        margin-left: 23px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-control-1 label {
+        margin: 0;
+        margin-left: 10px;
+        font-size: 16px;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+
+    <!--<div class="single_radio" id="model_radio">-->
+    <!--    <ul>-->
+    <!--        <span>模型类型:</span>-->
+    <!--        <li>-->
+    <!--            <input type="radio"  name="radio1" id="firstRadio" class="firstRadio" value="1" checked='true'>-->
+    <!--            <label for="firstRadio">Kapian-Meier生存曲线</label>-->
+                
+    <!--        </li>-->
+    <!--        <li>-->
+             
+    <!--         <input type="radio" name="radio1" id="secondRadio" class="secondRadio" value="2">-->
+    <!--         <label for="secondRadio">Cumulative hazard风险累积曲线</label>-->
+    <!--        </li>-->
+    <!--        <li>-->
+                
+    <!--            <input type="radio" name="radio1" id="thirdRadio" class="thirdRadio" value="3">-->
+    <!--            <label for="thirdRadio">样本时间生存线图</label>-->
+    <!--        </li>-->
+    <!--         <li>-->
+                
+    <!--            <input type="radio" name="radio1" id="fourthRadio" class="fourthRadio" value="4">-->
+    <!--            <label for="fourthRadio">生存表格</label>-->
+    <!--        </li>-->
+    <!--    </ul>-->
+    <!--</div>-->
+
+    <div class="form-control-1">
+        <div style="font-size:18px;margin-right:10px;">曲线类型</div>
+        <select name="radio" id="s1" style="width:260px;">
+            <option value="1">Kapian-Meier生存曲线</option>
+            <option value="2">Cumulative hazard风险累积曲线</option>
+        </select>
+    </div>
+    <div class="form-control-1">
+        <div style="font-size:18px;margin-right:10px;">图片风格</div>
+        <select name="radio" id="s2" style="width:260px;">
+            <option value="nejm">NEJM</option>
+            <option value="lancet">LANCET</option>
+            <option value="jama">JAMA</option>
+            <option value="npg">NPG</option>
+        </select>
+    </div>
+    
+    <!--<div class="single_radio" id="sort_radio">-->
+    <!--    <ul>-->
+    <!--        <span>是否排序sort:</span>-->
+    <!--        <li>-->
+                
+    <!--            <input type="radio"  name="radio2" id="yesRadio" class="yesRadio" value="是" checked="true">-->
+    <!--            <label for="yesRadio">是</label>-->
+    <!--        </li>-->
+    <!--        <li>-->
+             
+    <!--         <input type="radio" name="radio2" id="noRadio" class="noRadio" value="否">-->
+    <!--         <label for="noRadio">否</label>-->
+    <!--        </li>-->
+    <!--    </ul>-->
+    <!--</div>-->
+
+    <div class="scfx_input">
+        <!-- <span>生存间隔分组数:</span>
+        <input type="text" placeholder="请输入数字" id="schx_input" onkeyup="value=value.replace(/[^\0-9\.]/g,'')"> -->
+        <span style="font-size:16px;">作图x轴的刻度间隔:</span>
+        <input type="text" placeholder="请输入数字" value="" id="schx_input" style="width:200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;">
+    </div>
+
+    <div class="single_radio" id="boolean_radio">
+        <ul>
+            <span style="font-size:16px;">是否需要展示置信区间:</span>
+            <li>
+                
+                <input type="radio"  name="radio3" id="TrueRadio" class="TrueRadio" value="是">
+                <label for="TrueRadio">是</label>
+            </li>
+            <li>
+             
+             <input type="radio" name="radio3" id="FalseRadio" class="FalseRadio" value="否" checked="true">
+             <label for="FalseRadio">否</label>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="form-control-1" id="radio_2">
+        <div style="font-size:16px;">是否展示风险表：</div>
+        <div style="display:flex;align-items:center;">
+            <input type="radio" value="1" name="risk_table" /><label>是</label>
+            <input type="radio" value="0" name="risk_table" checked="true"  /><label>否</label>            
+        </div>
+
+    </div>
+    <div class="form-control-1" id="radio_1">
+        <div style="font-size:16px;">是否展示删除表：</div>
+        <div style="display:flex;align-items:center;">
+            <input type="radio" value="1" name="delete_table"  /><label>是</label>
+            <input type="radio" value="0" name="delete_table" checked="true"  /><label>否</label>            
+        </div>
+
+    </div>
+    
+    
+
+
+        <input type="hidden" name="scfx" value="">
+        
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+生存分析：绘制Kaplan-Meier生存曲线观察多组生存曲线差异，自动调用Log Rank法比较组间患者的生存曲线是否有差异，同时分析会给出不同时间段的生存状态表格。右侧参数栏可设置图片风格，提供了四种顶刊配色方案。
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+        $('.scfx_input').show();
+    });
+</script>
+{% endblock %}

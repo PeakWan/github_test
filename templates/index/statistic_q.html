@@ -1,0 +1,1856 @@
+{% extends 'index/base.html' %}
+
+{% block title %}
+
+<!--两组配对样本wilcoxon检验-->
+多组配对样本cochrans_q检验
+{% endblock %}
+
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+
+{% endblock %}
+
+
+{% block top_style %}
+<style>
+    * {
+
+        padding: 0;
+
+        margin: 0;
+
+    }
+
+    li {
+
+        list-style: none;
+
+        cursor: pointer;
+
+        position: relative;
+
+    }
+
+    .selection-container {
+
+        margin-top: -30px;
+
+        margin-left: 56px;
+
+        height: 350px;
+
+    }
+
+    .select-box {
+
+        height: 200px;
+
+        overflow: scroll;
+
+        width: 160px;
+
+        float: left;
+
+        background: #ffff;
+
+        border: 1px solid #ebeef5;
+
+        border-radius: 4px;
+
+    }
+
+    #select-box_right {
+
+        margin-left: 62px;
+
+        overflow: hidden;
+
+        width: 160px;
+
+        float: left;
+
+        background: #ffff;
+
+        border: 1px solid #ebeef5;
+
+        border-radius: 4px;
+
+    }
+
+    .arrows-box {
+
+        /* float: left; */
+
+        position: relative;
+
+        left: -2px;
+
+    }
+
+    .select-content {
+
+        width: 100%;
+
+    }
+
+    .select-box-title {
+
+        height: 40px;
+
+        line-height: 40px;
+
+        font-size: 16px;
+
+        font-family: "微软雅黑";
+
+        padding: 0 6%;
+
+        display: flex;
+
+        align-items: center;
+
+        position: relative;
+
+        width: 100%;
+
+        background: #ffffff;
+
+        border-bottom: 1px solid #ebeef5;
+
+        box-sizing: border-box;
+
+        color: #000;
+
+    }
+
+    .select-box-title label:before {
+
+        left: -14px !important;
+
+        top: 4px !important;
+
+    }
+
+    .select-box-title label:after {
+
+        left: -10px !important;
+
+        top: 5px !important;
+
+    }
+
+    .checkboxs {
+
+        vertical-align: middle;
+
+    }
+
+    .unselect-ul {
+
+        padding: 10px 0;
+
+    }
+
+    .selected-ul {
+
+        padding: 10px 0;
+
+    }
+
+    .select-content li {
+
+        padding: 5px 15px;
+
+        font-size: 12px;
+
+        font-family: "微软雅黑";
+
+    }
+
+    .select-box input[type='checkbox'] {
+
+        position: absolute;
+
+        left: 13px;
+
+        top: 3px;
+
+        width: 20px;
+
+        height: 20px;
+
+        opacity: 0;
+
+    }
+
+    .select-box label {
+
+        position: absolute;
+
+        left: 30px;
+
+        top: 9px;
+
+        height: 20px;
+
+        line-height: 20px;
+
+    }
+
+    .select-box span {
+
+        color: #767370;
+
+        padding-left: 20px;
+
+        font-size: 14px;
+
+    }
+
+    .select-box label:before {
+
+        content: '';
+
+        position: absolute;
+
+        left: -18px;
+
+        top: -3px;
+
+        width: 16px;
+
+        height: 15px;
+
+        border: 1px solid #ddd;
+
+        border-radius: 1px;
+
+        transition: all 0.3s ease;
+
+        -webkit-transition: all 0.3s ease;
+
+        -moz-transition: all 0.3s ease;
+
+    }
+
+    .select-box label:after {
+
+        content: '';
+
+        position: absolute;
+
+        left: -10px;
+
+        top: -2px;
+
+        width: 4px;
+
+        height: 8px;
+
+        border: 0;
+
+        border-right: 1px solid #fff;
+
+        border-bottom: 1px solid #fff;
+
+        background: #fff;
+
+        transform: rotate(45deg);
+
+        -webkit-transform: rotate(45deg);
+
+        -moz-transform: rotate(45deg);
+
+        -ms-transform: rotate(45deg);
+
+        transition: all 0.3s ease;
+
+        -webkit-transition: all 0.3s ease;
+
+        -moz-transition: all 0.3s ease;
+
+    }
+
+    .select-box input[type='checkbox']:checked+label:before {
+
+        background: #00A0E8;
+
+        border-color: #00A0E8;
+
+    }
+
+    .select-box input[type='checkbox']:checked+label:after {
+
+        background: #00A0E8;
+
+    }
+
+    .arrow-btns {
+
+        width: 80px;
+
+        position: absolute;
+
+        left: 149px;
+
+        top: 79px;
+
+    }
+
+    .btn-cursor {
+
+        background-color: #409eff !important;
+
+        border: 1px solid #409EFF !important;
+
+        transition: all 0.3s ease;
+
+        -webkit-transition: all 0.3s ease;
+
+        -moz-transition: all 0.3s ease;
+
+    }
+
+    .btn-cursor svg {
+
+        fill: #fff !important;
+
+        transition: all 0.3s ease;
+
+        -webkit-transition: all 0.3s ease;
+
+        -moz-transition: all 0.3s ease;
+
+    }
+
+    /*.btn-cursor{
+
+		cursor: not-allowed !important;
+
+	}*/
+
+    .arrow-btn {
+
+        display: block;
+
+        position: relative;
+
+        width: 47px;
+
+        height: 30px;
+
+        /* border-radius: 25px; */
+
+        background: #eee;
+
+        margin: 0 auto 5px;
+
+        cursor: pointer;
+
+        border: 1px solid #dcdfe6;
+
+        background-color: #fbfbfb;
+
+        color: #c0c4cc;
+
+        outline: none;
+
+    }
+
+    .arrow-btn svg {
+
+        /* padding: 11px; */
+
+        width: 17px;
+
+        height: 17px;
+
+        color: white;
+
+        fill: #C0C4CC;
+
+    }
+
+    .input_fu {
+
+        position: relative;
+
+        top: 180px;
+
+        height: 20px;
+
+        left: -180px;
+
+    }
+
+    #input_f {
+
+        height: 45px;
+
+        float: right;
+
+        border-radius: 29px;
+
+        border: transparent;
+
+        float: right;
+
+        margin-top: 360px;
+
+    }
+
+    #rightmodel {
+
+        position: absolute;
+
+        right: 0;
+
+        top: 0;
+
+        height: 100%;
+
+        width: 26%;
+
+        background: #efefef;
+
+        ;
+
+        min-width: 450px;
+
+    }
+
+    #z-nav>li {}
+
+    #z-nav>li>ul.nav-subnav {
+
+        /*display: flex;*/
+
+        font-size: 0;
+
+        text-align: center;
+
+    }
+
+    #header-navbar-collapse>.index {
+
+        position: absolute;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        right: 35%;
+
+        color: #333333;
+
+    }
+
+    #z-nav>li>ul.nav-subnav li {
+
+        width: 48%;
+
+        display: inline-block;
+
+        text-align: center;
+
+    }
+
+    #z-nav>li>ul.nav-subnav li:hover a {
+
+        background: #03a9f4;
+
+        color: #fff;
+
+        border: 1px solid #03a9f4;
+
+    }
+
+    #z-nav>li>ul.nav-subnav li a {
+
+        padding: 6px 8px;
+
+        box-sizing: border-box;
+
+        font-size: 12px;
+
+        border: 1px solid #ccc;
+
+        margin: 0 5px 12px;
+
+        border-radius: 10px;
+
+    }
+
+    #z-nav:nth-child(2)>ul.nav-subnav {
+
+        /*display: flex;*/
+
+        font-size: 0;
+
+        text-align: center;
+
+    }
+
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+
+        width: 48%;
+
+        display: inline-block;
+
+        text-align: center;
+
+    }
+
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+
+        background: #03a9f4;
+
+        color: #fff;
+
+        border: 1px solid #03a9f4;
+
+    }
+
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+
+        padding: 6px 8px;
+
+        box-sizing: border-box;
+
+        font-size: 12px;
+
+        border: 1px solid #ccc;
+
+        margin: 0 5px 12px;
+
+        border-radius: 10px;
+
+    }
+
+    #header-navbar-collapse {
+
+        position: relative;
+
+    }
+
+    #header-navbar-collapse>.help-control {
+
+        position: absolute;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        right: 20%;
+
+        color: #333333;
+
+    }
+
+    #rightmodel {
+
+        padding-top: 5%;
+
+    }
+
+    #rightmodel>h1 {
+
+        margin-top: -20px;
+
+        text-align: center;
+
+        font-size: 16px;
+
+    }
+
+    .select-options {
+
+        margin-top: 24px;
+
+    }
+
+    .select-options form {
+
+        width: 100%;
+
+        height: 100%;
+
+    }
+
+    .select-options form .select-input:first-child {
+
+        margin-top: 0;
+
+    }
+
+    .select-options form .select-input {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-top: 15px;
+
+        padding: 0 20px;
+
+    }
+
+    .select-options form .select-input span {
+
+        font-size: 14px;
+
+    }
+
+    .select-options form .select-input select {
+
+        width: 107px;
+
+        height: 22px;
+
+        cursor: pointer;
+
+        font-size: 14px;
+
+    }
+
+    .select-options form .select-input input[type='text'] {
+
+        outline: none;
+
+        display: block;
+
+        width: 107px;
+
+        height: 25px;
+
+        font-size: 14px;
+
+    }
+
+    .navbar-default>.left-aside {
+
+        float: left;
+
+        margin-left: 10px;
+
+        width: 34%;
+
+    }
+
+    /* .navbar-default>.container-fluid {
+
+        width: 58%;
+
+        float: right;
+
+    } */
+
+    .navbar-default>.left-aside .upload {
+
+        position: relative;
+
+        padding: 4px 22px;
+
+        border: 1px solid #999;
+
+        text-decoration: none;
+
+        color: #666;
+
+        display: inline-block;
+
+        margin-top: 18px;
+
+        font-size: 14px;
+
+        cursor: pointer;
+
+    }
+
+    .navbar-default>.left-aside .upload>.change {
+
+        position: absolute;
+
+        overflow: hidden;
+
+        right: 0;
+
+        top: 0;
+
+        opacity: 0;
+
+        cursor: pointer;
+
+    }
+
+    .click-button {
+
+        position: relative;
+
+        top: 440px;
+
+        margin-bottom: 28px;
+
+        text-align: center;
+
+    }
+
+    .finnally-button {
+
+        position: relative;
+
+        top: 430px;
+
+        text-align: center;
+
+    }
+
+    /* #header-navbar-collapse>.upload{
+
+        position: relative;
+
+        padding: 4px 22px;
+
+        border: 1px solid #999;
+
+        text-decoration: none;
+
+        color: #666;
+
+        display: inline-block;
+
+        margin-top: 18px;
+
+        font-size: 14px;
+
+        cursor: pointer;
+
+    }
+
+    #header-navbar-collapse>.upload>.change{
+
+        position: absolute;
+
+        overflow: hidden;
+
+        right: 0;
+
+        top: 0;
+
+        opacity: 0;
+
+        cursor: pointer;
+
+    } */
+
+    .middle-table {
+
+        width: 70.2%;
+
+        height: 100px;
+
+        padding: 30px;
+
+        /* text-align: center; */
+
+        /* position: relative; */
+
+        /* left: 500px; */
+
+    }
+
+    .layui-border-box {
+
+        padding-left: 20px;
+
+    }
+
+    .layui-transfer-active {
+
+        margin: 0 8px;
+
+    }
+
+    #middle-table>.table-left,
+
+    .table-right {
+
+        width: 45%;
+
+        height: 100%;
+
+        /* border: 1px solid #03a9f4; */
+
+        box-sizing: border-box;
+
+        border-top: none;
+
+        padding: 30px 20px;
+
+    }
+
+    #middle-table>.table-right {
+
+        margin-left: 50px;
+
+    }
+
+    .app-layout-canvas,
+
+    .app-layout-container {
+
+        height: 100%;
+
+    }
+
+    #middle-table>.accrow {
+
+        margin-left: 29px;
+
+        font-size: 32px;
+
+    }
+
+    .navbar {
+
+        display: flex;
+
+        align-items: center;
+
+    }
+
+    .opacity {
+
+        opacity: 0.2;
+
+    }
+
+    #header-navbar-collapse .login-button {
+
+        float: right;
+
+    }
+
+    #header-navbar-collapse .login-button a {
+
+        display: inline-block;
+
+        height: 38px;
+
+        line-height: 38px;
+
+        padding: 0 18px;
+
+        color: #fff;
+
+        white-space: nowrap;
+
+        text-align: center;
+
+        font-size: 14px;
+
+        border: none;
+
+        border-radius: 2px;
+
+        cursor: pointer;
+
+        background-color: #03a9f4;
+
+    }
+
+    .select-suo h1 {
+
+        font-size: 17px;
+
+        margin-top: -26px;
+
+        color: #666;
+
+        margin-bottom: 24px;
+
+        font-weight: bold;
+
+        text-align: center;
+
+    }
+
+    /* .select-options form .select-input #username{
+
+        margin-left: 90px;
+
+    }
+
+    .select-options form .select-input #password{
+
+        margin-left: 52px;
+
+    }
+
+    .select-options form .select-input #phone{
+
+        margin-left: 52px;
+
+    } */
+
+    /* 高级分析 */
+
+    .gj-checkout {
+
+        width: 400px;
+
+        height: 400px;
+
+        /* float: left; */
+
+        /* height: 100px; */
+
+        margin: 61px 64px;
+
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+
+        padding: 25px;
+
+        position: relative;
+
+        background-color: #fff;
+
+        border-radius: 5px;
+
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+
+    <div id="rightmodel">
+
+        <div class="select-options">
+
+            <div class="select-suo">
+
+                <h1>选择要分析的列名</h1>
+
+            </div>
+
+        </div>
+        {% endblock %}
+            
+        {% block main03 %}
+
+
+        <div class="click-button">
+
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">
+
+                <a href="{{ url('smart:statistic_q',kwargs={"project_id": project_id,"data_id":0}) }}"
+                    style="color:white">原始的数据</a>
+
+            </button>
+
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">
+
+                <a href="{{ url('smart:statistic_q',kwargs={"project_id": project_id,"data_id":1}) }}">处理的数据</a>
+
+            </button>
+
+        </div>
+
+        <div class="finnally-button">
+
+            {{ csrf_input }}
+
+            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" onclick="upload()"
+                name="{{ project_id }}" id="begin">开始分析</button>
+
+            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="save-jg"
+                onclick="f_save()">结果保存</button>
+
+        </div>
+
+    </div>
+    {% endblock %}
+    {% block main04 %}
+    <div class="middle-table">
+        {% endblock %}
+        {% block description %}
+Cochran's Q检验（多组配对计数资料比较）：通过对多个配对样本的分析，推断样本来自的多个总体的分布是否存在显著差异。适用与二分制数据的分析，如：1代表满意，0代表不满意。
+
+        {% endblock %}
+        {% block mian02 %}
+    </div>
+
+    <!--  -->
+
+    <!-- input 输入框 -->
+
+    <div class="input_fu">
+
+        <input type="text" id="input_f" placeholder="请输入数字形式以逗号隔开">
+
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+
+<!--穿梭框方法-->
+
+<script src="{{ static('./js/index2.js') }}"></script>
+
+<!--图标调用-->
+
+<script src="{{ static('./js/iconfot.js') }}"></script>
+
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+
+<script src="{{ static('index/js/app.js') }}"></script>
+
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+
+<!-- Page JS Code -->
+
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+
+    $(function () {
+
+        // Init page helpers (Slick Slider plugin)
+
+        App.initHelpers('slick');
+
+    });
+
+</script>
+
+<script>
+
+    var arr = [];
+
+    var spanText;
+
+    function upload() {
+
+        var normalityId = $('#begin').attr('name');
+
+        // 要传的项目id normalityId
+
+        // alert(normalityId)
+
+        // alert(111111111111111)
+
+        var normalityName = $('#transfer-right .transfer-data li .transfer-form-checkbox').find('span').text();
+
+        // normalityName 单选里的列名
+
+        // alert(normalityName)
+
+        // alert(222222222222222)
+
+        var normalityType = $('.click-button').find('.opacity').index();
+
+        // 获取到用户要求的原始数据还是最新数据
+
+        // alert(normalityType)
+
+        // alert(3333333333333333)
+
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+
+        // console.log(normalityName);
+
+        // 多选
+
+        // var serect = $("#select-box_right .select-content .selected-ul li").find('span').text().join(',');
+
+        for (var i = 0; i < $("#select-box_right .select-content .selected-ul li").length; i++) {
+
+            spanText = $("#select-box_right .select-content .selected-ul li").eq(i).find('span').text();
+
+            arr.push(spanText);
+
+        }
+
+        // console.log(arr);
+
+        // 获取 input框 数字数据
+
+        var num = $("#input_f").val();
+
+        // alert(num)
+
+        // alert(55555555555555555)
+
+        // 赋值
+
+        var pram = {
+
+            name: normalityName,
+
+            number: normalityType,
+
+            arr: arr,
+
+            num: num,
+
+            csrfmiddlewaretoken: csrfmiddlewaretoken,
+
+        };
+
+        $.ajax({
+
+            url: '/statistic_q/' + normalityId + '/' + normalityType + "/",
+
+            type: 'POST',
+
+            dataType: 'json',
+
+            contentType: "application/json",
+
+            cache: false,
+
+            headers: { 'X-CSRFToken': csrfmiddlewaretoken },
+
+            // 将 JavaScript 值转换为 JSON 字符串 保存在data数据里面
+
+            data: JSON.stringify(pram),
+
+            success: function (response) {
+
+                arr.splice(0);
+
+                alert(response.error)
+
+                // console.log(response);
+
+                $(".middle-table").html('<div class="gj-checkout">' + response.context.str + '</div>')
+
+                // 把project 赋值给 结果保存按钮的name属性
+
+                // alert(response.context.project)
+
+                $('#save-jg').attr('name', response.context.project)
+
+            },
+
+            error: function (error) {
+
+                // console.log(response.error);
+
+                // console.log(error.error);
+
+                // alert(error);
+
+                arr.splice(0);
+
+                alert(error.error);
+
+            }
+
+        })
+
+    }
+
+    // 结果保存 
+
+    function f_save() {
+
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+
+        var project_id = $('#save-jg').attr('name');
+
+        var param = {
+
+            'project': project_id,
+
+            'csrfmiddlewaretoken': csrfmiddlewaretoken,
+
+        };
+
+        $.ajax({
+
+            url: '/save_data/',
+
+            type: "POST",
+
+            dataType: 'json',
+
+            contentType: "application/json",
+
+            cache: false,
+
+            headers: {
+
+                'X-CSRFToken': csrfmiddlewaretoken
+
+            },
+
+            data: JSON.stringify(param),
+
+            success: function (data) {
+
+                alert(data.error);
+
+                console.log(data)
+
+            }, error: function (errorMsg) {
+
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+
+                console.log(errorMsg)
+
+            }
+
+        });
+
+    }
+
+    layui.use('table', function () {
+
+        var table = layui.table;
+
+        table.render({
+
+            elem: '#demo'
+
+            , cols: [[
+
+                { field: 'id', title: 'ID', width: 80, sort: true }
+
+                , { field: 'username', title: '用户名', width: 120 }
+
+                , { field: 'email', title: '邮箱', minWidth: 150 }
+
+                , { field: 'sign', title: '签名', minWidth: 160 }
+
+                , { field: 'sex', title: '性别', width: 80 }
+
+                , { field: 'city', title: '城市', width: 100 }
+
+                , { field: 'experience', title: '积分', width: 80, sort: true }
+
+            ]]
+
+            , data: [{
+
+                "id": "10001"
+
+                , "username": "杜甫"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "116"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "108"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10002"
+
+                , "username": "李白"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "12"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+                , "LAY_CHECKED": true
+
+            }, {
+
+                "id": "10003"
+
+                , "username": "王勃"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "65"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10004"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "666"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10005"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "86"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10006"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "12"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10007"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "16"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10008"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "106"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }],
+
+            skin: 'line',
+
+            even: true,
+
+            page: true,
+
+            limits: [5, 7, 10],
+
+            limit: 5
+
+        });
+
+    });
+
+    layui.use('table', function () {
+
+        var table = layui.table;
+
+        table.render({
+
+            elem: '#demo1'
+
+            , cols: [[
+
+                { field: 'id', title: 'ID', width: 80, sort: true }
+
+                , { field: 'username', title: '用户名', width: 120 }
+
+                , { field: 'email', title: '邮箱', minWidth: 150 }
+
+                , { field: 'sign', title: '签名', minWidth: 160 }
+
+                , { field: 'sex', title: '性别', width: 80 }
+
+                , { field: 'city', title: '城市', width: 100 }
+
+                , { field: 'experience', title: '积分', width: 80, sort: true }
+
+            ]]
+
+            , data: [{
+
+                "id": "10001"
+
+                , "username": "杜甫"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "116"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "108"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10002"
+
+                , "username": "李白"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "12"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+                , "LAY_CHECKED": true
+
+            }, {
+
+                "id": "10003"
+
+                , "username": "王勃"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "65"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10004"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "666"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10005"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "86"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10006"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "12"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10007"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "16"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }, {
+
+                "id": "10008"
+
+                , "username": "贤心"
+
+                , "email": "xianxin@layui.com"
+
+                , "sex": "男"
+
+                , "city": "浙江杭州"
+
+                , "sign": "人生恰似一场修行"
+
+                , "experience": "106"
+
+                , "ip": "192.168.0.8"
+
+                , "logins": "106"
+
+                , "joinTime": "2016-10-14"
+
+            }],
+
+            skin: 'line',
+
+            even: true,
+
+            page: true,
+
+            limits: [5, 7, 10],
+
+            limit: 5
+
+        });
+
+    });
+
+    //数据穿梭框
+
+    $(document).ready(function () {
+
+        $('.click-button .layui-btn-radius').eq(0).addClass('opacity');
+
+    })
+
+    $('.click-button').find('button').click(function () {
+
+        $(this).addClass('opacity').siblings().removeClass('opacity');
+
+    })
+
+    $('.select-transfer .transfer-box-left .transfer-data').on('click', 'li', function () {
+
+        var siblingChild = false;
+
+        $(this).children('.transfer-form-checkbox').toggleClass('transfer-form-check');
+
+        if ($(this).children('.transfer-form-checkbox').hasClass('transfer-form-check') == true) {
+
+            siblingChild = true;
+
+        }
+
+        if ($(this).children('.transfer-form-checkbox').hasClass('transfer-form-check') == false) {
+
+            siblingChild = false;
+
+        }
+
+        if (siblingChild) {
+
+            $(this).siblings('li').addClass('disabled');
+
+        } else {
+
+            $(this).siblings('li').removeClass('disabled');
+
+        }
+
+        btnStatus();
+
+    })
+
+    // 动态判断改变btn状态
+
+    function btnStatus() {
+
+        var leftBtn = false;
+
+        var rightBtn = false;
+
+        for (var i = 0; i < $('.select-transfer .transfer-box-left .transfer-data li').length; i++) {
+
+            if ($('.select-transfer #transfer-left .transfer-data li').eq(i).find('.transfer-form-checkbox').hasClass('transfer-form-check')) {
+
+                rightBtn = true;
+
+            }
+
+            if ($('.select-transfer #transfer-right .transfer-data li').eq(i).find('.transfer-form-checkbox').hasClass('transfer-form-check')) {
+
+                leftBtn = true;
+
+            }
+
+        }
+
+        if (rightBtn) {
+
+            $('.right-button').addClass('green');
+
+            $('.right-button').removeClass('disabled');
+
+        } else {
+
+            $('.right-button').removeClass('green');
+
+            $('.right-button').addClass('disabled');
+
+        }
+
+        if (leftBtn) {
+
+            $('.left-button').addClass('green');
+
+            $('.left-button').removeClass('disabled');
+
+        } else {
+
+            $('.left-button').removeClass('green');
+
+            $('.left-button').addClass('disabled');
+
+        }
+
+    }
+
+    //左右移按钮点击事件
+
+    $('.button-accrow').click(function () {
+
+        var orgin = ''; var target = ''; var checkLi = ''; var num = false; var cancelLi = '';
+
+        if ($(this).hasClass('right-button')) {
+
+            orgin = $('#transfer-left .transfer-data');
+
+            target = $('#transfer-right .transfer-data');
+
+        } else {
+
+            orgin = $('#transfer-right .transfer-data');
+
+            target = $('#transfer-left .transfer-data');
+
+            num = true;
+
+        }
+
+        checkLi = orgin.find('li'); cancelLi = target.find('li');
+
+        for (var i = 0; i < checkLi.length; i++) {
+
+            if ($(checkLi[i]).find('.transfer-form-checkbox').hasClass('transfer-form-check')) {
+
+                var that = $(checkLi[i]).clone();
+
+                that.children('.transfer-form-checkbox').removeClass('transfer-form-check');
+
+                target.append(that);
+
+                $(checkLi[i]).remove();
+
+            }
+
+        }
+
+        if (num) {
+
+            for (var i = 0; i < cancelLi.length; i++) {
+
+                $(cancelLi[i]).removeClass('disabled');
+
+            }
+
+            orgin.append("<p class='transfer-none'>无数据</p>");
+
+        } else {
+
+            target.find('p').remove();
+
+        }
+
+        btnStatus();
+
+    })
+
+    //搜索框检索事件
+
+    $('.select-transfer #transfer-left .transfer-search').find('.transfer-input').on('input', function (e) {
+
+        var inputVal = e.delegateTarget.value;
+
+        $('.select-transfer .transfer-box-left .transfer-data').find('li').each(function () {
+
+            $(this).hide();
+
+            if ($(this).find('.transfer-form-checkbox').find('span').text().indexOf($.trim(inputVal)) >= 0) {
+
+                $(this).show();
+
+            }
+
+        })
+
+    })
+
+</script>
+{% endblock %}

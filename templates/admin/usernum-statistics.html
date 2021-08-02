@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            后台管理系统
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+{#        <link rel="stylesheet" href="./css/x-admin.css" media="all">#}
+        <link rel="stylesheet" href="{{ static('admin/css/x-admin.css') }}" media="all">
+        <style>
+            #pagination {
+                display: flex;
+                justify-content: center;
+            }
+            .ui-pagination-container{
+                overflow: hidden;
+            }
+
+            .ui-pagination-container a {
+                padding: 8px 14px;
+                margin: 2px;
+                display: block;
+                float: left;
+                text-align: center;
+                line-height: 20px;
+            }
+
+            .ui-pagination-container a:hover {
+                background-color: #3eb8e9;
+                color: white;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="x-nav">
+            <span class="layui-breadcrumb">
+<!--              <a><cite>首页</cite></a>-->
+                <!--              <a><cite>会员管理</cite></a>-->
+                <!--              <a><cite>管理员列表</cite></a>-->
+            </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+           href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body container">
+
+        <div class="layui-form " style="margin-top: 15px;">
+            <div class="layui-form-item">
+
+                <div class="layui-input-inline">
+                    <input type="text" name="apiName" placeholder="请输入用户名称" autocomplete="off"
+                           class="layui-input" id="username">
+                </div>
+                <div class="layui-input-inline">
+                    <select name="time" id="time" lay-verify="">
+                        <option value="">请选择查询范围</option>
+                        <option value="week">最近7天</option>
+                        <option value="month">最近30天</option>
+                        <option value="all">全部</option>
+                    </select>
+                </div>
+                <!--                      <div class="layui-input-inline">-->
+
+                <!--                          <input type="date" class="layui-input" id="begin" placeholder="yyyy-MM-dd">-->
+                <!--                      </div>-->
+                <!--                      <div class="layui-input-inline">-->
+
+                <!--                          <input type="date" class="layui-input" id="end" placeholder="yyyy-MM-dd">-->
+                <!--                      </div>-->
+                <div class="layui-input-inline" style="width:80px">
+                    {{ csrf_input }}
+                    <button class="layui-btn" onclick="query()"><i class="layui-icon">&#xe615;</i></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div style="float: left;width: 45%">
+                <div class="" style="margin-top: 10px">
+                    <section class="panel">
+                        <div class="panel-heading">
+                               用户登录次数
+                        </select>
+                        </div>
+                        <div class="panel-body">
+                            <div class="echarts" id="main" style="height: 371px"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div style="float: right;width: 50%">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    用户名称
+                </th>
+                <th>
+                    用户登录次数
+                </th>
+            </tr>
+            </thead>
+            <tbody id="replace">
+            {% for k in info %}
+            <tr>
+                <td>
+                    {{ info.index(k)+1 }}
+                </td>
+                <td>
+                    {{ k.userName }}
+                </td>
+                <td>
+                    {{ k.userLoginNum }}
+                </td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagenation">
+            <div id="pagination" class="page clear"></div>
+        </div>
+        </div></div>
+        <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+        <script src="{{ static('admin/lib/layui/layui.js') }}" charset="utf-8"></script>
+        <script src="{{ static('admin/js/x-layui.js') }}" charset="utf-8"></script>
+        <script src="{{ static('admin/js/jquery.pagination.min.js') }}"></script>
+        <script src="{{ static('/js/template.js') }}"></script>
+        <script src="{{ static('admin/js/echarts.min.js') }}"></script>
+
+<script>
+    $(function () {
+        query();
+    });
+</script>
+
+<script>
+    function getObjAttr(obj,attrName) {
+         var data=[];
+         for (var i in obj){
+            data.push(obj[i][attrName]);
+        }
+         return  data;
+    }
+    // 查找api使用频次
+    function query() {
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+        var username = document.getElementById('username').value;
+        var time = document.getElementById('time').value;
+        var param = {
+            'username': username,
+            'time':time,
+            'csrfmiddlewaretoken': csrfmiddlewaretoken,
+        };
+        $.ajax({
+            url: '/admin/member/usernum_statistics/1/',
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json",
+            cache: false,
+            headers: {
+                'X-CSRFToken': csrfmiddlewaretoken
+            },
+            data: JSON.stringify(param),
+            success: function (data) {
+                var list  = data.context;
+                if(list.length==0){
+                    alert('未查询到任何用户登录记录,请重新输入查询条件')
+                    return false;
+                }
+                var htmlBody='';
+                for(let i=0;i<list.length;i++){
+                       htmlBody+='<tr><td>'+(i+1)+'</td><td>'+list[i].userName+'</td><td>'+list[i].userLoginNum+'</td></tr>';
+                    }
+                $("#replace").html(htmlBody);
+                option.yAxis.data=getObjAttr(list,'userName');
+                option.series[0].data=getObjAttr(list,'userLoginNum');
+                option && myChart.setOption(option);
+
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                console.log(errorMsg)
+            }
+        });
+    }
+
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+        color: ['#29e'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['用户登录次数']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01],
+        },
+        yAxis: {
+            type: 'category',
+            name: '用户名称',
+            nameLocation: 'start',
+            nameTextStyle: {
+                fontWeight: 'bold',
+            },
+            data: [],
+            inverse: true
+        },
+        series: [
+            {
+                name: '用户登录次数',
+                type: 'bar',
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    }
+                },
+                data: []
+            }
+        ]
+    };
+
+
+</script>
+<script>
+    layui.use(['laydate','element','laypage','layer','form'], function(){
+        $ = layui.jquery;//jquery
+      laydate = layui.laydate;//日期插件
+      lement = layui.element();//面包导航
+      laypage = layui.laypage;//分页
+      layer = layui.layer;//弹出层
+      //以上模块根据需要引入
+      laypage({
+        cont: 'page'
+        ,pages: 100
+        ,first: 1
+        ,last: 100
+        ,prev: '<em><</em>'
+        ,next: '<em>></em>'
+      }); 
+      
+      var start = {
+        min: laydate.now()
+        ,max: '2099-06-16 23:59:59'
+        ,istoday: false
+        ,choose: function(datas){
+          end.min = datas; //开始日选好后，重置结束日的最小日期
+          end.start = datas //将结束日的初始值设定为开始日
+        }
+      };
+      
+      var end = {
+        min: laydate.now()
+        ,max: '2099-06-16 23:59:59'
+        ,istoday: false
+        ,choose: function(datas){
+          start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+      };
+
+    });
+    </script>
+            
+    </body>
+
+</html>

@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+
+
+<html class="app-ui">
+
+
+<head>
+
+    <!-- Meta -->
+
+    <meta charset="UTF-8"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+
+    <!-- Document title -->
+
+    <title>智能数据分析平台</title>
+
+
+    <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework"/>
+
+    <meta name="author" content="rustheme"/>
+
+    <meta name="robots" content="noindex, nofollow"/>
+
+
+    <!-- Favicons -->
+
+    <link rel="apple-touch-icon" href="{{ static('index/img/favicons/apple-touch-icon.png') }}"/>
+
+    <link rel="icon" href="{{ static('index/img/favicons/favicon.ico') }}"/>
+
+
+    <!-- Google fonts -->
+
+    <link rel="stylesheet"
+          href="http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,900%7CRoboto+Slab:300,400%7CRoboto+Mono:400"/>
+
+
+    <!-- Page JS Plugins CSS -->
+
+    {#        <link rel="stylesheet" href="index/js/plugins/slick/slick.min.css" />#}
+
+    <link rel="stylesheet" href="{{ static('index/js/plugins/slick/slick.min.css') }}"/>
+
+    {#        <link rel="stylesheet" href="index/js/plugins/slick/slick-theme.min.css" />#}
+
+    <!-- <link rel="stylesheet" href="{{ static('index/js/plugins/slick/slick-theme.min.css') }}" /> -->
+
+
+    <!-- AppUI CSS stylesheets -->
+
+    {#        <link rel="stylesheet" id="css-font-awesome" href="css/font-awesome.css" />#}
+
+    {#        <link rel="stylesheet" id="css-ionicons" href="css/ionicons.css" />#}
+
+    {#        <link rel="stylesheet" id="css-bootstrap" href="css/bootstrap.css" />#}
+
+    {#        <link rel="stylesheet" id="css-app" href="css/app.css" />#}
+
+    {#        <link rel="stylesheet" id="css-app-custom" href="css/app-custom.css" />#}
+
+
+    <link rel="stylesheet" id="css-font-awesome" href="{{ static('index/css/font-awesome.css') }}"/>
+
+    <link rel="stylesheet" id="css-ionicons" href="{{ static('index/css/ionicons.css') }}"/>
+
+    <link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}"/>
+
+    <link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}"/>
+
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/app-custom.css') }}"/>
+
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}"/>
+
+    <!-- End Stylesheets -->
+
+</head>
+
+<style>
+
+    #rightmodel {
+
+        position: absolute;
+
+        right: 0;
+
+        top: 0;
+
+        height: 100%;
+
+        width: 300px;
+
+        background: #efefef;;
+
+    }
+
+    #z-nav > li {
+
+    }
+
+    #z-nav > li > ul.nav-subnav {
+
+        /*display: flex;*/
+
+        font-size: 0;
+
+        text-align: center;
+
+    }
+
+    #z-nav > li > ul.nav-subnav li {
+
+        width: 48%;
+
+        display: inline-block;
+
+        text-align: center;
+
+    }
+
+    #z-nav > li > ul.nav-subnav li:hover a {
+
+        background: #03a9f4;
+
+        color: #fff;
+
+        border: 1px solid #03a9f4;
+
+    }
+
+    #z-nav > li > ul.nav-subnav li a {
+
+        padding: 6px 8px;
+
+        box-sizing: border-box;
+
+        font-size: 12px;
+
+        border: 1px solid #ccc;
+
+        margin: 0 5px 12px;
+
+        border-radius: 10px;
+
+    }
+
+    #header-navbar-collapse {
+
+        position: relative;
+
+    }
+
+    #header-navbar-collapse > .help-control {
+
+        position: absolute;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        right: 20%;
+
+        color: #333333;
+
+    }
+
+    #rightmodel {
+
+        padding-top: 5%;
+
+    }
+
+    #rightmodel > h1 {
+
+        text-align: center;
+
+        font-size: 24px;
+
+    }
+
+    #rightmodel > .begin-button {
+
+        position: absolute;
+
+        bottom: 5%;
+
+        left: 50%;
+
+        transform: translateX(-50%);
+
+    }
+
+    .select-options {
+        margin-top: 24px;
+    }
+
+    .select-options form {
+        width: 100%;
+        height: 100%;
+    }
+
+    .select-options form .select-input:first-child {
+        margin-top: 0;
+    }
+
+    .select-options form .select-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding: 0 20px;
+
+    }
+
+    .select-options form .select-input span {
+        font-size: 14px;
+    }
+
+    .select-options form .select-input select {
+        width: 107px;
+        height: 22px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .select-options form .select-input input[type='text'] {
+        outline: none;
+        display: block;
+        width: 107px;
+        height: 25px;
+        font-size: 14px;
+    }
+
+    .navbar-default > .left-aside {
+        float: left;
+        margin-left: 10px;
+        width: 34%;
+    }
+
+    .navbar-default > .container-fluid {
+        width: 58%;
+        float: right;
+    }
+
+    .navbar-default > .left-aside .upload {
+        position: relative;
+        padding: 4px 22px;
+        border: 1px solid #999;
+        text-decoration: none;
+        color: #666;
+        display: inline-block;
+        margin-top: 18px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .navbar-default > .left-aside .upload > .change {
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* #header-navbar-collapse>.upload{
+        position: relative;
+        padding: 4px 22px;
+        border: 1px solid #999;
+        text-decoration: none;
+        color: #666;
+        display: inline-block;
+        margin-top: 18px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #header-navbar-collapse>.upload>.change{
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    } */
+
+    #middle-table {
+        width: 82.2%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
+    }
+
+    #middle-table > .table-left, .table-right {
+        width: 45%;
+        height: 100%;
+        border: 1px solid #03a9f4;
+        box-sizing: border-box;
+        border-top: none;
+        padding: 30px 20px;
+    }
+
+    #middle-table > .table-right {
+        margin-left: 50px;
+    }
+
+    .app-layout-canvas, .app-layout-container {
+        height: 100%;
+    }
+
+    #middle-table > .accrow {
+        margin-left: 29px;
+        font-size: 32px;
+    }
+
+    /* .select-options form .select-input #username{
+        margin-left: 90px;
+    }
+
+    .select-options form .select-input #password{
+        margin-left: 52px;
+    }
+
+    .select-options form .select-input #phone{
+        margin-left: 52px;
+    } */
+    #u_f {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+
+    #u_f input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    #u_f:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+</style>
+
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+
+<div class="app-layout-canvas">
+
+    <div class="app-layout-container">
+
+
+        <!-- Drawer -->
+
+        <aside class="app-layout-drawer">
+
+
+            <!-- Drawer scroll area -->
+
+            <div class="app-layout-drawer-scroll">
+
+                <!-- Drawer logo -->
+
+                <div id="logo" class="drawer-header">
+
+                    {#                            <a href="index.html"><img class="img-responsive" src="{{ static('index/img/logo/logo-backend.png') }}" title="AppUI" alt="AppUI" /></a>#}
+
+                </div>
+
+
+                <!-- Drawer navigation -->
+
+                <nav class="drawer-main">
+
+                    <ul class="nav nav-drawer" id="z-nav">
+
+
+                        {#                                <li class="nav-item nav-drawer-header">Apps</li>#}
+
+                        {##}
+
+                        {#                                <li class="nav-item ">#}
+
+                        {#                                    <a href="index.html"><i class="ion-ios-speedometer-outline"></i> Dashboard</a>#}
+
+                        {#                                </li>#}
+
+                        {#                                #}
+
+                        {#                                <li class="nav-item nav-drawer-header">智能统计分析</li>#}
+
+
+                        <li class="nav-item nav-item-has-subnav">
+
+                            <a href="javascript:void(0)"><i class="ion-ios-calculator-outline"></i> 数据整理</a>
+
+                            <ul class="nav nav-subnav">
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:index_qt') }}">缺失值剔除</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">异常值处理</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">数据填补</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">one-hot</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">连续变量分组</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">样本均衡</a>
+
+                                </li>
+
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_modals_tooltips.html">Modals / Tooltips</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_alerts_notify.html">Alerts / Notify</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_pagination.html">Pagination</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_progress.html">Progress</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_tabs.html">Tabs</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_typography.html">Typography</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_ui_widgets.html">Widgets</a>#}
+
+                                {#                                        </li>#}
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a href="{{ url('index_qt:boon') }}"><i class="ion-ios-speedometer-outline"></i> 智能统计分析</a>
+
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+
+                            <a href="javascript:void(0)"><i class="ion-ios-compose-outline"></i> 高级分析</a>
+
+                            <ul class="nav nav-subnav">
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">logistics</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">coX</a>
+
+                                </li>
+
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_forms_pickers_select.html">Pickers &amp; Select</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_forms_validation.html">Validation</a>#}
+
+                                {#                                        </li>#}
+
+                                {##}
+
+                                {#                                        <li>#}
+
+                                {#                                            <a href="base_forms_wizard.html">Wizard</a>#}
+
+                                {#                                        </li>#}
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="nav-item nav-item-has-subnav">
+
+                            <a href="javascript:void(0)"><i class="ion-ios-list-outline"></i> 图表制作</a>
+
+                            <ul class="nav nav-subnav">
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">树林图</a>
+
+                                </li>
+
+
+                                <li>
+
+                                    <a href="{{ url('index_qt:boon') }}">分组占比图</a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a href="{{ url('index_qt:boon') }}"><i class="ion-ios-monitor-outline"></i> 智能文章生成</a>
+
+                        </li>
+
+
+                    </ul>
+
+                </nav>
+
+                <!-- End drawer navigation -->
+
+
+                <div class="drawer-footer">
+
+                    <p class="copyright">Copyright &copy; 2019 ncdefs2.hk.8dfish.site name All rights reserved.</p>
+
+                </div>
+
+            </div>
+
+            <!-- End drawer scroll area -->
+
+        </aside>
+
+        <!-- End drawer -->
+
+
+        <!-- Header -->
+
+        <header class="app-layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="left-aside">
+                    {{ csrf_input }}
+                    <span class="upload" id="u_f">
+                                        上传
+                                        <input type="file" class="change" multiple="multiple" name="upfile" id="fileId"
+                                               value="">
+                                        <input type="hidden" name="code" id="code" value="">
+                                    </span>
+
+                    <span id="test">文件太大,请稍等</span>
+                    <!-- <input type="button" value="上传" onclick="upload()">    -->
+
+                    <script type="text/javascript">
+
+                        document.getElementById('fileId').onchange = function () {
+
+                            if (this.value != '') {
+                                upload(this);
+                            }
+                        }
+
+
+                        function upload(ele) {
+                            var name = ele.files[0];
+                            var xhr = new XMLHttpRequest();
+                            var fd = new FormData();
+                            fd.append('name', name);
+                            var csrf = $("input[name='csrfmiddlewaretoken']").val();
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+                                    alert(responseText);
+                                    var strToObj = JSON.parse(xhr.responseText);
+                                    alert(strToObj);
+
+                                }
+                            }
+
+                            xhr.open('POST', '/upload/');
+                            xhr.setRequestHeader("X-CSRFToken", csrf);
+                            xhr.send(fd);
+                        }
+
+                    </script>
+                </div>
+
+                <div class="container-fluid">
+
+                    {% if user.is_authenticated %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                            <a href="javascript:;" class="help-control">帮助中心</a>
+                            <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+                                <li class="dropdown dropdown-profile">
+
+                                    <a href="javascript:void(0)" data-toggle="dropdown">
+
+                                        <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>
+
+
+                                        <img class="img-avatar img-avatar-48"
+                                             src="{{ static('index/img/avatars/avatar3.jpg') }}"
+                                             alt="User profile pic"/>
+
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+
+                                            <a href="{{ url("index_qt:user") }}">个人中心</a>
+
+
+                                        </li>
+                                        <li>
+
+                                            <a href="{{ url("index_qt:logout") }}">退出</a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                            <a href="javascript:;" class="help-control">帮助中心</a>
+                            <a href="{{ url('index_qt:login') }}">登录</a>
+                            <span>|</span>
+                            <a href="{{ url('index_qt:register') }}">注册</a>
+                        </div>
+                    {% endif %}
+
+                    <!-- .navbar-right -->
+
+                </div>
+
+                <!-- .container-fluid -->
+
+            </nav>
+
+            <!-- .navbar-default -->
+
+        </header>
+
+        <!-- End header -->
+
+
+        <main class="app-layout-content">
+
+            <div id="rightmodel">
+
+                <h1>变量选择</h1>
+
+                <div class="select-options">
+                    <form action="" method="post">
+                        <div class="select-input">
+                            <span>选择要分析的列名</span>
+                            <select name="" id="s1">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                            </select>
+                        </div>
+
+                        <div class="select-input">
+                            <span>分组数</span>
+                            <input type="text" maxlength="20" name="" id="username" placeholder="">
+                        </div>
+
+                        <div class="select-input">
+                            <span>分组百分位数</span>
+                            <input type="text" maxlength="20" name="" id="password" placeholder="">
+                        </div>
+
+                        <div class="select-input">
+                            <span>按具体数值分组</span>
+                            <input type="text" maxlength="20" name="" id="phone" placeholder="">
+                        </div>
+
+                    </form>
+                </div>
+
+                <button type="button" class="begin-button" onclick="login()">开始分析</button>
+                <script type="text/javascript">
+                    function login() {
+                        // 获取要分析的列名
+                        var select = document.getElementById("s1");
+                        var options = select.options;
+                        var index = select.selectedIndex;
+                        var selectedText = options[index].text;
+                        // 获取分组数
+                        var group_num = document.getElementById("username").value;
+                        // 获取分组百分位数
+                        var group_percentile = document.getElementById("password").value;
+                        // 按具体数值分组
+                        var group_cut_value = document.getElementById("phone").value;
+                        var param = {
+                            'selectedText': selectedText,
+                            'group_percentile': group_percentile,
+                            'group_cut_value': group_cut_value
+                        };
+                        alert(param);
+
+                        $.ajax({
+                            url: '/analysis/',
+                            type: "POST",
+                            dataType: 'json',
+                            contentType: "application/json",
+                            cache: false,
+                            //  headers: {
+                            //     'X-CSRFToken': $.cookie('csrftoken')
+                            // },
+                            data: JSON.stringify(param),
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    {#window.location.replace("/");#}
+                                } else if (data.code == 1060) {
+                                    alert(data.error);
+                                } else {
+                                    alert(data.error);
+                                }
+
+                            }, error: function (errorMsg) {
+                                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                            }
+
+                        });
+                    }
+                </script>
+
+            </div>
+
+
+            <div id="middle-table">
+                <div class="table-left">
+                    <table class="layui-hide" id="demo"></table>
+                </div>
+                <div class="accrow"><img src="{{ static('images/dragging.png') }}"></div>
+                <div class="table-right">
+                    <table class="layui-hide" id="demo1"></table>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+
+
+            <!-- .container-fluid -->
+
+            <!-- End Page Content -->
+
+
+        </main>
+
+
+    </div>
+
+    <!-- .app-layout-container -->
+
+</div>
+
+<!-- .app-layout-canvas -->
+
+
+<!-- Apps Modal -->
+
+<!-- Opens from the button in the header -->
+
+<div id="apps-modal" class="modal fade" tabindex="-1" role="dialog">
+
+    <div class="modal-sm modal-dialog modal-dialog-top">
+
+        <div class="modal-content">
+
+            <!-- Apps card -->
+
+            <div class="card m-b-0">
+
+                <div class="card-header bg-app bg-inverse">
+
+                    <h4>Apps</h4>
+
+                    <ul class="card-actions">
+
+                        <li>
+
+                            <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="card-block">
+
+                    <div class="row text-center">
+
+                        <div class="col-xs-6">
+
+                            <a class="card card-block m-b-0 bg-app-secondary bg-inverse" href="index.html">
+
+                                <i class="ion-speedometer fa-4x"></i>
+
+                                <p>Admin</p>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-xs-6">
+
+                            <a class="card card-block m-b-0 bg-app-tertiary bg-inverse" href="frontend_home.html">
+
+                                <i class="ion-laptop fa-4x"></i>
+
+                                <p>Frontend</p>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- .card-block -->
+
+            </div>
+
+            <!-- End Apps card -->
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- End Apps Modal -->
+
+
+<div class="app-ui-mask-modal"></div>
+
+
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+
+<script src="{{ static('index/js/app.js') }}"></script>
+
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+
+
+<!-- Page Plugins -->
+
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+
+
+<!-- Page JS Code -->
+
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+
+<script>
+
+    $(function () {
+
+        // Init page helpers (Slick Slider plugin)
+
+        App.initHelpers('slick');
+
+    });
+
+</script>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#demo'
+            , cols: [[
+                {field: 'id', title: 'ID', width: 80, sort: true}
+                , {field: 'username', title: '用户名', width: 120}
+                , {field: 'email', title: '邮箱', minWidth: 150}
+                , {field: 'sign', title: '签名', minWidth: 160}
+                , {field: 'sex', title: '性别', width: 80}
+                , {field: 'city', title: '城市', width: 100}
+                , {field: 'experience', title: '积分', width: 80, sort: true}
+            ]]
+            , data: [{
+                "id": "10001"
+                , "username": "杜甫"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "116"
+                , "ip": "192.168.0.8"
+                , "logins": "108"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10002"
+                , "username": "李白"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+                , "LAY_CHECKED": true
+            }, {
+                "id": "10003"
+                , "username": "王勃"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "65"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10004"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "666"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10005"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "86"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10006"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10007"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "16"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10008"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "106"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }],
+            skin: 'line',
+            even: true,
+            page: true,
+            limits: [5, 7, 10],
+            limit: 5
+        });
+    });
+
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#demo1'
+            , cols: [[
+                {field: 'id', title: 'ID', width: 80, sort: true}
+                , {field: 'username', title: '用户名', width: 120}
+                , {field: 'email', title: '邮箱', minWidth: 150}
+                , {field: 'sign', title: '签名', minWidth: 160}
+                , {field: 'sex', title: '性别', width: 80}
+                , {field: 'city', title: '城市', width: 100}
+                , {field: 'experience', title: '积分', width: 80, sort: true}
+            ]]
+            , data: [{
+                "id": "10001"
+                , "username": "杜甫"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "116"
+                , "ip": "192.168.0.8"
+                , "logins": "108"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10002"
+                , "username": "李白"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+                , "LAY_CHECKED": true
+            }, {
+                "id": "10003"
+                , "username": "王勃"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "65"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10004"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "666"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10005"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "86"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10006"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "12"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10007"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "16"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }, {
+                "id": "10008"
+                , "username": "贤心"
+                , "email": "xianxin@layui.com"
+                , "sex": "男"
+                , "city": "浙江杭州"
+                , "sign": "人生恰似一场修行"
+                , "experience": "106"
+                , "ip": "192.168.0.8"
+                , "logins": "106"
+                , "joinTime": "2016-10-14"
+            }],
+            skin: 'line',
+            even: true,
+            page: true,
+            limits: [5, 7, 10],
+            limit: 5
+        });
+    });
+</script>
+
+
+</body>
+
+
+</html>

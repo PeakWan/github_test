@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智能分析平台-登录</title>
+    <link rel="stylesheet" type="text/css" href="{{ static('css/login.css') }}"/>
+    <script type="text/javascript" src="{{ static('js/host.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/vue-2.5.16.js') }}"></script>
+    <script type="text/javascript" src="{{ static('js/axios-0.18.0.min.js') }}"></script>
+    
+    <style>
+        /* 导航栏 */
+        .bar {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: 2px 2px 10px #b6b6b6;
+        }
+
+        /* 清除浮动 */
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        /* 背景图片 */
+
+        .bar_left {
+            float: left;
+        }
+
+        .bar_right {
+            float: right;
+        }
+
+        /* 公共部分 */
+        .middle {
+            width: 1200px;
+            font-size: 17px;
+            line-height: 60px;
+            /* background-color: #ffffff; */
+            margin: 0 auto;
+        }
+
+        .bar_left {
+            /* margin-left: 100px; */
+            font-size: 22px;
+            color: #424342;
+        }
+
+        .bar_right {
+            color: #bbadb1;
+        }
+
+        .bar_right a {
+            color: #ee2423;
+            font-size: 16px;
+        }
+
+        .r_con {
+            position: relative;
+            left: auto;
+            top: 30px;
+        }
+
+        .reg_form li label {
+            width: 75px;
+            height: 40px;
+            line-height: 40px;
+            float: left;
+            font-size: 14px;
+            color: #ffffff;
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .reg_sub_input {
+            width: 600px;
+        }
+        .name_input {
+            background-color: rgba(255,255,255,.3);
+        }
+        .page-bg {
+            background-position: center;
+            background-repeat: no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background-image: url("{{ static('images/1325.jpg') }}");
+        }
+        .logo {
+            position: fixed;
+            top: 0;
+            left: 10px;
+            width: 200px;
+            height: 100px;
+            margin: 0;
+            background-size: cover;
+            background-position: center;
+            background-image: url('{{ static('images/logo2.jpg') }}');
+        }
+        .login_form {
+            width: 436px;
+            height: 430px;
+            background-color: rgba(255,255,255,.8);
+            position: fixed;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            border-radius: 10px;
+        }
+        .f_l {
+            position: fixed;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .f_l p:nth-child(1) {
+            font-size: 32px;
+            line-height: 1.25;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .f_l p:nth-child(2) {
+            font-size: 16px;
+            line-height: 1.25;
+            color: white;
+        }
+    </style>
+</head>
+<body style="background-color:#DDDDDD">
+    <!-- bg -->
+    <div class="page-bg"></div>
+    <a href="/">
+    <div class="logo"></div>
+    </a>
+    
+    <div class="f_l">
+        <p>针对临床研究人员的一站式医学统计分析平台</p>
+        <p>-提供数据治理、数据统计、机器学习分析、智能文章生成服务</p>
+    </div>
+    <div class="login_form fr" id="app">
+        <!--<div class="login_title clearfix">-->
+        <!--    <a href="javascript:;" class="cur">账户登录</a>-->
+        <!--</div>-->
+        <div class="form_con">
+            <div class="form_input cur">
+                <form method="post" id="login-form" @submit="on_submit" v-cloak>
+                    {{ csrf_input }}
+                    <input type="text" v-model="username" @blur="check_username" name="username"
+                           class="name_input" placeholder="请输入用户名或手机号">
+                    <div v-show="error_username" class="user_error">请输入正确的用户名或手机号</div>
+                    <input type="password" v-model="password" @blur="check_password" name="password"
+                           class="pass_input" placeholder="请输入密码">
+                    <div v-show="error_password" class="pwd_error">密码最少8位，最长20位</div>
+                    {% if account_errmsg %}
+                        <span class="login_error" v-show="account_errmsg">{{ account_errmsg }}</span>
+                    {% endif %}
+                    <div class="more_input clearfix">
+                        <input type="checkbox" v-model="remembered" name="remembered">
+                        <label>记住登录</label>
+                    </div>
+                    <input type="submit" value="登 录" class="input_submit">
+                </form>
+            </div>
+        </div>
+        <div class="third_party">
+            <!--{#                        <a @click="qq_login" class="qq_login">QQ</a>#}-->
+            <!--<a href="#" class="weixin_login">微信</a>-->
+            <a href="{{ url("index_qt:forget") }}" class="register_btn"> 忘记密码 </a>
+            <a href="{{ url("index_qt:register") }}" class="register_btn"> 立即注册 </a>
+        </div>
+
+    </div>
+
+<script type="text/javascript" src="{{ static('js/host.js') }}"></script>
+<script type="text/javascript" src="{{ static('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ static('js/login.js') }}"></script>
+</body>
+
+
+</html>

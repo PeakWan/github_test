@@ -1,0 +1,551 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线充值_会员充值页_会员充值套餐_极智分析</title>
+    <link href="//s.3dxy.com/cache/201906131708/201806/css/index/top.css" rel="stylesheet" type="text/css">
+    <!--<link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}"/>-->
+    <!--<link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}"/>-->
+    <!--<link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}"/>-->
+    <!--<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />-->
+    <!-- header css end -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <!-- header js start -->
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+    <script type="text/javascript" src="//s.3dxy.com/js/jquery.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    
+    <link href="//s.3dxy.com/cache/201901231438/assets/dist/pc/css/VipSecond2018/VipSecond.min.css" rel="stylesheet" type="text/css"/>
+    <style>
+        
+        .jinyong{
+            background: #ccc;
+            width: 300px;
+            height: 300px;
+            background-size: 100% 100%;
+            float: left;
+            margin-right: 30px;
+            display: inline;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            overflow: hidden;
+        }    
+        .jinyong .tcTop {
+            height: 30px;
+            margin: 0 auto;
+            font-size: 30px;
+            color: #333333;
+            padding-top: 50px;
+            line-height: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<!--<header class="app-layout-header">-->
+
+
+
+<!--            <nav class="navbar navbar-default">-->
+
+<!--                <div id="logo" class="drawer-header">-->
+
+<!--                    <a href="/"><img src="/static/images/logo.jpg"></a>-->
+<!--                </div>-->
+
+<!--                <div class="container-fluid">-->
+
+
+
+                    
+
+
+
+<!--                        <div class="collapse navbar-collapse" id="header-navbar-collapse">-->
+
+<!--                                        <div class="HY">-->
+<!--                                            {% if u_id == 1 %}-->
+<!--                                            <a href="#" class="v_img" title="普通用户"><img src="/static/images/1.png"></a>-->
+<!--                                            {% elif u_id == 2 %}-->
+<!--                                            <a href="#" class="v_img" title="会员V1"><img src="/static/images/2.png"></a>                                           -->
+<!--                                            {% elif u_id == 3 %}-->
+<!--                                            <a href="#" class="v_img" title="会员V2"><img src="/static/images/3.png"></a>-->
+<!--                                            {% endif %}-->
+                                            <!--<a href="/" class="v_img"><img src="/static/images/3.png"></a> -->
+<!--                                        </div>-->
+
+<!--                            <div class="header-right">-->
+
+
+
+<!--                                <div class="navgition-header">-->
+
+
+<!--                                    <a href="{{ url('index_qt:index_qt') }}" class="index">研究项目</a>-->
+<!--                                    <a href="{{ url('index_qt:video_course') }}" class="index">视频教程</a>-->
+
+
+<!--                                    <a href="javascript:;" class="help-control">帮助中心</a>-->
+<!--                                    <a href="{{ url('verifications:recharge') }}" class="help-control">会员中心</a>-->
+
+
+
+<!--                                </div>-->
+
+
+
+<!--                                <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">-->
+
+
+
+<!--                                    <li class="dropdown dropdown-profile">-->
+
+
+
+<!--                                        <a href="javascript:void(0)" data-toggle="dropdown">-->
+
+
+
+<!--                                            <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>-->
+
+
+
+<!--                                            {% if user.image_tou %}-->
+
+
+
+<!--                                                <img class="img-avatar img-avatar-48"-->
+
+<!--                                                     src="/static/upload/user_images/{{ user.image_tou }}"-->
+
+<!--                                                     alt="User profile pic"/>-->
+
+
+
+<!--                                            {% else %}-->
+
+
+
+<!--                                                <img class="img-avatar img-avatar-48"-->
+
+<!--                                                     src="{{ static('index/img/avatars/avatar3.jpg') }}"-->
+
+<!--                                                     alt="User profile pic"/>-->
+
+
+
+<!--                                            {% endif %}-->
+
+
+
+<!--                                        </a>-->
+
+<!--                                        <ul class="dropdown-menu dropdown-menu-right">-->
+
+
+
+<!--                                            <li>-->
+
+
+
+<!--                                                <a href="{{ url("index_qt:user") }}">个人中心</a>-->
+
+
+
+<!--                                            </li>-->
+
+
+
+<!--                                            <li>-->
+
+
+
+<!--                                                <a href="{{ url("index_qt:logout") }}">退出</a>-->
+
+
+
+<!--                                            </li>-->
+
+
+
+<!--                                        </ul>-->
+
+
+
+<!--                                    </li>-->
+
+
+
+<!--                                </ul>-->
+
+
+
+<!--                            </div>-->
+
+
+
+<!--                        </div>-->
+
+
+
+                    
+
+
+
+                    <!-- .navbar-right -->
+
+
+
+<!--                </div>-->
+
+
+
+                <!-- .container-fluid -->
+
+
+
+<!--            </nav>-->
+
+
+
+            <!-- .navbar-default -->
+
+
+
+<!--        </header>-->
+<div class="content">
+    
+    <div class="vipSecondBanner">
+         <!--<img src="//s.3dxy.com/image/pc/index/jifenchongzhi/bg_jf.jpg" alt="" /> -->
+        <div class="vipSecondBannerText"><p>针对临床研究人员的一站式医学统计分析</p>
+            <p>充值会员</p></div>
+    </div>
+    <div class="vip-content-title"><strong>VIP</strong>套餐任意选</div>
+    <!--<div class="dvip_top">-->
+    <!--    <p class="p1">会员定价</p>-->
+    <!--    <p class="p2">针对临床研究人员的一站式医学统计分析平台-提供数据治理、数据统计、机器学习分</p>-->
+    <!--    <p class="p3">析、智能文章生成服务。</p>-->
+    <!--</div>-->
+    <div id="vip-content-box">
+        <div class="VIPNewBox">
+            <div class="VIPNewBoxMain" style="position: relative;">
+                <form>
+                    {{ csrf_input }}
+                    <!-- <div class="VIPNewTit"><h2>请选择积分充值套餐</h2></div> -->
+                    <ul class="VIPNewList">
+                        <!--<li class="VIPNewLi checkeds tj" name="58">-->
+                        <!--    <div class="tcTop"><span class="jiacu">V1</span>&nbsp会员-->
+                        <!--    </div><!--<div class="vipSecondPrivilege">限时送VIP1特权</div>-->
+                        <!--    <div class="vipSecondLine"></div>-->
+                        <!--    <div class="vipSecondDiscounts">省&nbsp2&nbsp元</div>-->
+                        <!--    <div class="vipSecondPrice"><span>￥58</span></div>-->
+                        <!--    <input type="hidden" value="1"><!-- <i class="vipSecondRecommend"></i> --><!-- 隐藏的ID值 -->
+                        <!--</li>-->
+                        <!-- VIPNewLi -->
+                        {% if vip_grade == 1 %}
+                            <li class="VIPNewLi checkeds tj" name="10">
+                                <div class="tcTop">
+                                    <span class="jiacu">V1</span>&nbsp会员/天
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP2特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp2&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span id="price" name="10">￥10</span>
+                                </div>
+                                <input type="hidden" value="2"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi" xz="0" name="129">
+                                <div class="tcTop">
+                                    <span class="jiacu">v2</span>&nbsp会员/月
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP3特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp32&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥129</span>
+                                </div>
+                                <input type="hidden" value="3"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi" name="1294">
+                                <div class="tcTop">
+                                    <span class="jiacu">v3</span>&nbsp会员/年
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP4特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp106&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥1294</span>
+                                </div>
+                                <input type="hidden" value="4"><!-- 隐藏的ID值 -->
+                            </li>
+                        {% elif vip_grade == 2 %}
+                            <li class="VIPNewLi checkeds tj" name="10">
+                                <div class="tcTop">
+                                    <span class="jiacu">V1</span>&nbsp会员/天(续费)
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP2特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp2&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span id="price" name="10">￥10</span>
+                                </div>
+                                <input type="hidden" value="2"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi" xz="0" name="129">
+                                <div class="tcTop">
+                                    <span class="jiacu">v2</span>&nbsp会员/月
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP3特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp31&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥129</span>
+                                </div>
+                                <input type="hidden" value="3"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi" name="1294">
+                                <div class="tcTop">
+                                    <span class="jiacu">v3</span>&nbsp会员/年
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP4特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp106&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥1294</span>
+                                </div>
+                                <input type="hidden" value="4"><!-- 隐藏的ID值 -->
+                            </li>
+                        {% elif vip_grade == 3 %}
+                            <li class="jinyong" name="10">
+                                <div class="tcTop">
+                                    <span class="jiacu">V1</span>&nbsp会员/天
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP2特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp2&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span id="price" name="10">￥98</span>
+                                </div>
+                                <input type="hidden" value="2"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi checkeds tj" xz="0" name="129">
+                                <div class="tcTop">
+                                    <span class="jiacu">v2</span>&nbsp会员/月（续费）
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP3特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp32&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥129</span>
+                                </div>
+                                <input type="hidden" value="3"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi" name="1294">
+                                <div class="tcTop">
+                                    <span class="jiacu">v3</span>&nbsp会员/年
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP4特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp102&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥1294</span>
+                                </div>
+                                <input type="hidden" value="4"><!-- 隐藏的ID值 -->
+                            </li>
+                        {% elif vip_grade == 4 %}
+                            <li class="jinyong" name="10">
+                                <div class="tcTop">
+                                    <span class="jiacu">V1</span>&nbsp会员/天
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP2特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp2&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span id="price" name="10">￥10</span>
+                                </div>
+                                <input type="hidden" value="2"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="jinyong" xz="0" name="129">
+                                <div class="tcTop">
+                                    <span class="jiacu">v2</span>&nbsp会员/月
+                                </div>
+                                <!--<div class="vipSecondPrivilege">限时送VIP3特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp32&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥129</span>
+                                </div>
+                                <input type="hidden" value="3"><!-- 隐藏的ID值 -->
+                            </li><!-- VIPNewLi -->
+                            <li class="VIPNewLi checkeds tj" name="1294">
+                                <div class="tcTop">
+                                    <span class="jiacu">v3</span>&nbsp会员/年(续费)
+                                </div><!--<div class="vipSecondPrivilege">限时送VIP4特权</div>-->
+                                <div class="vipSecondLine"></div>
+                                <div class="vipSecondDiscounts">省&nbsp106&nbsp元</div>
+                                <div class="vipSecondPrice">
+                                    <span>￥1294</span>
+                                </div>
+                                <input type="hidden" value="4"><!-- 隐藏的ID值 -->
+                            </li>
+                        {% endif %}
+                            
+                    </ul><!-- VIPList -->
+                    <div class="clearfloat"></div>
+                    <div class="VIPNewPay">
+                        <div class="VIPNewPayTop"><a href="javascript:;" class="VIPNewPayWx checked" name='1'><p>微信支付</p>
+                            <i></i></a><a href="javascript:;" class="VIPNewPayZfb" name='2'><p>支付宝支付</p><i></i></a></div>
+                        <p class="VIPNewPayBtn"><a href="#" id="recharge">立即充值</a></p>
+
+                        <!-- <div class="VIPNewPayTips"><p>充值积分不含任何VIP权限，如您想体验更多VIP权限，请点 <a href="//www.3dxy.com/Vip/" target="_blank">开通VIP</a></p><p>如有充值问题可随时联系我们：</p><p>客服QQ：2793779646</p></div> -->
+                        <!-- <div class="clearfloat"></div> --></div><!-- VIPNewPay -->
+                </form>
+            </div><!-- VIPNewCzsmBox -->
+            <div class="VIPNewCzsmBox">
+                <div class="VIPNewCzsm"><h3>充值说明</h3>
+                    <!--<p>1、VIP1、VIP2、VIP3、VIP4、VIP5、VIP6，可分别获得一年内享10、20、50、100、200、400个免费模型下载/日，云E库内下载数量翻倍；一年内享材质与光域网免费下载。</p>-->
+                    <p>1、充值积分不含任何VIP权限，如您想体验更多VIP权限。</p>
+                    <!--<p>2、发票规则：充值支付金额累计达到100元（含）以上可开具发票；</p>--><!--<p>4、充值VIP5、VIP6套餐享一年内全站模型9折下载；</p>--><p>
+                        2、充值积分永久有效，不可退款</p>
+                    <!--<p>3、发票规则：充值支付金额累计达到100元（含）以上可开具发票；如果开票金额在100元以下，需要您垫付快递费用</p>-->
+                    <p>3、如有充值问题可随时联系客服公众号</p></div>
+            </div><!-- VIPNewCzsmBox -->
+            <!-- <div class="lianjie"><div class="ljnr"><div class="box1"><p class="p1">充值积分永久有效</p><p class="p2">一次充值积分</p><p class="p2">永不过期</p><p class="p2">可用于下载本站所有付费模型</p></div><div class="box2"><p class="p1">优享高精模型</p><p class="p2">最新模型任你下载</p><p class="p2">你宝贵的时间</p><p class="p2">应该用于创作更好的设计</p></div><div class="box3"><p class="p1 pbtn"><button class="btn"><a href="https://www.3dxy.com/Vip/">立即加入 VIP </a></button></p><p class="p2">收费模型享 8 折优惠</p><p class="p2">每日签到得 10 积分</p><p class="p2">海量 VIP 专属资源随意下载</p></div></div></div> -->
+        </div>
+    </div>
+</div><!--content--><!-- vipNewPopup -->
+<div class="vipNewPopup">
+    <div class="vipNewPopupSuccess"><i onclick="vipNewPopupCloseFun()"></i>
+        <div>支付成功</div>
+        <span>页面正在跳转至模型下载页...</span></div>
+    <div class="vipNewPopupBg" onclick="vipNewPopupCloseFun()"></div>
+</div>
+<div class="WeChatPopup">
+    <div class="VIPNewPayBox VIPNewPayWeChat"><i onclick="vipNewPopupCloseFun()"></i>
+        <div class="VIPNewPayleft">
+            <div class="VIPNewPayCode">
+                <div class="vipCodeLoading"></div>
+                <img src="" alt="扫一扫支付" class="VIPNewPayCodeImg"/></div>
+            <div class="vipWechatIcon"><span></span>
+                <p class="VIPNewPayText">微信扫码完成支付 <br/>充值后立即到账</p>
+                <div class="clearfloat"></div>
+            </div>
+        </div>
+    </div>
+    <div class="vipNewPopupBg" onclick="vipNewPopupCloseFun()"></div>
+</div>
+
+<!--<div class="footer">-->
+<!--    <div class="footerInfoBg">-->
+<!--        <div class="footerInfo">-->
+<!--            <div class="footerInfoCont fl"><img src="//s.3dxy.com/201512/image/erweima_wap.jpg" alt="3D学苑手机版"/>-->
+<!--                <div class="title"><h3>3D学苑手机版</h3>-->
+<!--                    <p>充实碎片化时间</p>-->
+<!--                    <p>随时收集3d素材，随地学习建模技巧</p></div>-->
+<!--                <div class="clearfloat"></div>-->
+<!--            </div>-->
+<!--            <div class="footerInfoCont fr"><img src="//s.3dxy.com/201512/image/dyh-20180903.jpg" alt="3D学苑订阅号"><img-->
+<!--                    src="//s.3dxy.com/201512/image/new-erweima20180903.jpg" alt="3D学苑官方微信"/>-->
+<!--                <div class="title"><h3>3D学苑官方微信</h3>-->
+<!--                    <p>扫描二维码</p>-->
+<!--                    <p>更多精彩信息与你一同分享</p></div>-->
+<!--                <div class="clearfloat"></div>-->
+<!--            </div>-->
+<!--            <div class="clearfloat"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="footerContBg">-->
+<!--        <div class="footerCont"><p class="footerLink"><a href="//www.3dxy.com/aboutUs">关于我们</a><span>|</span><a-->
+<!--                href="//www.3dxy.com/linkUs">联系我们</a><span>|</span><a-->
+<!--                href="//www.3dxy.com/copyright">版权说明</a><span>|</span><a-->
+<!--                href="//www.3dxy.com/3dmodel/">最新素材</a><span>|</span><a-->
+<!--                href="//www.3dxy.com/3dmax/">3D教程</a><span>|</span><a-->
+<!--                href="//www.3dxy.com/sitemap.html">网站地图</a><span>|</span><a href="//www.3dxy.com/zt/list1.html">模型专题</a><span>|</span><a-->
+<!--                href="//www.3dxy.com/wenda/">3D问答</a></p>-->
+<!--            <p class="footerBottom">客服邮箱：-->
+<!--                <a href="mailto:sucai@3dxy.com" target="_blank">sucai@3dxy.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&copy;&nbsp;-->
+<!--                2014-2019 3DXY.com , All Rights Reserved&nbsp;&nbsp;&nbsp;&nbsp; 冀ICP备19004785号-1</p>-->
+<!--            <p>免责声明：本网站模型由用户自行上传，如权利人发现存在误传其作品情形，请及时与本站联系。</p></div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="gotopBox"></div>-->
+<span class="none"><script type="text/javascript"
+                           src="//s.3dxy.com/cache/201906131708/201806/js/index/ztFooter.js"></script></span>
+<script src="//s.3dxy.com/assets/src/pc/js/VipSecond/VipSecond.js" type="text/javascript"></script>
+<script>
+    window.onload = function () {
+        var lis = $(".VIPNewList li");
+        var price = $(".VIPNewList li").attr('name')
+        for (var i = 0; i < lis.length; i++) {
+            (function (i) {
+                lis[i].addEventListener('click', function () {
+                    price = $(this).attr("name");
+                }, false);
+
+            }(i))
+        }
+        // var pay_mothd = $(".VIPNewPayTop a").attr('name');
+        var divs = $(".VIPNewPayTop a");
+        var pay_mothd = 1
+        for (var i = 0; i < divs.length; i++) {
+            (function (i) {
+                divs[i].addEventListener('click', function () {
+                    pay_mothd = $(this).attr("name");
+                    console.log(pay_mothd);
+                }, false);
+
+            }(i))
+        }
+        // TODO 充值按钮点击
+        $("#recharge").click(function (e) {
+            var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+            if (price == null) {
+                alert('请选择要充值的积分');
+            }
+            var param = {
+                'pay_method':pay_mothd,
+                'price': price,
+                'csrfmiddlewaretoken': csrfmiddlewaretoken,
+            };
+            // 发起注册请求
+            // 发起登录请求
+            $.ajax({
+                url: '/recharge/',
+                type: "post",
+                dataType: 'json',
+                contentType: "application/json",
+                cache: false,
+                data: JSON.stringify(param),
+                headers: {
+                    'X-CSRFToken': $.cookie('csrftoken')
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        window.location.replace(data.alipay_url);
+                    } else {
+                        alert(data.error);
+                    }
+                }, error: function (errorMsg) {
+                    //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                }
+
+            })
+
+        });
+    };
+
+
+</script>
+</body>
+</html>

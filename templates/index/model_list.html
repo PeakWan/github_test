@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>临床研究模型库 - 个人中心</title>
+    <link rel="stylesheet" href="{{ static('index/js/layui/css/layui.css') }}">
+    <script src="{{ static('index/js/layui/layui.js') }}"></script>
+    <script src="{{ static('index/js/vue/vue.js') }}"></script>
+	<style>
+        a {
+            text-decoration: none;
+        }
+        body {
+            width: 1200px;
+            margin: 0 auto;
+        }
+		.page-top {
+		    box-sizing: border-box;
+			width: 100%;
+			height: 30px;
+			padding: 0 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		
+		.importData-box {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    right: 0;
+		    bottom: 0;
+		    z-index: 100000;
+		    background-color: rgba(0,0,0,.5);
+		    display: flex;
+		    justify-content: center;
+		    /*align-items: center;*/
+		    overflow-y: auto;
+		}
+		.model-form {
+		    width: 722px;
+		    background-color: white;
+		    padding-left: 0;
+		    border-radius: 5px;
+		    box-shadow: 1px 1px 6px 0 rgba(255,255,255,0.4);
+			margin-top: 0;
+			overflow-y: auto;
+		}
+		.model-form-head {
+		    margin-bottom: 56px;
+		    height: 58px;
+            padding: 0 24px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+		}
+		.model-form-head h1 {
+	        font-size: 16px;
+            color: #272727;
+            font-weight: normal;
+		}
+		.model-form-row {
+		    width: 566px;
+		    margin: 0 auto;
+	        display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 22px;
+		}
+		.model-form-row input[type=text] {
+		    width: 468px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            border: solid 1px #d9d9d9;
+            display: block;
+            outline: none;
+            padding-left: 10px;
+		}
+		.model-form-row input[type=radio] {
+		    margin: 0 5px;
+		}
+		.model-form-row input[type=radio] + span {
+		    margin-right: 10px;
+		}
+		.model-form-row textarea {
+		    width: 468px;
+            height: 115px;
+            resize: none;
+            background-color: #ffffff;
+            border-radius: 5px;
+            border: solid 1px #d9d9d9;
+            outline: none;
+            padding: 10px 0 0 10px;
+		}
+		.model-form-row .input-file {
+		    box-sizing: border-box;
+	        width: 104px;
+            height: 104px;
+            background-color: #fafafa;
+            border-radius: 5px;
+            border: solid 1px #d9d9d9;
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+		}
+		.model-form-row .input-file p {
+		    font-size: 14px;
+            color: #d9d9d9;
+		}
+		.model-form-row input[type=file] {
+		    position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+		}
+		.model-form-foot {
+		    box-sizing: border-box;
+		    margin-top: 47px;
+            height: 52px;
+            border-top: 1px solid #d9d9d9;
+            padding: 10px 14px 10px 0;
+		}
+		.model-form-foot button {
+	        float: right;
+            display: block;
+            background-color: #fff;
+            border: 1px solid #a8a8a8;
+            font-size: 14px;
+            color: #5F5F5F;
+            width: 63px;
+            height: 32px;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+		}
+		.model-form-foot button:nth-child(1) {
+		    background-color: #0F7FF4;
+            margin-left: 8px;
+            color: #fff;
+            border: none;
+		}
+		.form-img{
+		    display: flex;
+		    flex-wrap: wrap;
+		}
+		.form-img>div{
+		    width: 100px;
+		    height: 100px;
+		    box-sizing: border-box;
+            background-color: #fafafa;
+            border-radius: 5px;
+            border: solid 1px #d9d9d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            position: relative;
+            margin-top: 5px;
+            margin-bottom: 5px;
+		}
+		.form-img>.item img{
+		    width:100%;
+		    height: 100%;
+		    border-radius: 5px;
+		}
+		.form-img>.item svg{
+		    width:16px;
+		    height: 16px;
+		    position: absolute;
+		    top: -8px;
+		    right: -8px;
+		    cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<!-- 本页 html css js 全部写在本文件 -->
+	<div class="page-top">
+		<div>用户模型</div>
+		<div>
+			<a>帮助文档</a>
+			<a>常见问题</a>
+		</div>
+	</div>
+    <table class="layui-hide" id="models" lay-filter="models"></table>
+	
+	<!-- 导入模型 form -->
+	<div v-show="importDataForm" class="importData-box" id="importData-box" style="display:none">
+	    <form action="" class="model-form special">
+	        <div class="model-form-head">
+	            <h1 v-if="id === ''">新增项目</h1>
+	            <h1 v-else>编辑项目</h1>
+	        </div>
+    	    {{ csrf_input }}
+    		<!-- 模型名称 -->
+    	    <div class="model-form-row">
+                <span class="must">项目名称：</span>
+    				<input type="text" v-model="importData.model_name" placeholder="请输入模型名称" autocomplete="off" class="model-input">
+            </div>
+		
+    	    <div class="model-form-row">
+                <span class="must">模型说明：</span>
+    				<textarea  v-model="importData.background" placeholder="请输入模型说明" class="model-textarea"></textarea>
+            </div>
+            <div class="model-form-row">
+                <span class="must" style="display:inline-block;width:70px;text-align:right;">链接：</span>
+    				<input type="text" name="url" v-model="importData.url" placeholder="请输入链接" autocomplete="off" class="model-input">
+            </div>
+            <div class="model-form-row">
+                <span class="must">模型人数：</span>
+    				<input type="text" name="number" v-model="importData.number" placeholder="请输入模型人数" autocomplete="off" class="model-input">
+            </div>
+    	    <div class="model-form-row">
+                <span class="must">版本别名：</span>
+    				<input type="text" name="versions" v-model="importData.versions" placeholder="请输入版本别名" autocomplete="off" class="model-input">
+            </div>
+            
+    	    <div class="model-form-row">
+                <span class="must">模型方法：</span>
+    				<input type="text" name="outline" v-model="importData.outline" placeholder="请输入模型方法" autocomplete="off" class="model-input">
+            </div>
+            
+    	    <div class="model-form-row">
+                <span class="must">模型类型：</span>
+    			    <input type="radio" v-model="importData.model_type" value="临床路径模型" ><span>临床路径模型</span>
+    			    <input type="radio" v-model="importData.model_type" value="预测模型" ><span>预测模型</span>
+            </div>
+            
+    	    <div class="model-form-row" style="transform:translateX(-28px)">
+                <span class="must" style="flex-shrink:0">上传分析结果：</span>
+                <div class="form-img">
+                    <div v-for="(item,index) in importData.model_imgs" class="item">
+                        <img :src="item" alt="" />
+                        <svg t="1620918032072" class="icon" @click="handleDelete(index)" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2526" width="32" height="32"><path d="M512.00032 0.00064a511.35968 511.35968 0 0 0-511.99968 511.99968c0 283.327823 228.671857 511.99968 511.99968 511.99968s511.99968-228.671857 511.99968-511.99968-228.671857-511.99968-511.99968-511.99968z m215.039866 727.039546a37.119977 37.119977 0 0 1-51.199968 0L512.00032 563.200288l-163.839898 163.839898a37.119977 37.119977 0 0 1-51.199968 0 37.119977 37.119977 0 0 1 0-51.199968L460.800352 512.00032 296.960454 348.160422a37.119977 37.119977 0 0 1 0-51.199968 37.119977 37.119977 0 0 1 51.199968 0L512.00032 460.800352l163.839898-163.839898a37.119977 37.119977 0 0 1 51.199968 0 37.119977 37.119977 0 0 1 0 51.199968L563.200288 512.00032l163.839898 163.839898a31.99998 31.99998 0 0 1 0 51.199968z" fill="#FF464E" p-id="2527"></path><path d="M756.672167 756.672167a42.239974 42.239974 0 0 1-58.239964 0L512.00032 570.240284l-186.431883 186.431883a42.239974 42.239974 0 0 1-58.239964 0 42.239974 42.239974 0 0 1 0-58.239964L453.760356 512.00032 267.328473 325.568437a42.239974 42.239974 0 0 1 0-58.239964 42.239974 42.239974 0 0 1 58.239964 0L512.00032 453.760356l186.431883-186.431883a42.239974 42.239974 0 0 1 58.239964 0 42.239974 42.239974 0 0 1 0 58.239964L570.240284 512.00032l186.431883 186.431883a36.415977 36.415977 0 0 1 0 58.239964z" fill="#FFFFFF" p-id="2528"></path></svg>
+                    </div>
+                    <div>
+                        
+                    <div>
+                        <svg t="1609143595994" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2507" width="16" height="16"><path d="M874.666667 490.666667H533.333333V149.333333a21.333333 21.333333 0 0 0-42.666666 0v341.333334H149.333333a21.333333 21.333333 0 0 0 0 42.666666h341.333334v341.333334a21.333333 21.333333 0 0 0 42.666666 0V533.333333h341.333334a21.333333 21.333333 0 0 0 0-42.666666z" p-id="2508"></path></svg>
+                    </div>
+                    <!--<p v-text="importData.model_imgs"></p>-->
+    				<input type="file" id="img_list" v-on:change="uploadimg">
+                    </div>
+                    
+                </div>
+            </div>
+    	    <div class="model-form-row">
+                <span class="must">上传文件：</span>
+                <div class="input-file">
+                    <div>
+                        <svg t="1609143595994" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2507" width="16" height="16"><path d="M874.666667 490.666667H533.333333V149.333333a21.333333 21.333333 0 0 0-42.666666 0v341.333334H149.333333a21.333333 21.333333 0 0 0 0 42.666666h341.333334v341.333334a21.333333 21.333333 0 0 0 42.666666 0V533.333333h341.333334a21.333333 21.333333 0 0 0 0-42.666666z" p-id="2508"></path></svg>
+                    </div>
+                    <p v-text="importData.model_files"></p>
+    		        <input type="file" id="file_list" v-on:change="uploadfile">
+                </div>
+            </div>
+            
+            <div class="model-form-foot">
+    			<button type="button" class="model-btn" id="sc_btn">立即提交</button>
+    			<button type="button" class="model-btn model-btn-primary" @click="importDataForm = false" id="quxiao_btn">取消</button>
+            </div>
+	    </form>
+	</div>
+	
+
+    <script type="text/html" id="headLeftToolbar">
+      <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="importmodel">导入模型</button>
+      </div>
+    </script>
+     
+    <script type="text/html" id="colToolbar">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+	
+    <script>
+        layui.use('table', function(){
+        //
+          var table = layui.table,
+                $=layui.$;
+          table.render({
+            elem: '#models'
+            ,url:'/model/data/'
+            ,toolbar: '#headLeftToolbar' //开启头部工具栏，并为其绑定左侧模板
+            ,page: true
+            ,parseData:function(res){
+                console.log(res)
+                return{
+                    "code":0,
+                    "count":res.context.length,
+                data:res.context.info
+                    
+                }
+            }
+            ,defaultToolbar: [//自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+				{
+					title: '搜索'
+					,layEvent: 'search'
+					
+				}
+				,{
+					title: '刷新'
+					,layEvent: 'refresh'
+					,icon: 'layui-icon-refresh'
+				}
+			]
+            ,title: '用户数据表'
+            ,cols: [[
+              {field:'model_name', title:'模型名称', width:'22%'}
+              ,{field:'version', title:'版本数', width:'13%'}
+              ,{field:'model_type', title:'模型类型', width:'13%'}
+              ,{field:'model_create_time', title:'创建时间', width:'20%', sort: true}
+              ,{field:'model_last_time', title:'更新时间', width:'20%', sort: true}
+              ,{fixed: 'right', title:'操作', toolbar: '#colToolbar', width:'13%'}
+            ]]
+          });
+          
+          //头工具栏事件
+          table.on('toolbar(models)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+			    case 'importmodel':
+			        MODEL_LIST_FORM.id = '';
+					MODEL_LIST_FORM.importDataForm = true
+              break;
+              
+              //自定义头工具栏右侧图标
+              case 'search':
+                layer.alert('搜索框');
+              break;
+              case 'refresh':
+                layer.alert('刷新按钮');
+              break;
+            };
+          });
+          
+          //监听行工具事件
+          table.on('tool(models)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+              layer.confirm('真的删除行么', function(index){
+                obj.del();
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                var sendData = {
+                    ID: data.ID
+                }
+                $.ajax({
+                    url: '/model/delete/',
+                    type: 'POST',
+                    data: JSON.stringify(sendData),
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken
+                    },
+                    processData: false,
+                    success: function (response) {
+                        
+                        if (response.code == '200') {
+                            console.log(response);
+                            // 刷新当前页面
+                            location.reload()
+                        }else {
+                            alert(response.error);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+              })
+                layer.close(index);
+                
+                //
+              });
+            } else if(obj.event === 'edit'){
+            //   layer.prompt({
+            //     formType: 2
+            //     ,value: data.email
+            //   }, function(value, index){
+            //     obj.update({
+            //       email: value
+            //     });
+            //     layer.close(index);
+                
+            //     //
+            //   });
+                for(key in MODEL_LIST_FORM.importData){
+                    MODEL_LIST_FORM.importData[key] = data[key] || data['model_' + key]
+                }
+                MODEL_LIST_FORM.importData['model_imgs'] = data.img.split(',');
+                MODEL_LIST_FORM.importDataForm = true
+                MODEL_LIST_FORM.id = data.ID
+            }
+          });
+		
+		  var MODEL_LIST_FORM = new Vue({
+            el: "#importData-box",
+            data:{
+                importDataForm: false,
+                id: '',
+                importData: {
+                    model_name: null,
+                    background: null,
+                    outline: null,
+                    url:null,
+                    number: null,
+                    model_type: null,
+                    versions: null,
+                    model_imgs: [],
+                    model_files: []
+                }
+            },
+            methods: {
+                upload(file,callback) {
+                    var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                    var sendData = new FormData()
+                    sendData.append('img',file)
+                    $.ajax({
+                        url: '/model/update_img/',
+                        type: 'POST',
+                        data: sendData,
+                        headers: {
+                            'X-CSRFToken': csrfmiddlewaretoken
+                        },
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            
+                            if (response.code == '200') {
+                                callback(response.context)
+                            }else {
+                                alert(response.error);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                  })
+                },
+                handleDelete(i){
+                    const path = this.importData.model_imgs[i];
+                    this.importData.model_imgs.splice(i, 1); 
+                    var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                    $.ajax({
+                        url: '/model/delete_img/',
+                        type: 'POST',
+                        data: JSON.stringify({path}),
+                        contentType: "application/json; charset=utf-8",
+                        headers: {
+                            'X-CSRFToken': csrfmiddlewaretoken
+                        },
+                        processData: false,
+                  })
+                },
+                uploadimg: function(e) {
+                    // MODEL_LIST_FORM.importData.model_imgs = e.target.files[0].name
+                    if(e.target.files.length > 0) {
+                        this.upload(e.target.files[0],(path) => {
+                            this.importData.model_imgs.push(path)
+                        })
+                    }
+                },
+                uploadfile: function(e) {
+                    MODEL_LIST_FORM.importData.model_files = e.target.files[0].name
+                }
+            }
+        })
+		
+		  document.getElementById('sc_btn').addEventListener('click',function() {
+		      var isAdd = MODEL_LIST_FORM.importDataForm = true
+    	      var sendData = new FormData()
+    	      var temp_imgs = document.getElementById('img_list').files[0]
+    	      var temp_files = document.getElementById('file_list').files[0]
+    	      sendData.append('model_name',MODEL_LIST_FORM.importData.model_name)
+    	      sendData.append('background',MODEL_LIST_FORM.importData.background)
+    	      sendData.append('outline',MODEL_LIST_FORM.importData.outline)
+    	      sendData.append('url',MODEL_LIST_FORM.importData.url)
+    	      sendData.append('number',MODEL_LIST_FORM.importData.number)
+    	      sendData.append('model_type',MODEL_LIST_FORM.importData.model_type)
+    	      sendData.append('versions',MODEL_LIST_FORM.importData.versions)
+    	      sendData.append('model_imgs',MODEL_LIST_FORM.importData.model_imgs)
+    	      sendData.append('model_upfile',temp_files)
+    	      if(MODEL_LIST_FORM.id){
+    	          sendData.append('id',MODEL_LIST_FORM.id)
+    	      }
+    	      var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+    	      $.ajax({
+                    url: MODEL_LIST_FORM.id ? '/model/edit/' : '/model/update/',
+                    type: 'POST',
+                    data: sendData,
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken
+                    },
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        
+                        if (response.code == '200') {
+                            console.log(response);
+                            // 刷新当前页面
+                            location.reload()
+                        }else {
+                            alert(response.error);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+              })
+            
+		  })
+        
+        document.getElementById('quxiao_btn').addEventListener('click',function() {
+	      MODEL_LIST_FORM.importDataForm = false
+          MODEL_LIST_FORM.importData = {
+                    model_name: null,
+                    background: null,
+                    outline: null,
+                    url:null,
+                    number: null,
+                    model_type: null,
+                    versions: null,
+                    model_imgs: [],
+                    model_files: []
+                }
+	    })
+            
+        //
+        });
+    </script>
+</body>
+</html>

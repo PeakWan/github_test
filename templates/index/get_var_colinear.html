@@ -1,0 +1,624 @@
+{% extends 'index/base.html' %}
+{% block title %}
+相关性\共线性变量剔除
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    #rightmodel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 300px;
+        background: #efefef;
+    }
+    #z-nav>li {}
+    #z-nav>li>ul.nav-subnav {
+        /*display: flex;*/
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        /*display: flex;*/
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #header-navbar-collapse>.help-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20%;
+        color: #333333;
+    }
+    #header-navbar-collapse>.index {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 35%;
+        color: #333333;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    #rightmodel>.begin-button {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .select-options {
+        margin-top: 24px;
+    }
+    .select-options form {
+        width: 100%;
+        height: 100%;
+    }
+    .select-options form .select-input:first-child {
+        margin-top: 0;
+    }
+    .select-options form .select-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding: 21px 90px;
+    margin-left: -60px;
+    }
+    .select-options form .select-input span {
+        font-size: 14px;
+    }
+    .select-options form .select-input select {
+        width: 107px;
+        height: 22px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .select-options form .select-input input[type='text'] {
+        outline: none;
+        display: block;
+        width: 107px;
+        height: 25px;
+        font-size: 14px;
+    }
+    .navbar-default>.left-aside {
+        float: left;
+        margin-left: 10px;
+        width: 34%;
+    }
+    .navbar-default>.container-fluid {
+        width: 58%;
+        float: right;
+    }
+    .navbar-default>.left-aside .upload {
+        position: relative;
+        padding: 4px 22px;
+        border: 1px solid #999;
+        text-decoration: none;
+        color: #666;
+        display: inline-block;
+        margin-top: 18px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .navbar-default>.left-aside .upload>.change {
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+    #middle-table {
+        /* flex */
+        display: flex;
+        flex-wrap: wrap;
+        width: 82.2%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
+    }
+    #middle-table>.table-left,
+    .table-right {
+        margin-left: 54px;
+        width: 600px;
+        /* margin: 0 50px; */
+        box-sizing: border-box;
+        border-top: none;
+        padding: 30px 20px;
+    }
+    #middle-table>.table-left1,
+    .table-right1 {
+        width: 600px;
+        margin-left: 54px;
+        box-sizing: border-box;
+        border-top: none;
+        padding: 30px 20px;
+    }
+    #middle-table>.table-right {
+        margin-left: 50px;
+    }
+    #table-right {
+        margin-top: -24px;
+    }
+    #table-right1 {
+        margin-top: -22px;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    #middle-table>.accrow {
+        margin-left: 29px;
+        font-size: 32px;
+    }
+    .select-options form .select-input #password {
+        margin-left: 52px;
+    }
+    .select-options form .select-input #phone {
+        margin-left: 52px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 10%;
+        left: 15%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 5%;
+        left: 21%;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 原始分类数数据 */
+    #front {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #fronts {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 原始分类数数据 */
+    #original {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #originals {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    button, input, optgroup, option, select, textarea{
+        font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+    font-size: 12px;
+    padding: 0px 35px 5px 0px;
+    border: 1px solid #c0c5ff;
+    }
+    
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+		<div id="rightmodel">
+			<h1>变量选择</h1>
+			<div class="select-options">
+				<form action="" method="post">
+				    <div class="posirelative select-out-div">
+						<span>选择所属变量：</span>
+						<select name="" id="s2" class="select">
+							<option value="get_var_colinear" selected>剔除相关性过高变量</option>
+							<option value="get_var_vif">剔除共线性过高变量</option>
+						</select>
+					</div>
+					<div class="select-input">
+						<span>选择阀值：</span>
+						<select name="" id="s1">
+							<option value="0">0.1</option>
+							<option value="1">0.2</option>
+							<option value="2" selected>0.3</option>
+							<option value="3">0.4</option>
+							<option value="4">0.5</option>
+							<option value="5">0.6</option>
+							<option value="6">0.7</option>
+							<option value="7">0.8</option>
+							<option value="8">0.9</option>
+							<option value="9">1.0</option>
+						</select>
+					</div>
+				</form>
+			</div>
+                    {{ csrf_input }}
+			<div class="click-button">
+				<button type="button" class="layui-btn layui-btn-normal layui-btn-radius">原始的数据</button>
+				<button type="button" class="layui-btn layui-btn-normal layui-btn-radius">处理的数据</button>
+			</div>
+			<div class="finnally-button">
+				<button type="button" class="layui-btn layui-btn-danger layui-btn-radius" onclick="login()" id="u_f" name="{{ project_id }}">开始分析
+				</button>
+				<button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="save-jg" onclick="f_save()">结果保存
+				</button>
+			</div>
+		</div>
+		<div id="middle-table">
+			<!-- 表格一 -->
+			<div class="table-left">
+				<p id="front">
+				</p>
+				<div class="table-iu">
+					<table class="layui-hide" id="demo">
+					</table>
+				</div>
+			</div>
+			<!-- 表格二 -->
+			<div class="table-left1">
+				<p id="fronts">
+				</p>
+				<div class="table-iu">
+					<table class="layui-hide" id="demos">
+					</table>
+				</div>
+			</div>
+			<!-- 表格三 -->
+			<div class="table-right" id="table-right">
+				<p id="original">
+				</p>
+				<table class="layui-hide" id="demo1">
+				</table>
+			</div>
+			<!-- 表格四 -->
+			<div class="table-right1" id="table-right1">
+				<p id="originals">
+				</p>
+				<table class="layui-hide" id="demo2">
+				</table>
+			</div>
+		</div>
+		</main>
+{% endblock %}
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+
+{% block js_center %}
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            App.initHelpers('slick');
+        });
+    </script>
+<script>
+    </script>
+<script type="text/javascript">
+        // 第一个表格数据
+        // 行
+        var col = new Array();
+        // data数据
+        var all = new Array();
+        // 第三个个表格 结果数据
+        // 行
+        var resultCol = new Array();
+        // // data数据
+        var resultAll = new Array();
+        // 第二个表格数据
+        // 行
+        var beforeCol = new Array();
+        // data数据
+        var beforeAll = new Array();
+        // 第四个表格数据 结果
+        // 行
+        var afterCol = new Array();
+        // data 数据
+        var afterAll = new Array();
+        function login() {
+            // var options = $("#s1 option:selected").val();//获取当前选择项.
+            // 获取缺乏率
+            // var group_num = document.getElementById("username").value;
+            var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+            ;
+            var project_id = $('#u_f').attr('name');
+            // alert(project_id)
+            var buttonNumber = $('.click-button').find('.opacity').index();
+            // 获取下拉菜单
+            var Select = $("#s1").find("option:selected").text();
+            var Select2 = $("#s2").find("option:selected").val();
+            // alert(333333)
+            // console.log(2233332)
+            var param = {
+                'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                'number': buttonNumber,
+                'thres': Select
+            };
+            $.ajax({
+                url: '/'+Select2+'/' + project_id + '/',
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                cache: false,
+                headers: {
+                    'X-CSRFToken': csrfmiddlewaretoken
+                },
+                data: JSON.stringify(param),
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert(data.error);
+                        // 打印数据
+                        console.dir(data);
+                        var dataText = data.context;
+                        // input_o_desc 表格数据
+                        var input_o_descText = dataText.input_o_desc;
+                        // result_o_descText  结果数据
+                        var result_o_descText = dataText.result_o_desc;
+                        // beforeText 表格数据
+                        var beforeText = dataText.before;
+                        // afterText  结果数据
+                        var afterText = dataText.after;
+                        console.log(111111111111111111111111)
+                        // 判断  表格返回数据时 里面的对象是否为空
+                        if (JSON.stringify(input_o_descText) != "{}") {
+                            // input_o_desc 获取数据  行
+                            for (var i = 0; i < input_o_descText.Listing.length; i++) {
+                                col.push({
+                                    field: input_o_descText.Listing[i].field,
+                                    title: input_o_descText.Listing[i].title,
+                                    minWidth: 100
+                                })
+                            }
+                            // input_o_desc 获取数据  data 表格数据
+                            for (var i = 0; i < input_o_descText.info.length; i++) {
+                                all.push({
+                                    "name": input_o_descText.info[i].name,
+                                    "count": input_o_descText.info[i].count,
+                                    "categorical": input_o_descText.info[i].categorical,
+                                    "highest": input_o_descText.info[i].highest,
+                                    "frequency": input_o_descText.info[i].frequency
+                                })
+                            }
+                        }
+                        if (JSON.stringify(result_o_descText) != "{}") {
+                            // result_o_descText 获取数据  行
+                            for (var i = 0; i < result_o_descText.Listing.length; i++) {
+                                resultCol.push({
+                                    field: result_o_descText.Listing[i].field,
+                                    title: result_o_descText.Listing[i].title,
+                                    minWidth: 100
+                                })
+                            }
+                            // result_o_descText 获取数据  data 表格数据
+                            for (var i = 0; i < result_o_descText.info.length; i++) {
+                                resultAll.push({
+                                    "name": result_o_descText.info[i].name,
+                                    "count": result_o_descText.info[i].count,
+                                    "categorical": result_o_descText.info[i].categorical,
+                                    "highest": result_o_descText.info[i].highest,
+                                    "frequency": input_o_descText.info[i].frequency
+                                })
+                            }
+                        }
+                        if (JSON.stringify(beforeText) != "{}") {
+                            // beforeText 表格数据 行
+                            for (var i = 0; i < beforeText.Listing.length; i++) {
+                                beforeCol.push({
+                                    field: beforeText.Listing[i].field,
+                                    title: beforeText.Listing[i].title,
+                                    minWidth: 100
+                                })
+                            }
+                            // beforeText 表格数据 数据
+                            for (var i = 0; i < beforeText.info.length; i++) {
+                                beforeAll.push({
+                                    "name": beforeText.info[i].name,
+                                    "count": beforeText.info[i].count,
+                                    "unique": beforeText.info[i].unique,
+                                    "top": beforeText.info[i].top,
+                                    "freq": beforeText.info[i].freq
+                                })
+                            }
+                        }
+                        if (JSON.stringify(afterText) != "{}") {
+                            // afterText 表格数据 行
+                            for (var i = 0; i < afterText.Listing.length; i++) {
+                                afterCol.push({
+                                    field: afterText.Listing[i].field,
+                                    title: afterText.Listing[i].title,
+                                    minWidth: 100
+                                })
+                            }
+                            // afterText 表格数据 数据
+                            for (var i = 0; i < afterText.info.length; i++) {
+                                afterAll.push({
+                                    "name": afterText.info[i].name,
+                                    "count": afterText.info[i].count,
+                                    "unique": afterText.info[i].unique,
+                                    "top": afterText.info[i].top,
+                                    "freq": afterText.info[i].freq
+                                })
+                            }
+                        }
+                        // 一表
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            table.render({
+                                elem: '#demo'
+                                , cols: [col]
+                                , data: all,
+                                even: true,
+                                page: true,
+                                limits: [16, 20],
+                                limit: 20,
+                                height: 320
+                            });
+                        });
+                        // 二表
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            table.render({
+                                elem: '#demos'
+                                , cols: [resultCol]
+                                , data: resultAll,
+                                even: true,
+                                page: true,
+                                limits: [16, 20],
+                                limit: 20,
+                                height: 320
+                            });
+                        });
+                        // 三表
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            table.render({
+                                elem: '#demo1'
+                                , cols: [beforeCol]
+                                , data: beforeAll,
+                                skin: 'line',
+                                even: true,
+                                page: true,
+                                limits: [16, 20],
+                                limit: 20,
+                                height: 320
+                            });
+                        });
+                        // 四表
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            table.render({
+                                elem: '#demo2'
+                                , cols: [afterCol]
+                                , data: afterAll,
+                                skin: 'line',
+                                even: true,
+                                page: true,
+                                limits: [16, 20],
+                                limit: 20,
+                                height: 320
+                            });
+                        });
+                        $('.table-html').hide();
+                        // 原始分类数据描述
+                        $("#front").html("原始分类数据描述")
+                        // 结果计量数据描述
+                        $("#fronts").html("结果分类数据描述")
+                        // 结果分类数据描述
+                        $("#original").html("原始计量数据描述")
+                        // 原始计量数据描述
+                        $("#originals").html("结果计量数据描述")
+                        $('#save-jg').attr('name', data.context.project)
+                    } else if (data.code == 1002) {
+                        alert(data.error);
+                    } else {
+                        alert(data.error);
+                    }
+                }, error: function (errorMsg) {
+                    //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                }
+            });
+        }
+        // 结果保存
+        function f_save() {
+            var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+            var project_id = $('#save-jg').attr('name');
+            var param = {
+                'project': project_id,
+                'csrfmiddlewaretoken': csrfmiddlewaretoken,
+            };
+            $.ajax({
+                url: '/save_data/',
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                cache: false,
+                headers: {
+                    'X-CSRFToken': csrfmiddlewaretoken
+                },
+                data: JSON.stringify(param),
+                success: function (data) {
+                    alert(data.error);
+                }, error: function (errorMsg) {
+                    //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    console.log(errorMsg)
+                }
+            });
+        }
+        $(document).ready(function () {
+            $('.click-button .layui-btn-radius').eq(0).addClass('opacity');
+        })
+        // 原始的数据 处理的数据
+        $('.click-button').find('button').click(function () {
+            $(this).addClass('opacity').siblings().removeClass('opacity');
+        })
+    </script>
+{% endblock %}

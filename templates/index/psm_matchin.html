@@ -1,0 +1,246 @@
+{% extends 'index/base.html' %}
+{% block title %}
+PSM倾向性匹配
+{% endblock %}
+{% block choice %}
+<!-- 引入单选框 -->
+<link rel="stylesheet" id="css-s_border" href="{{ static('index/css/ss_border.css') }}"/>
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% block bottom %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/all-common.css') }}" />
+{% endblock %}
+<style>
+    /* input */
+    #balanceInput {
+        text-indent: 2em;
+        width: 140px;
+        height: 40px;
+        border: transparent;
+        border-radius: 5px;
+        margin-left: 8px;
+    }
+    /* 多选框 */
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+        width: 107px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .select-input {
+        text-align: center;
+        margin-top: 35px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 原始分类数数据 */
+    #front {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #fronts {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 原始分类数数据 */
+    #original {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #originals {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    .select-transfer{
+        margin-top: 25px;
+        padding-left: 18px;
+    }
+    .changeInput{
+        width: 100%;
+        text-align: center;
+        margin-top: 25px;
+    }
+     .radioStyle {
+         margin-top: 21px;
+       display: inline-block;
+    }
+ 
+.radioStyle input {
+                        visibility: hidden;
+                  }
+.radioStyle input[type="radio"] + label{
+                                            position: relative;
+                                            cursor: pointer;
+                                        }
+.radioStyle input+label::before{
+            content: '';
+            position: absolute;        /*父元素为label，针对父元素进行绝对定位*/
+            left: -24px;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #999; 
+            background-color: white;
+            border-radius: 50%;        /*圆角边框*/
+        }
+
+/* .radioStyle input:checked+label::before {
+            box-shadow: 0 0 6px #24b7e5;
+        } */
+.radioStyle input:checked+ label::after{
+            content: '';
+            position: absolute;    /*针对label进行绝对定位*/
+            left: -21px;
+            top: 3px;
+            border-radius: 50%;    /*设置圆角*/
+            width: 12px;
+            height: 12px;
+            background: #4e71f2;
+        }
+
+</style>
+{% endblock %}
+{% block main %}
+<!-- End header -->
+<main class="app-layout-content">
+<div id="rightmodel">
+			<h1>变量选择</h1>
+
+{% endblock %}
+{% block main03 %}
+
+<div class="changeInput" id="changeInput">
+    <span>匹 配 比 例：</span>
+    <input type="text" id="balanceInput" placeholder="请输入数字">
+</div>
+<div class="radioStyle">
+        <span style="margin-left:82px;margin-right: 20px;">是否精准匹配</span>
+        <input type="radio" name="precious" id="precious1" value="true">
+        <label for="precious1" style="font-size:15px">是</label>
+        <input type="radio" name="precious" id="precious2" value="false" checked style="margin-left:20px;">
+        <label for="precious2" style="font-size:15px">否</label>
+</div>
+{% endblock %}
+{% block main04 %}
+<div id="middle-table">
+{% endblock %}
+{% block description %}倾向性匹配是队列研究中常用的数据处理方法，常见于巢式队列研究，输入匹配比例，系统会自动根据数据较少的组进行比例匹配。{% endblock %}
+{% block main02 %}
+</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            App.initHelpers('slick');
+        });
+    </script>
+{% endblock %}

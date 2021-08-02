@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" type="text/css" href="/static/index/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/index/css/main.css">
+    <script type="text/javascript" src="/static/index/js/jquery-1.12.4.min.js"></script>
+
+    <script type="text/javascript" src="/static/index/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="/static/index/js/user_pic_info.js"></script>
+{#    <meta http-equiv="refresh" content="20">#}
+</head>
+<body class="inframe_body">
+<form class="pic_info" enctype="multipart/form-data">
+    <h3>头像设置</h3>
+    <div class="form-group" >
+        <label class="label01">当前图像：</label>
+        {% if user.userunionid %}
+            <img src="{{ user.image_tou }}" alt="用户图片"  class="now_user_pic" id="img_user">
+        {% else %}
+            {% if avatar_url %}
+                <img src="/static/upload/user_images/{{ user.image_tou }}" alt="用户图片"  class="now_user_pic" id="img_user">
+            {% else %}
+                <img src="/static/index/images/user_pic.png" alt="用户图片">
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label>上传图像：</label>
+        <input type="file" name="avatar" class="input_file">
+    </div>
+
+    <div class="form-group">
+        {{ csrf_input }}
+        <input type="submit" value="保 存" class="input_sub">
+    </div>
+</form>
+</body>
+</html>

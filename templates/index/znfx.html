@@ -1,0 +1,234 @@
+{% extends 'index/base.html' %}
+{% block title %}
+智能分组分析
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 35px 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .input_fu {
+        text-align: center;
+        margin-top: 20px;
+    }
+    #znfx_input {
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+    .input_fu span{
+        color: #333333;
+        font-weight: bold;
+        font-size: 14px;
+        letter-spacing: 1px;
+        margin-right: 5px;
+    }
+    .form-control-1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 25px;
+    }
+    .form-control-1 select {
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em
+    }
+    .form-control-1 input[type=radio] {
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+        margin-left: 23px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-control-1 label {
+        margin: 0;
+        margin-left: 10px;
+        font-size: 16px;
+    }
+    
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+    <div  class="single_radio">
+        
+        <ul>
+            <li>
+                <input type="radio" name="znfx_Back" id="" class="backwardRadio" value="1" checked="true">
+             <label for="wireBack">Mean±SD</label>
+            </li>
+            
+            <li>
+                <input type="radio" name="znfx_Back" id="" class="backwardRadio" value="2">
+             <label for="steadyBack">Median[Q1-Q3]</label>
+             
+            </li>
+        </ul>
+    </div>
+    <div class="input_fu">
+        <span>分组数:</span>
+        <input type="text" id="znfx_input" placeholder="请输入数字" value="10" oninput="value=value.replace(/[^\d]/g,'')"> 
+    </div>
+    <div class="form-control-1">
+        <div >图片风格：</div>
+        <select name="radio" id="s2" style="width:200px;    margin-right: 11px;">
+            <option value="nejm">NEJM</option>
+            <option value="lancet">LANCET</option>
+            <option value="jama">JAMA</option>
+            <option value="npg">NPG</option>
+        </select>
+    </div>
+
+
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+智能分组分析：分析应变量Y在不同自变量X分组下的均值\中位数变化，可设置分类变量G，展示不同分类G下的变化趋势，平台同时会计算趋势检验P值，观察分组下的趋势是否存在意义，并绘制折点图，右侧参数栏可设置图片风格，提供了四种顶刊配色方案。
+例:以年龄作为分组变量，将年龄分为10组作为X轴，血压作为观测变量Y，性别作为分类变量G，观察不同年龄段的两组性别的血压变化趋势。
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+{% endblock %}

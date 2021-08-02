@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交流区</title>
+    <link rel="stylesheet" href="{{ static('css/community.css') }}" />
+</head>
+<body>
+    <header id="header">
+        <div class="header">
+            <a href="/"><img class="logo" src="{{ static('new_index/images/logo3.png') }}" /></a>
+            <div></div>
+        </div>
+    </header>
+    
+    <main id="main">
+        <img class="fullimg" src="{{ static('images/communi_img_1.png') }}" />
+        <!-- 主体内容 -->
+        <div class="main">
+            <p class="title">我要留言&#160;&#160;&#62;</p>
+            <!-- 回复框 -->
+            <div class="replyBox" :class="{'disabled': login_status == false ? true : false}">
+                <div class="row">
+                    <img class="avatar" :src="get_avatar_url(user_image)" />
+                    <textarea class="textarea" v-model="reply_enter_1"></textarea>
+                    <div class="textarea">
+                        请先<div class="btn dl" @click="show_login = true">登录</div>后发表评论(・ω・)
+                    </div>
+                    <div class="btn" @click="do_reply()">
+                        <span>发表</span>
+                        <span>评论</span>
+                    </div> 
+                </div>
+            </div>
+            <!-- 一级评论框 -->
+            <div class="commentWrap" v-for="item1,index1 in comments">
+                <img class="avatar" :src="get_avatar_url(item1.user)" />
+                <div class="content">
+                    <div class="name"><span v-text="item1.username"></span><img class="vip" /></div>
+                    <div class="text" v-text="item1.text"></div>
+                    <div class="time" v-text="item1.time"></div>
+                    <div class="handle">
+                        <div class="replyBtn" @click="show_reply(item1.id,'')">回复</div>
+                    </div>
+                    <div class="children">
+                        <!-- 二级评论框 -->
+                        <div class="child"  v-for="item2,index2 in item1.subs" v-if="index2 < item1.subs_show">
+                            <div class="content">
+                                <img class="avatar" :src="get_avatar_url(item2.user)" />
+                                <div class="text">
+                                    <p>
+                                        <span style="font-size:12px;" v-html="item2.username + (item2.sub_username !== null ? ' <span style=\'color:#00a1d6;\'>回复</span> ' + item2.sub_username : '')"></span>
+                                        <img class="vip" />
+                                        <span v-text="item2.text"></span>
+                                    </p>
+                                </div>
+                                <div class="time" v-text="item2.time"></div>
+                            </div>
+                            <div class="handle">
+                                <div class="replyBtn" @click="show_reply(item1.id,item2.username)">回复</div>
+                            </div>
+                        </div>
+                        <!-- 查看更多 -->
+                        <div class="more" v-if="item1.subs_show < item1.subs_count">
+                            <span v-text="'共' + item1.subs_count + '条回复，'"></span>
+                            <div class="btn" @click="item1.subs_show += 3">点击查看</div>
+                        </div>
+                        <!--回复框-->
+                        <div class="replyBox" :class="{'disabled': login_status == false ? true : false}" v-if="reply_id == item1.id">
+                            <div class="row">
+                                <img class="avatar" :src="get_avatar_url(user_image)" />
+                                <textarea class="textarea" v-model="reply_enter_2" :placeholder="'回复 ' + reply_username"></textarea>
+                                <div class="textarea">
+                                    请先<div class="btn dl" @click="show_login = true">登录</div>后发表评论(・ω・)
+                                </div>
+                                <div class="btn" @click="do_reply(1)">
+                                    <span>发表</span>
+                                    <span>评论</span>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 分页 -->
+        <div class="pageControl">
+            <div class="next btn" :class="{'disabled':page_current == 1}" @click="prev_page">上一页</div>
+            <div class="flex" v-show="page_current > 4">
+                <div class="page btn" @click="to_page(1)" v-text="1"></div>
+                <span class="btn">...</span>
+            </div>
+            <div class="page btn"
+            v-for="index of page_count" v-text="index"
+            :class="{'active':index == page_current}" 
+            v-if="page_btn_show(index)"
+            @click="to_page(index)"></div>
+            <div class="flex" v-show="page_count - page_current > 3">
+                <span class="btn">...</span>
+                <div class="page btn" @click="to_page(page_count)" v-text="page_count"></div>
+            </div>
+            <div class="next btn" :class="{'disabled':page_current == page_count}" @click="next_page">下一页</div>
+        </div>
+        <!-- 登录框 -->
+        <div class="login-register" style="display: none;" v-show="show_login">
+
+			<div class="container">
+			    <!-- 微信扫码登录 -->
+			    <div class="c" v-show="login_type == 'wx'">
+			        <div class="icon1" @click="login_type = 'pwd'"></div>
+    				<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+    				<div class="qrcode_box">
+    					<iframe v-if="login_type == 'wx'" :src="code_url" frameborder="0" width="430px" height="430px" scrolling="no"></iframe>
+    					<div class="mb" @click="get_wx_qrcode" style="cursor:pointer;" title="刷新二维码"></div>
+    				</div>
+    				<div class="p2">
+    				    <div class="icon3"></div>
+    				    <span>微信扫码登录/注册极智分析</span>
+    				</div>
+			    </div>
+			    <!-- 手机登录 -->
+                <div class="c" v-show="login_type == 'pwd'" style="display:none;">
+			        <div class="icon2" @click="login_type = 'wx'"></div>
+    				<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+    				<div class="form-control tel">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="mobile" placeholder="请输入用户名/手机号" required="required" />
+    				</div>
+    				<div class="form-control pwd">
+    				    <div class="icon"></div>
+    				    <input type="password" v-model="password" placeholder="请输入密码" required="required" />
+    				</div>
+    				<div class="p4">
+    				    <span @click="login_type = 'fgt'">忘记密码</span>
+    				    <span @click="login_type = 'reg'">注册</span>
+    				</div>
+    				<div class="btn" @click="mobilelogin">登录</div>
+                </div>
+			    <!-- 忘记密码 -->
+                <div class="c" v-show="login_type == 'fgt'" style="display:none;">
+    				<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+    				<div class="form-control tel">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="mobile" placeholder="请输入手机号" required="required" />
+    				</div>
+    				<div class="form-control pwd">
+    				    <div class="icon"></div>
+    				    <input type="password" v-model="password" placeholder="请输入密码" required="required" />
+    				</div>
+    				<div class="form-control pwd">
+    				    <div class="icon"></div>
+    				    <input type="password" v-model="password2" placeholder="请再次输入密码" required="required" />
+    				</div>
+    				<div class="form-control yzm">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="sms2" placeholder="请输入验证码" required="required" />
+    				    <div class="get_yzm_btn" v-text="get_sms_count" @click="get_editpwd_sms"></div>
+    				</div>
+    				<div class="p4">
+    				    <span @click="login_type = 'pwd'">手机登录</span>
+    				    <span @click="login_type = 'reg'">注册</span>
+    				</div>
+    				<div class="btn" @click="editpassword">更改密码</div>
+                </div>
+			    <!-- 手机注册 -->
+                <div class="c zc" v-show="login_type == 'reg'" style="display:none;">
+    				<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+    				<div class="form-control tel">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="username" placeholder="请输入用户名" required="required" @blur="check_input('username')" />
+    				    <p class="err_msg" v-text="username_err_msg"></p>
+    				</div>
+    				<div class="form-control tel">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="mobile" placeholder="请输入手机号" required="required" @blur="check_input('mobile')" />
+    				    <p class="err_msg" v-text="mobile_err_msg"></p>
+    				</div>
+    				<div class="form-control pwd">
+    				    <div class="icon"></div>
+    				    <input type="password" v-model="password" placeholder="请输入密码" required="required" @blur="check_input('password')" />
+    				    <p class="err_msg" v-text="password_err_msg"></p>
+    				</div>
+    				<div class="form-control pwd">
+    				    <div class="icon"></div>
+    				    <input type="password" v-model="password2" placeholder="请再次输入密码" required="required" @blur="check_input('password2')" />
+    				    <p class="err_msg" v-text="password2_err_msg"></p>
+    				</div>
+    				<div class="form-control yzm">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="image_code" placeholder="请输入图片验证码" required="required" />
+    				    <p class="err_msg" v-text="image_code_err_msg"></p>
+    				    <img :src="image_code_url" class="get_yzm_btn" @click="get_reg_image" />
+    				</div>
+    				<div class="form-control yzm">
+    				    <div class="icon"></div>
+    				    <input type="text" v-model="sms" placeholder="请输入验证码" required="required" />
+    				    <p class="err_msg" v-text="sms_err_msg"></p>
+    				    <div class="get_yzm_btn" v-text="get_sms_count" @click="get_reg_sms"></div>
+    				</div>
+    				<div class="p4">
+    				    <span @click="login_type = 'pwd'">已有账号，立即登录</span>
+    				</div>
+    				<div class="btn" @click="register">注册</div>
+                </div>
+                <div class="close" @click="show_login = false"></div>
+			</div>
+
+		</div>
+		<!--  -->
+		
+    </main>
+    
+    {{ csrf_input }}
+    
+    <script src="{{ static('index/js/vue-2.5.16.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('js/host.js') }}"></script>
+    <script src="{{ static('js/community.js') }}"></script>
+</body>
+</html>

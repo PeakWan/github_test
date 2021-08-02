@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" type="text/css" href="{{ static('index/css/reset.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('index/css/main.css') }}">
+    
+    <link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}"/>
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}"/>
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+    
+    <!-- header js start -->
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+    <!-- header js end -->
+    
+    <script type="text/javascript" src="{{ static('index/js/jquery-1.12.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('index/js/jquery.form.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('index/js/main.js') }}"></script>
+{#    <meta http-equiv="refresh" content="2">#}
+</head>
+<body>
+<!-- header -->
+    <header class="app-layout-header" style="position:relative;z-index:100;">
+    
+    
+    
+                <nav class="navbar navbar-default">
+    
+                    <div id="logo" class="drawer-header">
+    
+                        <a href="/"><img src="/static/images/logo.jpg"></a>
+                    </div>
+    
+                    <div class="container-fluid">
+    
+    
+    
+                        
+    
+    
+    
+                            <div class="collapse navbar-collapse" id="header-navbar-collapse">
+    
+                                            <div class="HY">
+                                                {% if u_id == 1 %}
+                                                <a href="#" class="v_img" title="普通用户"><img src="/static/images/1.png"></a>
+                                                {% elif u_id == 2 %}
+                                                <a href="#" class="v_img" title="会员V1"><img src="/static/images/2.png"></a>    
+                                                {% elif u_id == 3 %}
+                                                <a href="#" class="v_img" title="会员V2"><img src="/static/images/3.png"></a>
+                                                {% elif u_id == 4 %}
+                                                <a href="#" class="v_img" title="会员V3"><img src="/static/images/4.png"></a>
+                                                {% endif %}
+                                                <!--<a href="/" class="v_img"><img src="/static/images/3.png"></a> -->
+                                            </div>
+    
+                                <div class="header-right">
+    
+    
+    
+                                    <div class="navgition-header">
+    
+    
+                                        <a href="{{ url('index_qt:index_qt') }}" class="index">研究项目</a>
+                                        <a href="{{ url('index_qt:video_course') }}" target="_blank" class="index">视频教程</a>
+    
+    
+                                        <a href="{{ url("index_qt:community") }}" target="_blank" class="help-control">交流区</a>
+                                        <a href="{{ static('instructions.pdf')}}" target="_blank" class="help-control">帮助中心</a>
+                                        <a href="{{ url('verifications:recharge') }}" class="help-control">会员中心</a>
+    
+    
+    
+                                    </div>
+    
+    
+    
+                                    <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+    
+    
+    
+                                        <li class="dropdown dropdown-profile">
+    
+    
+    
+                                            <a href="javascript:void(0)" data-toggle="dropdown">
+    
+    
+    
+                                                <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>
+    
+                                             {% if user.userunionid %}
+                                             <img class="img-avatar img-avatar-48"
+
+                                                     src="{{ user.image_tou }}"
+
+                                                     alt="User profile pic"/>
+                                            {% else %}
+
+
+                                                {% if user.image_tou %}
+    
+    
+    
+                                                    <img class="img-avatar img-avatar-48"
+    
+                                                         src="/static/upload/user_images/{{ user.image_tou }}"
+    
+                                                         alt="User profile pic"/>
+    
+    
+    
+                                                {% else %}
+    
+    
+    
+                                                    <img class="img-avatar img-avatar-48"
+    
+                                                         src="{{ static('index/img/avatars/avatar3.jpg') }}"
+    
+                                                         alt="User profile pic"/>
+    
+    
+    
+                                                {% endif %}
+                                            {% endif %}
+
+    
+    
+                                            </a>
+    
+                                            <ul style="z-index:1000;" class="dropdown-menu dropdown-menu-right">
+    
+    
+    
+                                                <li>
+    
+    
+    
+                                                    <a href="{{ url("index_qt:user") }}">个人中心</a>
+    
+    
+    
+                                                </li>
+    
+    
+    
+                                                <li>
+    
+    
+    
+                                                    <a href="{{ url("index_qt:logout") }}">退出</a>
+    
+    
+    
+                                                </li>
+    
+    
+    
+                                            </ul>
+    
+    
+    
+                                        </li>
+    
+    
+    
+                                    </ul>
+    
+    
+    
+                                </div>
+    
+    
+    
+                            </div>
+    
+    
+    
+                        
+    
+    
+    
+                        <!-- .navbar-right -->
+    
+    
+    
+                    </div>
+    
+    
+    
+                    <!-- .container-fluid -->
+    
+    
+    
+                </nav>
+    
+    
+    
+                <!-- .navbar-default -->
+    
+    
+    
+            </header>
+<div class="conter_con">
+    <div class="user_menu_con fl">
+        <div class="user_center_pic">
+            {% if user.userunionid %}
+                    <img src="{{ user.image_tou }}" alt="用户图片">
+            {% else %}
+                {% if avatar_url %}
+                    <img src="/static/upload/user_images/{{ user.image_tou }}" alt="用户图片">
+                {% else %}
+                    <img src="/static/index/images/user_pic.png" alt="用户图片">
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="user_center_name">{{ user_s }}</div>
+
+        <ul class="option_list">
+            <!--<li class="active"><a href="user_base_info.html" target="main_frame">基本资料</a></li>-->
+            <li><a href="{{ url('index_qt:user_pic') }}" target="main_frame">头像设置</a></li>
+            <!--<li><a href="user_follow.html" target="main_frame">我的关注</a></li>-->
+            <li><a href="{{ url('index_qt:user_pass') }}" target="main_frame">密码修改</a></li>
+
+        </ul>
+    </div>
+
+    <div class="user_con fr">
+        <iframe src="{{ url('index_qt:user_pic') }}" frameborder="0" name="main_frame" class="main_frame"
+                id="main_frame"
+                style="width: 930px; height: 600px;">
+        </iframe>
+
+    </div>
+</div>
+
+<!-- 登录表单 -->
+<form class="login_form_con">
+    <div class="login_form">
+        <div class="login_title">
+            <h3>登 录</h3>
+            <a href="javascript:;" class="shutoff"></a>
+        </div>
+        <div class="form_group">
+            <input type="text" name="username" autocomplete="off">
+            <div class="input_tip">用户名/手机号</div>
+        </div>
+        <div class="form_group">
+            <input type="password" name="password">
+            <div class="input_tip">密码(不少于6位)</div>
+        </div>
+        <input type="submit" name="" value="登 录" class="input_sub">
+        <div class="down_link">还没有账号？<a href="#" class="to_register">立即注册</a></div>
+    </div>
+    <div class="mask"></div>
+</form>
+
+<!-- 注册表单 -->
+<form class="register_form_con">
+    <div class="register_form">
+        <div class="register_title">
+            <h3>注 册</h3>
+            <a href="javascript:;" class="shutoff"></a>
+        </div>
+        <div class="form_group">
+            <input type="text" name="username" autocomplete="off" class="phone_input">
+            <div class="input_tip">手机号</div>
+            <div class="error_tip">手机号不能为空</div>
+        </div>
+        <div class="form_group">
+            <input type="password" name="code_pwd" class="code_pwd">
+            <div class="input_tip">手机验证码</div>
+            <a href="javascript:;" class="get_code">点击获取验证码</a>
+            <div class="error_tip">验证码不能为空</div>
+        </div>
+        <div class="form_group">
+            <input type="password" name="password" class="pass_input">
+            <div class="input_tip">密码(不少于6位)</div>
+            <div class="error_tip">密码不能为空</div>
+        </div>
+        <div class="form_group">
+            <input type="password" name="code_pwd" class="code_pwd">
+            <div class="input_tip">图形验证码</div>
+            <img src="/static/index/images/pic_code.png" class="get_pic_code">
+            <div class="error_tip">图形码不能为空</div>
+        </div>
+
+        <div class="form_group2 clearfix">
+            <input type="checkbox" class="agree_input" checked>
+            <p>同意使用条款，并已阅读"跟帖评论自律管理承诺书"</p>
+            <div class="error_tip">请勾选</div>
+        </div>
+        <input type="submit" name="" value="注 册" class="input_sub">
+        <div class="down_link">已有账号？<a href="#" class="to_login">立即登录</a></div>
+    </div>
+    <div class="mask"></div>
+</form>
+<script type="text/javascript">
+   // 获取小页面的标签属性、
+
+</script>
+</body>
+
+
+</html>

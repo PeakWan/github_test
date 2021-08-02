@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        后台管理系统
+    </title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{{ static('admin/css/x-admin.css') }}" media="all">
+    <style>
+        .layui-form-label {
+            width: 134px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body container layui-form ">
+    <div class="layui-form-item">
+        <label for="id" class="layui-form-label">
+            id
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="id" name="id" disabled="" value="{{id}}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="username" class="layui-form-label">
+            <span class="x-red">*</span>用户名
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="username" name="username" disabled lay-verify="required"
+                   autocomplete="off" value="{{ username }}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            <span class="x-red">*</span>是否启用
+        </label>
+        <div class="layui-input-inline">
+            <select class="layui-input" style="display: block" id="is_active" name="is_active" value="{{  is_active }}">
+                {% if is_active %}
+                <option value="True" selected>启用</option>
+                <option value="False">禁用</option>
+                {% else %}
+                <option value="True">启用</option>
+                <option value="False" selected>禁用</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            <span class="x-red">*</span>角色
+        </label>
+
+        <div class="layui-input-inline">
+            <select class="layui-input" style="display: block" id="super_u" value="{{ super_u }}">
+                {% if super_u==0 %}
+                <option value="1">超级管理员</option>
+                <option value="0" selected>普通用户</option>
+                {% else %}
+                <option value="1" selected>超级管理员</option>
+                <option value="0">普通用户</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+
+        <label class="layui-form-label">
+        </label>
+        {{ csrf_input }}
+        <button class="layui-btn" lay-filter="save" onclick="save()">
+            保存
+        </button>
+    </div>
+</div>
+<script src="{{ static('admin/lib/layui/layui.js') }}" charset="utf-8">
+</script>
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('admin/js/x-layui.js') }}" charset="utf-8">
+</script>
+<script>
+    // 保存修改结果
+    function save() {
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+        var id = $('#id').val();
+        var is_active = $('#is_active').val();
+        var super_u = $('#super_u').val();
+        var param = {
+            'csrfmiddlewaretoken': csrfmiddlewaretoken,
+            'id': id,
+            'is_active': is_active,
+            'super_u': super_u,
+        };
+        $.ajax({
+            url: '/admin/Administrator/Administrator_userRoleEdit/'+id+'/',
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json",
+            cache: false,
+            headers: {
+                'X-CSRFToken': csrfmiddlewaretoken
+            },
+            data: JSON.stringify(param),
+            success: function (data) {
+                if(data.code==200){
+                    alert("修改成功")
+                }else{
+                    alert("修改失败")
+                }
+                parent.location.reload(true);
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            }, error: function (errorMsg) {
+                console.log(errorMsg)
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+{% extends 'index/base.html' %}
+{% block title %}
+分类排序饼图
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .gj-checkout img{
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    .common_input{
+       text-align: center;
+       margin-top: 10px;
+    }
+    .common_input span{
+        margin-right: 10px;
+    }
+    .common_input input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+
+    .plt-img{
+        width: 100%;
+        height: auto;
+    }
+    .plt-img img{
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+
+    <div class="common_input">
+        <span>图表中展示的前几位:</span>
+        <input type="text" id="table_input"  placeholder="请输入数字"  onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+    <div class="common_input">
+        <span>字体大小:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="font_input"  placeholder="请输入数字" value="10" onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+    <div class="common_input">
+        <span>初始角度:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="rotate_input"  placeholder="请输入数字" value="90" onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+
+    <input type="hidden" name="flbt" value="">
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+    分类排序饼图 
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/echarts.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+//原始代码
+//    $(function () {
+//        // Init page helpers (Slick Slider plugin)
+//        App.initHelpers('slick');
+//    });
+
+//新增echarts代码
+var feature=eval({{ feature|safe}})['feature'];
+var mv=eval({{ data|safe }});
+// {#alert(mv);#}
+var arr=new Array();
+for(var key in mv){
+   var data={"name":key,"value":mv[key]};
+   arr.push(data);
+	}
+
+var myChart = echarts.init(document.getElementById('middle-table'));
+
+var option = {
+        title: {
+            text: feature,
+            x: 'center'
+        },
+
+        series: [{
+            name: '',
+            type: 'pie', // 设置图表类型为饼图
+            radius: '70%', // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+            label: {
+                normal: {
+                    show: true,
+                    formatter: '{b}: {c}({d}%)'
+                }
+            },
+            data: arr
+        }]
+
+    };
+
+myChart.setOption(option);
+
+</script>
+{% endblock %}

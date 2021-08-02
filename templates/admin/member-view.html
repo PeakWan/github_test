@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        后台管理系统
+    </title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{{ static("admin/css/x-admin.css") }}" media="all">
+</head>
+<style>
+    .data_view {
+        display: inline-block;
+        float: right;
+        background-color: #2299ee;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 10px;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    #pagination {
+        display: flex;
+        justify-content: center;
+            
+    }
+    .ui-pagination-container{
+        overflow: hidden;
+    }
+
+    .ui-pagination-container a {
+        padding: 8px 14px;
+        margin: 2px;
+        display: block;
+        float: left;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    .ui-pagination-container a:hover {
+        background-color: #3eb8e9;
+        color: white;
+        font-weight: 700;
+    }
+</style>
+
+<body>
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>会员管理</cite></a>
+              <a><cite>浏览记录</cite></a>
+            </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon"
+                                                                        style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+        <div class="layui-form-pane" style="margin-top: 15px;">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input" id="username">
+                </div>
+                {{ csrf_input }}
+                <div class="layui-input-inline" style="width:80px">
+                    <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="query()"><i class="layui-icon">&#xe615;</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button>
+        <span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" name="" value="">
+            </th>
+            <th>
+                ID
+            </th>
+            <th>
+                用户名
+            </th>
+            <th>
+                是否展示在智能文章
+            </th>
+            <th>
+                访问时间
+            </th>
+            <th>
+                操作流程
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        </thead>
+        <tbody id="replace">
+        
+            {% for i in info %}
+            <tr>
+                    <td>
+                        <input type="checkbox" value="1" name="">
+                    </td>
+                    {% for k,v in i.items() %}
+                    <td>
+                        {{ v.id }}
+                    </td>
+                    
+
+                    <td>
+                        {{ v.name }}
+                    </td>
+                    <td>
+                        {{ v.is_delete }}
+                    </td>
+                    <td>
+                        {{v.time}}
+                    </td>
+                    <td>
+                        <span>{{v.bro.name}}</span>
+                        <button onclick="member_view('详情页面','{{ url("member:view_data") }}','600','500')" class="data_view">详情</button>
+                    </td>
+                    <td class="td-manage">
+                        <a title="删除" href="javascript:;" onclick="view_del(this,{{ v.id }})"
+                           style="text-decoration:none">
+                            <i class="layui-icon">&#xe640;</i>
+                        </a>
+                    </td>
+                    {% endfor %}
+            </tr>
+            {% endfor %}
+        
+        </tbody>
+    </table>
+</div>
+<div class="pagenation">
+<div id="pagination" class="page clear"></div>
+</div>
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static("admin/lib/layui/layui.js") }}" charset="utf-8"></script>
+<script src="{{ static("admin/js/x-layui.js") }}" charset="utf-8"></script>
+<script src="{{ static("admin/js/x_view.js") }}" charset="utf-8"></script>
+<script src="{{ static('/js/template.js') }}"></script>
+<script src="{{ static('admin/js/jquery.pagination.min.js') }}"></script>
+<script>
+
+
+    $(function () {
+        $('#pagination').pagination({
+            currentPage: {{ page_num }},
+            totalPage: {{ total_page }},
+            callback: function (current){
+                location.href = '/admin/member/member_view/' + current+'/';
+            }
+        })
+    });
+
+</script> 
+<!-- 阻断jinjia2语法 -->
+{% raw %}
+<script type="text/html" id="listcomment" charset="utf-8">
+{{ each data as value index}}
+            <tr>
+                <td>
+                    <input type="checkbox" value="1" name="">
+                </td>
+                <td>
+                    {{ value.id }}
+                </td>
+                <td>
+                    {{ value.name }}
+                </td>
+                <td>
+                    {{ value.is_delete }}
+                </td>
+                <td>
+                    {{value.time}}
+                </td>
+                <td>
+                    <span>{{value.process}}</span>
+                    <button onclick="member_view('详情页面','/admin/member/member_view_data/','600','500')" class="data_view">详情</button>
+                </td>
+                <td class="td-manage">
+                    <a title="删除" href="javascript:;" onclick="view_del(this,{{ value.id }})"
+                       style="text-decoration:none">
+                        <i class="layui-icon">&#xe640;</i>
+                    </a>
+                </td>
+        </tr>
+{{/each}}
+
+</script>
+{% endraw %}
+<!-- 阻断jinjia2语法 -->
+<script>
+            // 查找用户名
+            function query() {
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                var username = document.getElementById('username').value;
+                var param = {
+                    'name': username,
+                    'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                };
+                $.ajax({
+                    url: '/admin/member/member_view/1/',
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: "application/json",
+                    cache: false,
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken
+                    },
+                    data: JSON.stringify(param),
+                    success: function (res) {
+                        if(res.code == 200){
+                            var list  = res;
+                            console.log(list);
+                            var html1 = template('listcomment',list);
+                            $("#replace").html(html1);
+                        }
+                        else{
+                            alert(res.error);
+                        }
+                    },
+                    error: function (errorMsg) {
+                        //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                        console.log(errorMsg)
+                    }
+                });
+            }
+        </script>
+<script>
+    layui.use(['element', 'layer'], function () {
+        $ = layui.jquery;//jquery
+        lement = layui.element();//面包导航
+        layer = layui.layer;//弹出层
+
+
+    })
+
+
+    //批量删除提交
+    function delAll() {
+        layer.confirm('确认要删除吗？', function (index) {
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+        });
+    }
+
+    /*浏览-删除*/
+    function view_del(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+                                // 获取要删除用户的id
+            console.log(id);
+            var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+            var param = {
+                'id': id,
+                'csrfmiddlewaretoken': csrfmiddlewaretoken,
+            };
+            $.ajax({
+            url: '/admin/member/member_view/',
+            type: "DELETE",
+            dataType: 'json',
+            contentType: "application/json",
+            cache: false,
+            headers: {
+                'X-CSRFToken': csrfmiddlewaretoken
+            },
+            data: JSON.stringify(param),
+            success: function (data) {
+                if(data.code == 200){
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!',{icon:1,time:1000});
+                    setTimeout(function(){window.location.reload();},1000);
+                    
+
+                }
+                else{
+                    alert(data.error);
+                }
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                console.log(errorMsg)
+            }
+        });
+
+        });
+    }
+
+    /*用户-添加*/
+    function member_view(title, url, w, h) {
+        x_admin_view(title, url, w, h);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            后台管理系统
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="{{ static('admin/css/x-admin.css') }}" media="all">
+    </head>
+    <body>
+        <div class="x-body">
+                <div class="layui-form-item">
+                    <label for="level-name" class="layui-form-label">
+                        <span class="x-red">*</span>等级名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="level-name" name="level-name" required="" lay-verify="required"
+                        autocomplete="off"  class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="level-price" class="layui-form-label">
+                        <span class="x-red">*</span>价格
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="level-price" name="level-price" required=""  lay-verify="required"
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="level-kiss" class="layui-form-label">
+                        <span class="x-red">*</span>分析条数
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="level-kiss" name="level-kiss" required=""  lay-verify="required"
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="level-project" class="layui-form-label">
+                        <span class="x-red">*</span>项目个数
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="level-project" name="level-project" required=""  lay-verify="required"
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                        <label for="level-flow" class="layui-form-label">
+                            <span class="x-red">*</span>流程个数
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="level-flow" name="level-project" required=""  lay-verify="required"
+                            autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    {{ csrf_input }}
+                    <button  class="layui-btn" lay-filter="save" onclick="f_save()">
+                        保存
+                    </button>
+                </div>
+        </div>
+        <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+        <script src="{{ static('admin/lib/layui/layui.js') }}" charset="utf-8">
+        </script>
+        <script src="{{ static('admin/js/x-layui.js') }}" charset="utf-8">
+        </script>
+        <script>
+        // 保存修改结果
+        function f_save() {
+            var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+
+            // 获取等级用户名
+            var name = $('#level-name').val();
+            // 获取分析条数
+            var number = $('#level-kiss').val();
+            // 获取分析项目个数
+            var project = $('#level-project').val();
+            var flow = $('#level-flow').val();
+            var price = $('#level-price').val();
+            var param = {
+                'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                'name':name,
+                'number':number,
+                'project':project,
+                'flow':flow,
+                'price':price
+            };
+            $.ajax({
+                url: '/admin/member/member_add/',
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                cache: false,
+                headers: {
+                    'X-CSRFToken': csrfmiddlewaretoken
+                },
+                data: JSON.stringify(param),
+                success: function (data) {
+                    window.parent.location.reload();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index); 
+                    setTimeout(function(){window.location.reload();},1000);
+                }, error: function (errorMsg) {
+                    //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    console.log(errorMsg)
+                }
+            });
+        }
+        </script>
+        
+    </body>
+
+</html>

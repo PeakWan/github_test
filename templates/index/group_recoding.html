@@ -1,0 +1,361 @@
+{% extends 'index/base.html' %}
+{% block title %}
+分组重编码
+{% endblock %}
+{% block choice %}
+<!-- 引入单选框 -->
+<link rel="stylesheet" id="css-s_border" href="{{ static('index/css/ss_border.css') }}"/>
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% block bottom %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/all-common.css') }}" />
+{% endblock %}
+<style>
+    /* input */
+    #group_input {
+        text-indent: 1.5em;
+        width: 140px;
+        height: 34px;
+        border: transparent;
+        border-radius: 5px;
+        margin-left: -53px;
+    }
+     #group_id {
+        margin-left: 10px;
+    } 
+    /* 多选框 */
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+        width: 107px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .select-input {
+            /* margin-left: -116px; */
+        text-align: center;
+        margin-top: 35px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 原始分类数数据 */
+    #front {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #fronts {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 原始分类数数据 */
+    #original {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    /* 结果分类数据 */
+    #originals {
+        font-size: 20px;
+        text-align: center;
+        color: #009688;
+    }
+    .select-transfer{
+        margin-top: 25px;
+        padding-left: 18px;
+    }
+    h2 {
+       font-weight: normal;
+    }
+ .radioStyle {
+         margin-top: 21px;
+       display: inline-block;
+    }
+ 
+.radioStyle input {
+                        visibility: hidden;
+                  }
+.radioStyle input[type="radio"] + label{
+                                            position: relative;
+                                            cursor: pointer;
+                                        }
+.radioStyle input+label::before{
+            content: '';
+            position: absolute;        /*父元素为label，针对父元素进行绝对定位*/
+            left: -24px;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #999; 
+            border-radius: 50%;        /*圆角边框*/
+        }
+
+/* .radioStyle input:checked+label::before {
+            box-shadow: 0 0 6px #24b7e5;
+        } */
+.radioStyle input:checked+ label::after{
+            content: '';
+            position: absolute;    /*针对label进行绝对定位*/
+            left: -21px;
+            top: 3px;
+            border-radius: 50%;    /*设置圆角*/
+            width: 12px;
+            height: 12px;
+            background: #4e71f2;
+        }
+    #likeH{
+        margin-left: 28px;
+    }
+    #likeZ{
+        margin-left: 28px;
+    }
+    .rbm_range {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+    .rbm_range .head {
+        width: 100%;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .rbm_range .head span + span {
+        margin-left: 110px;
+    }
+    .rbm_range .ul {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .rbm_range .ul .li {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .rbm_range .ul .li input {
+        box-sizing: border-box;
+        width: 50px;
+        height: 35px;
+        padding: 0 10px;
+        border: 1px solid #ddd;
+        margin: 0 10px;
+    }
+</style>
+{% endblock %}
+{% block main %}
+
+<!-- End header -->
+<main class="app-layout-content">
+<div id="rightmodel">
+	<h1>变量选择</h1>
+{% endblock %}
+
+{% block main03 %}
+<!-- 下拉框 -->
+<div class="select-input" style="text-align: left;padding-left: 60px">
+<span>选择重编码方法</span>
+<select name="" id="selectSingle" style="width:200px;
+height: 35px;
+outline: none;
+border: 1px solid #dddd;
+text-indent: 1em;
+margin-left:11px;">
+	<option grade="gradeThree" value="groupnum" selected >等分分组</option>
+	<option grade="gradeThree" value="group_percentile" id="number">百分位分组</option>
+	<option grade="gradeThree" value="group_cut_value">节点分组</option>
+	<option grade="gradeThree" value="group_cut_value2">范围重编码</option>
+</select>
+</div>
+
+<!-- input输入框 -->
+<div id="inputDiv">
+</div>
+<!-- 范围重编码 -->
+<div id="rbm_range" class="rbm_range" style="display:none;">
+    <div class="head">
+        <span>范围介于</span>
+        <span>编码数字</span>
+    </div>
+    <div class="ul">
+        <div class="li" v-for="item,index in sub_list">
+            <input type="text" v-model="item.value1" />
+            <div>到</div>
+            <input type="text" v-model="item.value2" />
+            <div style="width:20px;height:20px;">
+                <svg t="1612783988446" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2134" width="20" height="20"><path d="M837.9904 570.0608H124.5696a29.0304 29.0304 0 0 1-29.0304-29.0304V482.9696a29.0304 29.0304 0 0 1 29.0304-29.0304h713.4208z" fill="#333333" p-id="2135"></path><path d="M561.3056 808.96l-40.96-40.96a28.928 28.928 0 0 1 0-40.96l215.04-215.04-215.04-215.04a28.9792 28.9792 0 0 1 0-40.96l40.96-40.96a28.9792 28.9792 0 0 1 40.96 0l296.96 296.96-296.96 296.96a28.9792 28.9792 0 0 1-40.96 0z" fill="#333333" p-id="2136"></path></svg>
+            </div>
+            <input type="text" style="width:80px;" v-model="item.key" />
+            <div @click="sub_list.push({key: '',value1: '',value2: ''})" style="margin-right:10px;cursor:pointer;">
+                <svg t="1612784058651" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3314" width="20" height="20"><path d="M906.212134 565.732986 565.732986 565.732986 565.732986 906.212134C565.732986 926.013685 541.666486 959.972 511.97312 959.972 482.297674 959.972 458.213254 926.013685 458.213254 906.212134L458.213254 565.732986 117.734106 565.732986C97.950475 565.732986 63.97424 541.666486 63.97424 511.97312 63.97424 482.279754 97.950475 458.213254 117.734106 458.213254L458.213254 458.213254 458.213254 117.734106C458.213254 97.950475 482.297674 63.97424 511.97312 63.97424 541.666486 63.97424 565.732986 97.950475 565.732986 117.734106L565.732986 458.213254 906.212134 458.213254C925.995765 458.213254 959.972 482.279754 959.972 511.97312 959.972 541.666486 925.995765 565.732986 906.212134 565.732986Z" p-id="3315" fill="#333333"></path></svg>
+            </div>
+            <div @click="sub_list_remove(index)" style="cursor:pointer;">
+                <svg t="1612784167251" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5920" width="18" height="18"><path d="M935 423.3H89C40.2 423.3 0.3 463.2 0.3 512c0 48.8 39.9 88.7 88.7 88.7h846c48.8 0 88.7-39.9 88.7-88.7 0-48.8-39.9-88.7-88.7-88.7z" p-id="5921" fill="#333333"></path></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="radioStyle">
+        <span style="margin-left:84px;">编码类型</span>
+        <input type="radio" name="likes" id="likeH" int="1" value="1" checked>
+        <label for="likeH" style="font-size:15px">数值</label>
+        <input type="radio" name="likes" id="likeZ" int="2" value="2">
+        <label for="likeZ" style="font-size:15px">文字</label>
+</div>
+{% endblock %}
+{% block main04 %}
+<div id="middle-table">
+{% endblock %}
+{% block description %}
+平台提供了等分分组、百分位分组、节点分组、范围编码，四种分组方式。等分分组：可以设置分组数，自动按照等分分位值进行等分分组；
+百分位分组：按照百分位数进行分组，如0.25，0.5，0.75，即按照四分卫数及中位数将数据分为四组；
+节点分组：按照设定的值进行分组
+范围分组：可以将一定范围内的数据替换为设置的值，如0-10->1即将0到10范围内的值全部替换为1。
+{% endblock %}
+{% block main02 %}
+</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+<script src="{{ static('index/js/vue-2.5.16.js') }}"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        App.initHelpers('slick');
+        $('#number').click();
+    });
+        
+    var RBM = new Vue({
+        el: '#rbm_range',
+        data: {
+            sub_list: [
+                {
+                    key: '',
+                    value1: '',
+                    value2: ''
+                }
+            ],
+
+        },
+        methods: {
+            sub_list_remove(x) {
+                if (this.sub_list.length > 1) {
+                    let temp = []
+                    this.sub_list.forEach((item,index)=>{ if (x !== index) temp.push(item) })
+                    this.sub_list = temp                    
+                }
+            },
+        }
+    })
+</script>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'index/base.html' %}
+{% block title %}
+数据操作
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/ss_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/all-common.css') }}" />
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+<div id="rightmodel">
+			<h1>变量选择</h1>
+			
+{% endblock %}
+{% block main03 %}
+<!-- 下拉框 -->
+<div class="select-input">
+	<span>选择填补方法:</span>&nbsp;&nbsp;&nbsp;
+	<select name="" id="selectMethods" style="  width: 200px;
+	height: 35px;
+	outline: none;
+	border: 1px solid #dddd;
+	text-indent: 1em;">
+		<option value="1" selected>批量修改小数点位数</option>
+		<option value="2">剔除变量</option>
+		<!-- <option value="Mean">均数填补</option>
+		<option value="most_frequent">众数填补</option>
+		<option grade="gradeThree" value="constant">常数填补</option> -->
+	</select>
+</div>
+
+<div class="message-decimals sjcz-number" style="    margin-left: 100px;    margin-top: 10px; height:auto">
+    <label for="digit">小数位:</label>&nbsp;&nbsp;&nbsp;
+                                        <select name="digit" id="sjcznum_select" style="width: 100px;
+	height: 35px;
+	outline: none;
+	border: 1px solid #dddd;
+	text-indent: 1em;">
+                                            <option value ="0">0</option>
+                                            <option value ="1">1</option>
+                                            <option value ="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                          </select>
+</div>
+
+<!-- input输入框 -->
+<div id="inputDiv">
+</div>
+{% endblock %}
+{% block main04 %}
+<div id="middle-table">
+{% endblock %}
+{% block description %}数据操作可以修改小数点位数、剔除不需要的变量。{% endblock %}
+
+
+{% block main02 %}
+
+</div>
+</main>
+{% endblock %}
+
+{% block center_script %}
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            App.initHelpers('slick');
+        });
+</script>
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends 'index/base.html' %}
+{% block title %}
+缺失数据剔除
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/miss_delete.css') }}" />
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+	<div id="rightmodel">
+		<h1>变量选择</h1>
+		<div class="select-options">
+			<form action="" method="post">
+				<div class="select-input">
+					<span>变量类型</span>
+					<select name="" id="s1" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;" onchange="showArgsArea(this.value)">
+						<option value="0" >数值型变量</option>
+						<option value="1" >分类型变量</option>
+					</select>
+				</div>
+                <div class="select-input numeric-var">
+					<span style="height: 35px;line-height: 35px">标准差</span>
+					<input type="text" maxlength="20" name=""  placeholder="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right;
+                     ">
+				</div>
+                <div class="select-input numeric-var">
+                    <span style="height: 35px;line-height: 35px">置信区间的边际误差</span>
+					<input type="text" maxlength="20" name=""  placeholder="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right">
+				</div>
+                <div class="select-input classify-var" >
+					<span style="height: 35px;line-height: 35px">失效率</span>
+					<input type="text" maxlength="20" name=""  placeholder="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right">
+				</div>
+                <div class="select-input classify-var">
+                    <span style="height: 35px;line-height: 35px">容许误差</span>
+					<input type="text" maxlength="20" id="testArgs"  placeholder="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right">
+				</div>
+                <div class="select-input">
+					<span style="height: 35px;line-height: 35px">置信水平</span>
+					<input type="text" maxlength="20" name=""  placeholder="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right;">
+				</div>
+                <div class="select-input">
+					<span style="height: 35px;line-height: 35px">置信区间</span>
+					<select name="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;" onchange="showSingleOrDoubleArea(this.value)">
+						<option value="0" selected>单侧</option>
+						<option value="1">双侧</option>
+					</select>
+				</div>
+                <div class="select-input  double">
+					<span style="height: 35px;line-height: 35px">双侧</span>
+					<select name="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right">
+						<option value="20" selected>20</option>
+                        <option value="40" selected>40</option>
+                        <option value="60" selected>60</option>
+                        <option value="80" selected>80</option>
+                        <option value="90" selected>90</option>
+                        <option value="95" selected>95</option>
+                        <option value="98" selected>98</option>
+                        <option value="99" selected>99</option>
+					</select>
+				</div>
+                <div class="select-input single" >
+					<span style="height: 35px;line-height: 35px">单侧</span>
+					<select name="" style="width:120px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;float: right">
+						<option value="60" selected>60</option>
+                        <option value="70" selected>70</option>
+                        <option value="80" selected>80</option>
+                        <option value="90" selected>90</option>
+                        <option value="95" selected>95</option>
+                        <option value="97.5" selected>97.5</option>
+                        <option value="99" selected>99</option>
+                        <option value="99.5" selected>99.5</option>
+					</select>
+				</div>
+			</form>
+
+			{% endblock %}
+			{% block main03 %}
+		</div>
+
+		{% endblock %}
+		{% block main04 %}
+		<div id="middle-table">
+			{% endblock %}
+			{% block description %}样本量分析{% endblock %}
+			{% block mian02 %}
+
+		</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    function  showArgsArea(id){
+        //显示分类变量
+        if (id=='1'){
+            $(".classify-var").css('display','block');
+            $(".numeric-var").css('display','none')
+        }
+        //显示数值变量
+        if (id=='0'){
+            $(".classify-var").css('display','none');
+            $(".numeric-var").css('display','block')
+        }
+    }
+    function  showSingleOrDoubleArea(id){
+        //显示双侧选择区间
+        if (id=='1'){
+            $(".double").css('display','block');
+            $(".single").css('display','none')
+        }
+        //显示单侧选择区间
+        if (id=='0'){
+            $(".double").css('display','none');
+            $(".single").css('display','block')
+        }
+    }
+	$(function () {
+		App.initHelpers('slick');
+		$(".classify-var").css('display','none');
+        $(".numeric-var").css('display','block');
+        $(".double").css('display','none');
+        $(".single").css('display','block')
+	});
+</script>
+<style>
+	#ta div{
+		float: left;
+	}
+	/* .fx-details-texts button{
+		width: 92px;
+		color: white;
+		font-size: 14px;
+		background-color: #4387f9;
+		border-radius:10px;
+	} */
+</style>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

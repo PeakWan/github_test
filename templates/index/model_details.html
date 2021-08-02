@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>临床研究模型库 - 模型详情</title>
+    <style>
+        body, .main, div {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+        body {
+            min-width: 1200px;
+        }
+        a {
+            text-decoration: none;
+        }
+        .page-top {
+            width: 100%;
+            height: 60px;
+        }
+        .public-items {
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            padding: 0 calc((100% - 1200px) / 2);
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+        .public-items > p {
+            padding: 0 10px;
+        }
+        .public-item {
+            width: 120px;
+            height: 36px;
+            margin: 0 20px;
+            background-color: gray;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .public-item:hover {
+            background-color: lightgray;
+        }
+        .model {
+            box-sizing: border-box;
+            width: 100%;
+            height: calc(100vh - 90px);
+            overflow: auto;
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .model-detail {
+            width: 900px;
+            height: 100%;
+        }
+        .model-detail > div {
+            width: 100%;
+        }
+        .detail-box {
+            box-sizing: border-box;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        }
+        .model-detail-name {
+            font-size: 24px;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .model-detail-author-version {
+            font-size: 14px;
+            line-height: 1;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        .model-detail-author {
+            margin-right: 10px;
+        }
+        .model-detail-version {
+            margin-right: 10px;
+        }
+        /*  */
+        .model-detail-method {
+            /*height: 70px;*/
+            font-size: 16px;
+            line-height: 20px;
+            /*display: flex;*/
+        }
+        .model-detail-desc {
+            height: 90px;
+            font-size: 16px;
+            line-height: 20px;
+            /*display: flex;*/
+        }
+        .model-detail-result {
+            /*height: calc(100% - 330px);*/
+            /*display: flex;*/
+            /*justify-content: flex-start;*/
+        }
+        .model-detail .left {
+            width: 100px;
+            height: calc(100% - 10px);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .model-detail .right {
+            /*width: calc(100% - 100px);*/
+            /*height: calc(100% - 10px);*/
+            margin-bottom: 10px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            line-height: 1.3;
+            padding-left: 20px;
+        }
+        .model-detail-result .right {
+            box-sizing: border-box;
+            /*height: calc(100% - 10px);*/
+            margin-bottom: 10px;
+            /*border: 1px solid gray;*/
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .model-detail-result .right img {
+            max-width: 100%;
+            object-fit: cover;
+        }
+        .model-comments {
+            box-sizing: border-box;
+            width: 280px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: transparent;
+            overflow-y: auto;
+            box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+            
+        }
+        .model-comment {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row-reverse;
+        }
+        .model-comment + .model-comment {
+            margin-top: 10px;
+        }
+        .model-comment-user {
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .model-comment-content {
+            box-sizing: border-box;
+            width: calc(100% - 15px);
+            font-size: 14px;
+        }
+        .model-comment-replys {
+            box-sizing: border-box;
+            width: calc(100% - 15px);
+            padding: 10px;
+            background-color: transparent;
+        }
+        .model-comment-reply {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 5px 10px;
+            background-color: #f1f1f1;
+        }
+        .model-comment-reply + .model-comment-reply {
+            margin-top: 10px;
+        }
+        .model-comment-reply-user {
+            font-size: 13px;
+        }
+        .model-comment-reply-content {
+            font-size: 12px;
+            padding-left: 15px;
+        }
+        .switch-model-comment-replys {
+            text-align: right;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #666;
+            cursor: pointer;
+        }
+        .switch-model-comment-replys:hover {
+            color: #000;
+        }
+        /* 回复框 */
+        .huifu-form {
+            box-sizing: border-box;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 1px 1px 10px 0 rgba(0,0,0,.1);
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 9999999;
+        }
+        .huifu-form textarea {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 20px;
+            margin: 20px;
+            transform: translate(1px,1px);
+        }
+        .huifu-form button {
+            width: 30%;
+        }
+        .huifu-form button + button {
+            margin-left: 20px;
+        }
+        .model-detail-result  .model_imgs {
+            display: block;
+            /*flex-wrap: wrap;*/
+        }
+        .model_imgs img {
+            width: 100%;
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 本页 html css js 全部写在本文件 -->
+    <div class="main" id="main">
+        <div class="page-top">
+            <div class="public-items">
+                <p>已发表文章链接:</p>
+            <a class="public-item" href="article.url" v-for="article in page_data.model_articles" v-text="article.title"></a>
+            <p>相关文章：<a :href="model_url">{{model_url}}</a></p>
+            </div>
+        </div>
+        <hr style="margin: 4px 0;">
+        <div class="model">
+            <div class="model-detail">
+                <div class="detail-box" style="margin-top:10px">
+                    <div class="model-detail-name" v-text="page_data.model_name"></div>
+                    <div class="model-detail-author-version">
+                        <div class="model-detail-version" v-text="'版本：' + page_data.model_version"></div>
+                        <div class="model-detail-author" v-text="'作者：' + page_data.model_author"></div>
+                    </div>                    
+                </div>
+
+                <div class="model-detail-method detail-box">
+                    <div class="left">模型方法:</div>
+                    <div class="right" v-text="page_data.model_method"></div>
+                </div>
+                <div class="model-detail-desc detail-box" style="height:auto">
+                    <div class="left">模型说明:</div>
+                    <div class="right" style="max-height:100px;overflow-y:auto" v-text="page_data.model_desc"></div>
+                </div>
+                <div class="model-detail-result detail-box">
+                    <div class="left">分析结果:</div>
+                    <div class="right model_imgs">
+                        <img v-for="item in page_data.model_imgs" :src="item" alt="" @click="previewImg(item)" />
+                    </div>
+                </div>
+            </div>
+    
+            <div class="model-comments" style="display:none">
+                <!-- 1 -->
+                <div class="model-comment" v-for="comment in page_data.model_comments">
+                    <div class="model-comment-user" v-text="comment.comment_user + ':'"></div>
+                    <div class="model-comment-content" v-text="comment.comment_content"></div>
+                    <div class="switch-model-comment-replys" v-show="comment.comment_reply_open == false">
+                        <span style="padding-right: 20px;" @click='huifu' :objid='comment.comment_id'>回复</span><span  @click="comment.comment_reply_open = true">查看评论</span>
+                    </div>
+                    <div class="model-comment-replys" v-show="comment.comment_reply_open == true">
+                        <!-- 1 -->
+                        <div class="model-comment-reply" v-for="reply in comment.comment_reply">
+                            <div class="model-comment-reply-user" v-text="reply.reply_user"></div>
+                            <div class="model-comment-reply-content" v-text="reply.reply_content"></div>
+                        </div>
+                    </div>
+                    <div class="switch-model-comment-replys" v-show="comment.comment_reply_open == true">
+                        <span style="padding-right: 20px;" @click='huifu' :objid='comment.comment_id'>回复</span><span  @click="comment.comment_reply_open = false">收起评论</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form class="huifu-form" v-show="huifu_data.huifu_open" style="display: none">   
+            <textarea name="reply_textarea" id="reply_textarea" :value="huifu_data.huifu_content" placeholder="请输入评论" cols="30" rows="8"></textarea>
+            <button type="button" @click="pinglun">评论</button>
+            <button type="button" @click="cancel_pinglun">取消</button>
+        </form>
+    </div>
+    {{ csrf_input }}\
+    <script src="{{ static('index/js/vue/vue.js') }}"></script>
+    <script>
+        var MODEL_DETAIL = new Vue({
+            el: '#main',
+            data: {
+                model_url:'',
+                page_data: {
+                    model_name: null,
+                    model_version: null,
+                    model_author: null,
+                    model_method: null,
+                    model_desc: null,
+                    model_id: null,
+                    model_imgs: [],
+                    model_url: null,
+                    model_articles: [
+                        {
+                            url: '#',
+                            title: '文章1'
+                        }
+                    ],
+                    model_result: [], //'./img/0.jpg','./img/bg1.png'
+                    model_comments: [
+                        {
+                            comment_user: '评论1的的用户',
+                            comment_id: 111,
+                            comment_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
+                            comment_reply_open: false, // 默认不展开评论
+                            comment_reply: [
+                                {
+                                    reply_user: '评论1的回复1用户',
+                                    reply_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容'
+                                },
+                                {
+                                    reply_user: '评论1的回复2用户',
+                                    reply_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容'
+                                }
+                            ]
+                        },
+                        {
+                            comment_user: '评论2的回复的用户',
+                            comment_id: 222,
+                            comment_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
+                            comment_reply_open: false, // 默认不展开评论
+                            comment_reply: [
+                                {
+                                    reply_user: '评论2的回复1用户',
+                                    reply_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容'
+                                },
+                                {
+                                    reply_user: '评论2的回复2用户',
+                                    reply_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容'
+                                }
+                            ]
+                        },
+                        {
+                            comment_user: '评论3的回复的用户',
+                            comment_id: 333,
+                            comment_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
+                            comment_reply_open: false, // 默认不展开评论
+                            comment_reply: [
+                                {
+                                    reply_user: '评论3的回复1用户',
+                                    reply_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容'
+                                },
+                                {
+                                    reply_user: '评论3的回复2用户',
+                                    reply_content: '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                huifu_data: {
+                    huifu_open: false,
+                    huifu_object: '',
+                    huifu_user: '',
+                    huifu_content: ''
+                }
+            },
+            methods: {
+                huifu: function(e) {
+                    MODEL_DETAIL.huifu_data.huifu_open = true
+                    console.log('回复目标评论id:',e.target.getAttribute('objid'))
+                    MODEL_DETAIL.huifu_data.huifu_object = e.target.getAttribute('objid')
+                },
+                pinglun: function() {
+                    
+                },
+                cancel_pinglun: function() {
+                    MODEL_DETAIL.huifu_data.huifu_open = false
+                    MODEL_DETAIL.huifu_data.huifu_object = ''
+                    MODEL_DETAIL.huifu_data.huifu_content = ''
+                },
+                previewImg(src) {
+                    open(src)
+                }
+            }
+        });
+        
+        window.onload = function() {
+            // 获取id
+            // var model_id = localStorage.getItem("model_id");
+            var model_id = window.location.href.split('?id=')[1]
+            // 删除id
+            localStorage.removeItem("model_id");
+            // 获取token
+            var csrfmiddlewaretoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+            // 请求
+            var XHR = new XMLHttpRequest();
+            XHR.open('POST','/model/views/',true);
+            XHR.setRequestHeader("Content-Type","application/json");
+            XHR.setRequestHeader("X-CSRFToken",csrfmiddlewaretoken);
+            XHR.send(JSON.stringify({"ID":model_id}));
+            XHR.onreadystatechange = function() {
+                if(this.readyState==4 && this.status==200){
+                    var data = JSON.parse(this.responseText)
+                    console.log(data.context)
+                    MODEL_DETAIL.page_data.model_name = data.context.name
+                    if (data.context.versions == "null") {
+                        
+                        MODEL_DETAIL.page_data.model_version = '1.0.0'
+                    } else {
+                        MODEL_DETAIL.page_data.model_version = data.context.versions
+                    }
+                    MODEL_DETAIL.page_data.model_author = data.context.username
+                    MODEL_DETAIL.page_data.model_method = data.context.model_outline
+                    MODEL_DETAIL.page_data.model_desc = data.context.background
+                    MODEL_DETAIL.page_data.model_imgs = data.context.model_info.split(',')
+                    MODEL_DETAIL.model_url = data.context.url
+                }
+            };
+            
+        }
+    </script>
+</body>
+</html>

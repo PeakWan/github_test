@@ -1,0 +1,239 @@
+{% extends 'index/base.html' %}
+{% block title %}
+森林图
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    .plt-img{
+        width: 100%;
+        height: auto;
+    }
+    .plt-img img{
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .common_input{
+       text-align: center;
+       margin-top: 10px;
+    }
+    .common_input span{
+        margin-right: 10px;
+    }
+    .common_input input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+    .single_radio{
+        margin-top: 6px;
+    }
+    .transfer-box{
+        margin-top: 0;
+    }
+    
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+
+    <div class="single_radio" id="slt_radio" style="margin: 20px 0;">
+        <ul>
+            <li>
+                <span  style="font-size:14px">方向:</span>
+                <label for="horizontalRadio"  style="font-size:14px">horizontal</label>
+                <input type="radio"  name="Radio5" id="horizontalRadio" class="horizontalRadio" value="horizontal">
+            </li>
+            <li>
+             <label for="verticalRadio"  style="font-size:14px">vertical</label>
+             <input type="radio" name="Radio5" id="verticalRadio" class="verticalRadio" value="vertical">
+            </li>
+        </ul>
+    </div>
+
+    <div class="common_input">
+        <span>X轴标旋转角度:</span>
+        <input type="text" id="x_input"  placeholder="请输入数字" value="45"  onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+    <div class="common_input">
+        <span>ylim:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="ylim_input"  placeholder="请输入数字以逗号形式隔开" value="0,1" onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+    <div class="common_input">
+        <span>fig_size:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="size_input"  placeholder="请输入数字以逗号形式隔开" value="10,10" onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+    <div class="common_input">
+        <span>表标题名字:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="tabless_input"  placeholder="" value="" >
+    </div>
+    
+    <div class="single_radio" id="slt_radio" style="margin-top: 20px;">
+        <ul>
+            <span style="font-size: 14px;">是否标记保护因素和危险因素:</span>
+            <li>
+                <label for="horizontalRadio"  style="font-size:14px">是</label>
+                <input type="radio"  name="Radio10" id="horizontalRadio" class="horizontalRadio" value="yes" checked="checked">
+            </li>
+            <li>
+             <label for="verticalRadio"  style="font-size:14px">否</label>
+             <input type="radio" name="Radio10" id="verticalRadio" class="verticalRadio" value="no">
+            </li>
+        </ul>
+    </div>
+    
+    <div class="single_radio" id="slt_radio" style="margin-top: 20px;">
+        <ul>
+             <span style="font-size: 14px;">中间实体采用的形状标记:</span>
+            <li>
+                <label for="horizontalRadio"  style="font-size:14px">方形</label>
+                <input type="radio"  name="Radio12" id="horizontalRadio" class="horizontalRadio" value="square" checked="checked">
+            </li>
+            <li>
+             <label for="verticalRadio"  style="font-size:14px">圆形</label>
+             <input type="radio" name="Radio12" id="verticalRadio" class="verticalRadio" value="circle">
+            </li>
+        </ul>
+    </div>
+
+    <input type="hidden" name="slt" value="">
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+    森林图 
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+{% endblock %}

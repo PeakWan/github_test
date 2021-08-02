@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能数据分析平台</title>
+    <!--<link rel="stylesheet" href="{{ static("css/1.css") }}">-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1932671_azqzldb2ccg.css">
+    <!-- header css start -->
+    <link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}"/>
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}"/>
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+    <link href="{{ static('/new_index/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static('/new_index/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static('/new_index/css/default.css') }}" rel="stylesheet" id="color-opt"> 
+    <!-- header css end -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <!-- header js start -->
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+    <!-- header js end -->
+    
+    <!-- main css start -->
+    <link rel="stylesheet" href="{{ static('index/css/chongzhi.css') }}" />
+    <!-- main css end -->
+    
+</head>
+<style>
+    .navbar {
+        flex-wrap: nowrap;
+    }
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
+    .HY
+    {
+        float: right;
+
+        margin-top: 40px;
+    }
+    .frinedlink {
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: left;
+    }
+    .frinedlink a {
+        padding: 6px;
+        border-radius: 5px;
+        background-color: white;
+        margin-right: 20px;
+    }
+    .frinedlink img {
+        height: 38px;
+        object-fit: contain;
+    }
+</style>
+<body>
+    <!-- header -->
+    <header class="app-layout-header" style="position:relative;z-index:100;">
+    
+    
+    
+                <nav class="navbar navbar-default">
+    
+                    <div id="logo" class="drawer-header">
+    
+                        <a href="/"><img src="/static/images/logo.jpg"></a>
+                    </div>
+    
+                    <div class="container-fluid">
+    
+    
+    
+                        
+    
+    
+    
+                            <div class="collapse navbar-collapse" id="header-navbar-collapse">
+    
+                                            <div class="HY">
+                                                {% if u_id == 1 %}
+                                                <a href="#" class="v_img" title="普通用户"><img src="/static/images/1.png"></a>
+                                                {% elif u_id == 2 %}
+                                                <a href="#" class="v_img" title="会员V1"><img src="/static/images/2.png"></a>              
+                                                {% elif u_id == 3 %}
+                                                <a href="#" class="v_img" title="会员V2"><img src="/static/images/3.png"></a>
+                                                {% elif u_id == 4 %}
+                                                <a href="#" class="v_img" title="会员V3"><img src="/static/images/4.png"></a>
+                                                {% endif %}
+                                            </div>
+    
+                                <div class="header-right">
+    
+    
+    
+                                    <div class="navgition-header">
+    
+    
+                                        <a href="{{ url('index_qt:index_qt') }}" class="index">研究项目</a>
+                                        <a href="{{ url('index_qt:video_course') }}" target="_blank" class="index">视频教程</a>
+    
+    
+                                        <a href="{{ url("index_qt:community") }}" target="_blank" class="help-control">交流区</a>
+                                        <a href="{{ static('instructions.pdf')}}" target="_blank" class="help-control">帮助中心</a>
+                                        <a href="{{ url('verifications:recharge') }}" class="help-control">会员中心</a>
+    
+    
+    
+                                    </div>
+    
+    
+    
+                                    <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+    
+    
+    
+                                        <li class="dropdown dropdown-profile">
+    
+    
+    
+                                            <a href="javascript:void(0)" data-toggle="dropdown">
+    
+    
+    
+                                                <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>
+                                                     {% if user.userunionid %}
+                                                                <img class="img-avatar img-avatar-48"
+                    
+                                                                         src="{{ user.image_tou }}"
+                    
+                                                                         alt="User profile pic"/>
+                                                    {% else %}
+                                                                {% if user.image_tou %}
+                    
+                    
+                    
+                                                                    <img class="img-avatar img-avatar-48"
+                    
+                                                                         src="/static/upload/user_images/{{ user.image_tou }}"
+                    
+                                                                         alt="User profile pic"/>
+                    
+                    
+                    
+                                                                {% else %}
+                    
+                    
+                    
+                                                                    <img class="img-avatar img-avatar-48"
+                    
+                                                                         src="{{ static('index/img/avatars/avatar3.jpg') }}"
+                    
+                                                                         alt="User profile pic"/>
+                    
+                    
+                    
+                                                                {% endif %}
+                                                    {% endif %}
+    
+    
+                                            </a>
+    
+                                            <ul style="z-index:1000;" class="dropdown-menu dropdown-menu-right">
+    
+    
+    
+                                                <li>
+    
+    
+    
+                                                    <a href="{{ url("index_qt:user") }}">个人中心</a>
+    
+    
+    
+                                                </li>
+    
+    
+    
+                                                <li>
+    
+    
+    
+                                                    <a href="{{ url("index_qt:logout") }}">退出</a>
+    
+    
+    
+                                                </li>
+    
+    
+    
+                                            </ul>
+    
+    
+    
+                                        </li>
+    
+    
+    
+                                    </ul>
+    
+    
+    
+                                </div>
+    
+    
+    
+                            </div>
+    
+    
+    
+                        
+    
+    
+    
+                        <!-- .navbar-right -->
+    
+    
+    
+                    </div>
+    
+    
+    
+                    <!-- .container-fluid -->
+    
+    
+    
+                </nav>
+    
+    
+    
+                <!-- .navbar-default -->
+    
+    
+    
+            </header>
+    <!-- main -->
+    <main id="main">
+        <!-- step 1 -->
+        <div class="bg_top" v-show="step == 1">
+            <div class="p1">会员中心</div>
+            <div class="p2">
+                <div>当前会员类别：<span class="p3" v-text="my_vip_grade"></span></div>
+                <div v-if="my_vip_time">会员到期时间：<span class="p3" v-text="my_vip_time"></span></div>
+            </div>
+        </div>
+        <div class="main" v-show="step == 1">
+            <div class="top">
+                <div class="wrap">
+                    <div class="item head">套餐对比</div>
+                    <div class="item body free">
+                        <div class="mbtn"></div>
+                        <div class="price">￥<span>0</span>/年</div>
+                        <div class="v">免费会员</div>
+                    </div>
+                    <div class="item body">
+                        <div class="mbtn" @click="selectvip(1)" :class="{'disabled':this.my_vip.grade > 2 }"
+                        v-text="this.my_vip.grade == 2 ? '续费' : '立即购买'"></div>
+                        <div class="price">￥<span>9.9</span>/天</div>
+                        <div class="v">V1会员</div>
+                    </div>
+                    <div class="item body">
+                        <div class="mbtn" @click="selectvip(2)" :class="{'disabled':this.my_vip.grade > 3 }"
+                        v-text="this.my_vip.grade == 3 ? '续费' : '立即购买'"></div>
+                        <div class="price">￥<span>199</span>/月</div>
+                        <div class="v">V2会员</div>
+                    </div>
+                    <div class="item body">
+                        <div class="mbtn" @click="selectvip(3)" :class="{'disabled':this.my_vip.grade > 4 }"
+                        v-text="this.my_vip.grade == 4 ? '续费' : '立即购买'">立即购买</div>
+                        <div class="price">￥<span>1299</span>/年</div>
+                        <div class="v">V3会员</div>
+                    </div>
+                    <div class="item body">
+                        <div class="mbtn" @click="selectvip(4)" :class="{'disabled':this.my_vip.grade > 4 }">立即购买</div>
+                        <div class="price">￥<span>3999</span></div>
+                        <div class="v">终身会员</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hr"></div>
+            <!-- 表格 -->
+            <div class="mtable">
+                <div class="mrow">
+                    <div class="mcol head">最大可分析行数</div>
+                    <div class="mcol">1000行</div>
+                    <div class="mcol">2000行</div>
+                    <div class="mcol">5000行</div>
+                    <div class="mcol">20000行</div>
+                    <div class="mcol">20000行</div>
+                </div>
+                <div class="mrow">
+                    <div class="mcol head">最大项目数量</div>
+                    <div class="mcol">1个</div>
+                    <div class="mcol">3个</div>
+                    <div class="mcol">5个</div>
+                    <div class="mcol">10个</div>
+                    <div class="mcol">20个</div>
+                </div>
+                <div class="mrow">
+                    <div class="mcol head">单项目最大流程个数</div>
+                    <div class="mcol">10</div>
+                    <div class="mcol">10</div>
+                    <div class="mcol">30</div>
+                    <div class="mcol">100</div>
+                    <div class="mcol">100</div>
+                </div>
+                <div class="mrow">
+                    <div class="mcol head">智能AI分析</div>
+                    <div class="mcol"><img class="false" src="/static/images/false_icon.png" /></div>
+                    <div class="mcol"><img class="true" src="/static/images/true_icon.png" /></div>
+                    <div class="mcol"><img class="true" src="/static/images/true_icon.png" /></div>
+                    <div class="mcol"><img class="true" src="/static/images/true_icon.png" /></div>
+                    <div class="mcol"><img class="true" src="/static/images/true_icon.png" /></div>
+                </div>
+                <!--<div class="mrow">-->
+                <!--    <div class="mcol head">一对一服务</div>-->
+                <!--    <div class="mcol"><img class="false" class="false" src="/static/images/false_icon.png" /></div>-->
+                <!--    <div class="mcol"><img class="false" src="/static/images/false_icon.png" /></div>-->
+                <!--    <div class="mcol"><img class="false" src="/static/images/false_icon.png" /></div>-->
+                <!--    <div class="mcol"><img class="true" src="/static/images/true_icon.png" /></div>-->
+                <!--    <div class="mcol"><img class="true" src="/static/images/true_icon.png" /></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <!-- step 2 -->
+        <div class="main2" style="display:none;" v-show="step == 2">
+            <div class="mrow center black head">订单详情</div>
+            <div class="mrow" style="justify-content:space-between;">
+                <div>
+                    <span>购买商品：</span>
+                    <select v-if="select_id == 1" @change="change_count" v-model="select_count">
+                        <option value="1">1天</option>
+                        <option value="2">2天</option>
+                        <option value="3">3天</option>
+                        <option value="4">4天</option>
+                        <option value="5">5天</option>
+                        <option value="6">6天</option>
+                        <option value="7">7天</option>
+                    </select>
+                    <select v-if="select_id == 2" @change="change_count" v-model="select_count">
+                        <option value="1">1月</option>
+                        <option value="2">2月</option>
+                        <option value="3">3月</option>
+                        <option value="4">4月</option>
+                        <option value="5">5月</option>
+                        <option value="6">6月</option>
+                    </select>
+                    <select v-if="select_id == 3" @change="change_count" v-model="select_count">
+                        <option value="1">1年</option>
+                        <option value="2">2年</option>
+                        <option value="3">3年</option>
+                    </select>
+                    <select v-if="select_id == 4" @change="change_count" v-model="select_count">
+                        <option value="1">永久</option>
+                    </select>
+                </div>
+                <div style="transform: translateX(-258px);">
+                    <span>订单金额（人民币）：</span><span v-text="sum_price"></span>
+                </div>
+            </div>
+            <div class="mrow">
+                <span>选择支付方式</span>
+                <div class="type" :class="{'active green':paytype == 1}" @click="select_type(1)">
+                    <img v-show="paytype == 1" src="/static/images/check_wechat.png" />
+                    <img v-show="paytype != 1" src="/static/images/uncheck_wechat.png" />
+                    <span>微信</span>
+                    <span>WeChat</span>
+                </div>
+                <div class="type" :class="{'active':paytype == 2}" @click="select_type(2)">
+                    <img v-show="paytype == 2" src="/static/images/check_alipay.png" />
+                    <img v-show="paytype != 2" src="/static/images/uncheck_alipay.png" />
+                    <span>支付宝</span>
+                    <span>Alipay Wallet</span>
+                </div>
+            </div>
+            <div class="mrow center">
+                <div v-show="paytype == 2" class="btn" @click="pay">支付</div>
+                <img v-if="paytype == 1 && wechat_qrcode != ''" :src="wechat_qrcode" style="width:200px;" @click="pay" />
+                <div v-if="paytype == 1 && wechat_qrcode != ''" v-text="'订单号:' + wechat_orderid"></div>
+                <div v-if="paytype == 1 && wechat_qrcode != ''">微信扫码支付</div>
+            </div>
+            <div class="back" @click="back">
+                <span>返回</span>
+                <img src="/static/images/chongzhi_back.png" />
+            </div>
+        </div>
+    </main>
+    
+    {{ csrf_input }}
+    
+    <footer class="bg-dark">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-lg-5 col-md-12">
+    				<a class="logo-footer text-white" href="#">
+    					<!--Landkey-->
+    					<img src="/static/new_index/images/logo1.png" style=""> 
+    				</a>
+    				<p>版权所有@江西速临科技有限公司</p>
+    				<p>Copyright  SuLing Technology Ltd 2021 All Right Reserved.</p>
+    				<!--end icon-->
+    			</div>
+    
+    			<div class="col-lg-7 col-12">
+    				<div class="row">
+    					<div class="col-lg-4 col-md-4 col-12 mt-4 pt-2 mt-lg-0 pt-lg-0">
+    						<h5 class="text-light footer-head font-weight-normal mb-0">法律协议</h5>
+    						<ul class="list-unstyled footer-list mt-4">
+    							<li><a href="{{ url("index_qt:security") }}" target="_blank" class="text-foot"><i class="mdi mdi-chevron-right mr-1"></i>安全性</a></li>
+    						</ul>
+    						<ul class="list-unstyled footer-list mt-4">
+    							<li><a href="{{ url("index_qt:legal_provisions") }}" target="_blank" class="text-foot"><i class="mdi mdi-chevron-right mr-1"></i>法律条款</a></li>
+    						</ul>
+    						<ul class="list-unstyled footer-list mt-4">
+    							<li><a href="{{ url("index_qt:privacy") }}" target="_blank" class="text-foot"><i class="mdi mdi-chevron-right mr-1"></i>隐私</a></li>
+    						</ul>
+    					</div>
+    					<div class="col-lg-4 col-md-4 col-12 mt-4 pt-2 mt-lg-0 pt-lg-0">
+    						<h5 class="text-light footer-head font-weight-normal mb-0">关于</h5>
+    						<ul class="list-unstyled footer-list mt-4">
+    							<li><a  class="text-foot" href="{{ url("index_qt:about") }}"><i class="mdi mdi-chevron-right mr-1"></i>关于我们</a></li>
+    						</ul>
+    					</div>
+    					
+    					<div class="col-lg-4 col-md-4 col-12 mt-4 pt-2 mt-lg-0 pt-lg-0">
+    						<h5 class="text-light footer-head font-weight-normal mb-0">联系我们</h5>
+    						<ul class="list-unstyled footer-list mt-4">
+    							<li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin fea icon-sm mr-2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><a href="javascript:void(0)" class="text-foot">中国·江西</a></li>
+    							<li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail fea icon-sm mr-2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:contact@example.com" class="text-foot">slkj2021@163.com</a></li>
+    							
+    						</ul>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </footer>
+    <footer class="bg-dark footer-bar py-4">
+    	<div class="container">
+            <div class="frinedlink">
+                <a href="https://www.datarx.cn/">
+                    <img src="/static/images/palanDataRx.png" />
+                </a>
+                <a href="http://www.bioinformatics.com.cn/">
+                    <img src="/static/images/weishengxin.png" />
+                </a>
+            </div>
+    	</div>
+    </footer>
+    <footer class="bg-dark footer-bar py-4">
+    	<div class="container">
+    		<div class="row justify-content-center">
+    			<div class="col-12 text-center">
+    				<p class="foot-color mb-0"><a target="_blank" href="https://beian.miit.gov.cn/">赣ICP备2021000880号-1</a></p>
+    			</div>
+    		</div>
+    	</div>
+    </footer>
+    
+    <!-- 本页js -->
+    <script src="{{ static('index/js/vue-2.5.16.js') }}"></script>
+    <script>
+        new Vue({
+            el: '#main',
+            data: {
+                csrf: null,
+                my_vip: {},
+                step: 1,
+                select_id: 1,
+                select_count: 1,
+                vip_list: [
+                    {
+                        id: 1,
+                        price: 9.9
+                    },
+                    {
+                        id: 2,
+                        price: 199
+                    },
+                    {
+                        id: 3,
+                        price: 1299
+                    },
+                    {
+                        id: 4,
+                        price: 3999
+                    }
+                ],
+                paytype: 1,
+                wechat_qrcode: '',
+                wechat_orderid: ''
+            },
+            created() {
+                this.csrf = $('input[name="csrfmiddlewaretoken"]').val();
+                this.get_user()
+            },
+            computed: {
+                sum_price() {
+                    return `￥${this.vip_list[this.select_id - 1].price * 10 * this.select_count / 10}`
+                },
+                my_vip_grade: function() {
+                    return (this.my_vip.grade !== 1 && this.my_vip.grade !== undefined) ? 'v' + (this.my_vip.grade - 1) + '会员' : '普通用户'
+                },
+                my_vip_time: function() {
+                    return this.my_vip.limit_time !== undefined ? this.my_vip.limit_time + '天' : null
+                }
+            },
+            methods: {
+                get_user() {
+                    $.ajax({
+                        url: '/show_members/',
+                        type: 'POST',
+                        headers: { 'X-CSRFToken': this.csrf },
+                        data: {'csrfmiddlewaretoken': this.csrf },
+                        success: data => {
+                            this.my_vip = data.context
+                        }
+                    })  
+                },
+                change_count() {
+                    if (this.paytype == 1) this.pay()
+                },
+                selectvip(x) {
+                    if (x >= this.my_vip.grade - 1) {
+                        this.select_id = x
+                        this.select_count = 1
+                        this.step++   
+                        this.pay()
+                    }
+                },
+                select_type(x) {
+                    if (x == 1) { // 切换至 微信支付 => 获取/刷新二维码
+                        this.paytype = x
+                        this.pay()
+                    } else { // 切换至 支付宝支付 => 清空 二维码和订单号
+                        this.paytype = x
+                        this.delete_wechat_qrcode()
+                    }
+                    
+                },
+                delete_wechat_qrcode() { // 清除 微信支付二维码
+                    if (this.wechat_orderid == '') return
+                    $.ajax({
+                        url: '/wx_img/',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': this.csrf
+                        },
+                        data: JSON.stringify({
+                            'csrfmiddlewaretoken': this.csrf,
+                            'order': this.wechat_orderid
+                        }),
+                        success: res => {
+                            //
+                        }
+                    })
+                    
+                    this.wechat_qrcode = ''
+                    this.wechat_orderid = ''
+                },
+                wechat_poll(orderid) { // 对某订单id进行轮询
+                    // 只有生成新订单号时会开始轮询
+                    // => 旧订单号失效 => 停止旧轮询
+                    // 同时最多进行一个轮询
+                    // 二维码或订单号为空 不执行轮询
+                    if (this.paytype != 1 || this.wechat_orderid == '' || this.wechat_orderid != orderid) return
+                    $.ajax({
+                        url: '/monitor/',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': this.csrf
+                        },
+                        data: JSON.stringify({
+                            'csrfmiddlewaretoken': this.csrf,
+                            'order': this.wechat_orderid
+                        }),
+                        success: res => {
+                            if (res.stat == 1) { // 已支付
+                                alert('支付成功')
+                                window.location.href = '/index/'
+                            } else { // 未支付
+                                setTimeout(()=>{ this.wechat_poll(orderid) },4000) // 每4000毫秒 查询一次
+                            }
+                        }
+                        
+                    })
+                },
+                back() {
+                  this.step = 1 
+                  this.select_count = 1
+                  this.select_id = 1
+                },
+                pay() {
+                   $.ajax({
+                        url: this.paytype == 2 ? '/recharge/' : '/wechatpay/',
+                        type: "post",
+                        dataType: 'json',
+                        contentType: "application/json",
+                        cache: false,
+                        data: JSON.stringify({
+                            'csrfmiddlewaretoken': this.csrf,
+                            'name': `v${this.select_id}`, // 名称
+                            'count': this.select_count, // 数量
+                            'single_price': this.vip_list[this.select_id - 1].price, // 单价
+                            'price': this.vip_list[this.select_id - 1].price * 10 * this.select_count / 10, // 总价
+                            'pay_method': this.paytype, // 支付方式
+                            'member': this.select_id + 1 // 不知道干嘛的
+                        }),
+                        headers: {
+                            'X-CSRFToken': this.csrf
+                        },
+                        success: data => {
+                            if (this.paytype == 2) {
+                                if (data.code == 200) window.open(data.alipay_url)
+                                else alert(data.error)                          
+                            } else if (this.paytype == 1) {
+                                if (data.code == 200) {
+                                    // 成功生成新订单号 =>
+                                    this.delete_wechat_qrcode() // 删除上一个订单号
+                                    this.wechat_qrcode = data.qrcode_name
+                                    this.wechat_orderid = data.out_trade_no // 保存新订单号 => 旧订单号轮询失效
+                                    this.wechat_poll(data.out_trade_no) // 开始新订单轮询
+                                } 
+                                else alert(data.error)
+                            }
+                        }
+                    })
+                    
+                }
+            }
+        })
+    </script>
+</body>
+</html>

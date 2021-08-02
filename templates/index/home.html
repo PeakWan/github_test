@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html class="app-ui">
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>智能数据分析平台-首页</title>
+    <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework"/>
+    <meta name="author" content="rustheme"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="stylesheet" href="{{ static('index/iconfont/iconfont.css') }}">
+    <link rel="apple-touch-icon" href="{{ static('index/img/favicons/apple-touch-icon.png') }}"/>
+    <link rel="icon" href="{{ static('index/img/favicons/favicon.ico') }}"/>
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ static('index/js/plugins/slick/slick.min.css') }}"/>
+    <link rel="stylesheet" id="css-font-awesome" href="{{ static('index/css/font-awesome.css') }}"/>
+    <link rel="stylesheet" id="css-ionicons" href="{{ static('index/css/ionicons.css') }}"/>
+    <link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}"/>
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}"/>
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/miss_delete.css') }}" />
+    
+    <!-- End Stylesheets -->
+<style>
+    .HY
+    {
+        float: right;
+        margin-top: 40px;
+    }
+    
+    .dightNumber{
+         position: absolute;
+    bottom: -135px;
+    left: 100px;
+    width: 183px;
+    /* line-height: 50px; */
+    height: 134px;
+    background-color: #fff;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.1);
+    color: #aaa;
+    display: none;
+    }
+    
+    .dightNumber div{
+        margin-left: 20px;
+    }
+    
+    .nav-item-has-subnav img{
+        width: 16px;
+        height: 16px;
+    }
+    .black {
+        background-color: black;
+    }
+    .blue {
+        background-color: blue;
+    }
+    #global_style {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-left: 0;
+    }
+    #global_style .l {
+        font-size: 12px;
+        color: #aaa;
+    }
+    #global_style .r {
+        box-sizing: border-box;
+        width: 59px;
+        height: 25px;
+        margin-left: 10px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #global_style .cur {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border-radius: 2px;
+    }
+    #global_style .subs {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        transform: translateY(1px);
+    }
+    #global_style .sub {
+        width: 59px;
+        height: 25px;
+        margin: 0;
+    }
+</style>
+</head>
+
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+<div class="app-layout-canvas">
+    <div class="app-layout-container">
+        <!-- Drawer -->
+        <aside class="app-layout-drawer">
+            <!-- Drawer scroll area -->
+            <div class="app-layout-drawer-scroll">
+                <!--<div id="logo" class="drawer-header">-->
+                <!--    <a href="{{ url("index_qt:index_sy") }}"><img src="{{ static('images/logo.jpg') }}"></a>-->
+                <!--</div>-->
+                <!-- Drawer navigation -->
+                <nav class="drawer-main">
+                    <ul class="nav nav-drawer" id="z-nav">
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;" src="/static/images/数据整理1.png" alt="" /> 数据整理</a>
+                            <ul class="nav nav-subnav">
+                                <li>
+                                    <a href="{{ url("upload:miss_delete",kwargs={"project_id": project_id}) }}"
+                                       title="缺失数据剔除" target="main_frame" class="button_color">缺失剔除</a>
+                                </li>
+                                <!--<li>-->
+                                <!--    <a href="{{ url("upload:colinear",kwargs={"project_id": project_id}) }}">获取相关性过高变量</a>-->
+                                <!--</li>-->
+                                <li>
+                                    <a href="{{ url("upload:vif",kwargs={"project_id": project_id}) }}"
+                                       title="相关性\共线性变量剔除" target="main_frame" class="button_color">相关性\共线性剔除</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:abnormal",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="异常偏离值处理" target="main_frame" class="button_color">异常值处理</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('upload:miss_filling',kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="数据自动化填补" target="main_frame" class="button_color">智能数据填补</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:matchin",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="PSM倾向性匹配" target="main_frame" class="button_color">PSM倾向性匹配</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:balance",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="样本均衡" target="main_frame" class="button_color">样本均衡</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:group",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="分组重编码" target="main_frame" class="button_color">分组重编码</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:recoding",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="哑变量重编码" target="main_frame" class="button_color">哑变量重编码</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:standardization",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="数据标准化" target="main_frame" class="button_color">数据标准化</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:manipulate",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="数据操作" target="main_frame" class="button_color">数据操作</a>
+                                </li>
+                                <li style="float:left;transform: translateX(5px)">
+                                    <a href="{{ url("upload:data_transform",kwargs={"project_id": project_id,"data_id":0}) }}"
+                                       title="数据转化" target="main_frame" class="button_color">数据转化</a>
+                                </li>
+                            </ul>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;" src="/static/images/基线分析2.png" alt="" /> 基线分析</a>
+                            <ul class="nav nav-subnav">
+                                <li>
+                                    <a href="{{ url("smart:zhfx",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="综合智能统计分析" target="main_frame" class="button_color">综合智能统计分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:sjms",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="数据描述" target="main_frame" class="button_color">数据描述</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('smart:kfjy',kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="卡方/Fisher检验" target="main_frame" class="button_color">卡方/Fisher检验</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:statistic",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="两组独立样本t 检验" target="main_frame" class="button_color">T检验
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:d_fc",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="多组独立单因素方差分析" target="main_frame" class="button_color">Anova方差分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:fcsjy",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="非参数检验" target="main_frame" class="button_color">非参数检验
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:dcbj",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="多重比较" target="main_frame" class="button_color">多重比较</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:zws",kwargs={"project_id": project_id, "data_id": 0}) }}" title="中位数差异分析" target="main_frame" class="button_color">中位数差异分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('upload:normality',kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="正态性校验" target="main_frame" class="button_color">正态性检验</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('smart:fxqx',kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="方差齐性" target="main_frame" class="button_color">方差齐性检验</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('smart:xgx',kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="相关性分析" target="main_frame" class="button_color">相关性分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('smart:gxx',kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="共线性分析" target="main_frame" class="button_color">共线性分析</a>
+                                </li>
+                                <li style="float: left;margin-left: 5px">
+                                    <a href="{{ url('smart:sample',kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="样本量分析" target="main_frame" class="button_color">样本量分析</a>
+                                </li>
+                                <!-- <li>
+					<a href="{{ url('smart:f_jy',kwargs={"project_id": project_id, "data_id": 0}) }}" title="Fisher检验">Fisher检验</a>
+					</li> -->
+
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;" src="/static/images/高级分析2.png" alt="" /> 高级分析</a>
+                            <ul class="nav nav-subnav">
+                                <li>
+                                    <a href="{{ url("advanced:loghg",kwargs={"project_id": project_id, "data_id": 0}) }}" title="logistic回归" target="main_frame" class="button_color">Logistic回归</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:xxhg",kwargs={"project_id": project_id, "data_id": 0}) }}" title="线性回归析" target="main_frame" class="button_color">线性回归</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("upload:survival",kwargs={"project_id": project_id, "data_id": 0}) }}" title="生存分析" target="main_frame" class="button_color">生存分析</a>
+                                </li>
+                                
+
+                                <!--<li>-->
+                                    <!--<a href="{{ url("advanced:wait") }}" title="列线图" target="main_frame" class="button_color">列线图</a>-->
+                                <!--    <a href="#" title="列线图" target="main_frame" class="button_color">列线图</a>-->
+                                <!--</li>-->
+
+                                <li>
+                                    <a href="{{ url("advanced:coxfx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="Cox回归分析" target="main_frame" class="button_color">COX回归</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:dys",kwargs={"project_id": project_id, "data_id": 0}) }}" title="单因素多因素分析" target="main_frame" class="button_color">单因素\多因素分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:dmxfx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="多模型回归分析" target="main_frame" class="button_color">多模型回归分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:fcfx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="分层分析" target="main_frame" class="button_color">分层分析</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="{{ url("smart:qsfx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="趋势回归分析" target="main_frame" class="button_color">趋势回归分析</a>
+                                </li>   
+                                
+                                <li>
+                                    <a href="{{ url("smart:phqx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="平滑曲线拟合分析" target="main_frame" class="button_color">平滑曲线分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("smart:znfx",kwargs={"project_id": project_id, "data_id": 0}) }}"
+                                       title="智能分组分析" target="main_frame" class="button_color">智能分组分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:roc",kwargs={"project_id": project_id, "data_id": 0}) }}" title="ROC曲线" target="main_frame" class="button_color">ROC曲线</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:nri",kwargs={"project_id": project_id, "data_id": 0}) }}" title="NRI分析" target="main_frame" class="button_color">NRI分析</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            {% if u_id == 1 %}
+                            <a href="javascript:alert('请先充值会员，智能AI分析只对会员开放！');" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;background-color: #f9f9f9;" src="/static/images/智能AI分析.png" alt="" /> 智能AI分析</a>
+                            {% else %}
+                            <a href="javascript:void(0)" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;" src="/static/images/智能分析.png" alt="" /> 智能AI分析</a>
+                            {% endif %}
+                            <ul class="nav nav-subnav">
+
+                                <!--<li>-->
+                                <!--    <a href="{{ url("advanced:wait") }}" title="主成分分析" target="main_frame" class="button_color">主成分分析</a>-->
+                                    <!--<a href="#" title="主成分分析" target="main_frame" class="button_color">主成分分析</a>-->
+                                <!--</li>-->
+
+                                {% if u_id == 1 %}
+                                <li>
+                                    <a href="javascript:alert('会员可使用');" title="影响因子重要度分析" target="main_frame" class="button_color">影响因子重要度分析</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:alert('会员可使用');" title="变量数-模型评分分析" target="main_frame" class="button_color">变量数-模型评分分析</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:alert('会员可使用');" title="机器学习分类" target="main_frame" class="button_color">机器学习分类</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:alert('会员可使用');" title="机器学习回归" target="main_frame" class="button_color">机器学习回归</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:alert('会员可使用');" title="机器学习聚类" target="main_frame" class="button_color">机器学习聚类</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:alert('会员可使用');" title="分类多模型综合分析" target="main_frame" class="button_color">分类多模型综合分析</a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="{{ url("advanced:zydpx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="影响因子重要度分析" target="main_frame" class="button_color">影响因子重要度分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:blmx",kwargs={"project_id": project_id, "data_id": 0}) }}" title="变量数-模型评分分析" target="main_frame" class="button_color">变量数-模型评分分析</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:jqxxfl",kwargs={"project_id": project_id, "data_id": 0}) }}" title="机器学习分类" target="main_frame" class="button_color">机器学习分类</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:jqxxhg",kwargs={"project_id": project_id, "data_id": 0}) }}" title="机器学习回归" target="main_frame" class="button_color">机器学习回归</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:jqxxjl",kwargs={"project_id": project_id, "data_id": 0}) }}" title="机器学习聚类" target="main_frame" class="button_color">机器学习聚类</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("advanced:d_roc",kwargs={"project_id": project_id, "data_id": 0}) }}" title="分类多模型综合分析" target="main_frame" class="button_color">分类多模型综合分析</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;" src="/static/images/图表制作1.png" alt="" /> 图表制作</a>
+                            <ul class="nav nav-subnav">
+                                <li>
+                                    <a href="{{ url("xsmartplot:pie",kwargs={"project_id": project_id}) }}" target="main_frame" title="分类排序饼图"  class="button_color">分类排序饼图</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("xsmartplot:comparison",kwargs={"project_id": project_id}) }}" target="main_frame" title="比较图"  class="button_color">比较图</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url("xsmartplot:plp",kwargs={"project_id": project_id}) }}" target="main_frame" title="点线图"  class="button_color">点线图</a>
+                                </li>
+                                <!--<li>-->
+                                <!--    <a href="{{ url("xsmartplot:horizontal",kwargs={"project_id": project_id}) }}" target="main_frame" title="水平柱状图" class="button_color">水平柱状图</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--    <a href="{{ url("xsmartplot:forest",kwargs={"project_id": project_id}) }}" target="main_frame" title="森林图" class="button_color">森林图</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--    <a href="{{ url("xsmartplot:box",kwargs={"project_id": project_id}) }}" target="main_frame" title="箱图" class="button_color">箱图</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--    <a href="{{ url("xsmartplot:scatter",kwargs={"project_id": project_id}) }}" target="main_frame" title="散点图" class="button_color">散点图</a>-->
+                                <!--</li>-->
+            
+                                <!--<li>-->
+                                <!--    <a href="{{ url("xsmartplot:rel",kwargs={"project_id": project_id}) }}" target="main_frame" title="点线混合图" -->
+                                <!--    class="button_color">点线混合图</a>-->
+                                    <!--<a href="#" target="main_frame" title="点线混合图" class="button_color">点线混合图</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--    <a href="{{ url("xsmartplot:strip",kwargs={"project_id": project_id}) }}" target="main_frame" title="分类散点图" class="button_color">分类散点图</a>-->
+                                    <!--<a href="#" target="main_frame" title="分类散点图" class="button_color">分类散点图</a>-->
+                                <!--</li>-->
+                                
+                                <li>
+                                    <a href="{{ url("xsmartplot:stackbar",kwargs={"project_id": project_id}) }}" target="main_frame" title="堆积柱状图" class="button_color">堆积柱状图</a>
+                                    <!--<a href="#" target="main_frame" title="堆积柱状图" class="button_color">堆积柱状图</a>-->
+                                </li>
+                                <li style="float:left;transform:translateX(5px);">
+                                    <a href="{{ url("xsmartplot:dist",kwargs={"project_id": project_id}) }}" target="main_frame" title="频率分布直方图" class="button_color">频率分布直方图</a>
+                                    <!--<a href="#" target="main_frame" title="堆积柱状图" class="button_color">堆积柱状图</a>-->
+                                </li>                            
+                            </ul>
+                        </li>
+                        <li class="nav-item" title="智能文章生成">
+                            <a href="{{ url('upload:article',kwargs={"project_id": project_id}) }}" target="main_frame" style="padding-left:0;"><img style="margin-left: 20px;margin-right: 15px;width: 16px;height: 16px;" src="/static/images/智能文章1.png" alt="" /> 智能文章生成</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End drawer navigation -->
+                <div style="margin:20px auto;width:200px;">
+                	<!-- Landkey -->
+                	<img style="max-width:100%;" src="/static/images/weixin.png" >
+                    <!--<p class="copyright">-->
+                    <!--    Copyright &copy; 2019 ncdefs2.hk.8dfish.site name All rights reserved.-->
+                    <!--</p>-->
+                </div>
+            </div>
+            <!-- End drawer scroll area -->
+        </aside>
+        <!-- End drawer -->
+        <!-- Header -->
+        <header class="app-layout-header">
+            <nav class="navbar navbar-default">
+                <div id="logo" class="drawer-header" >
+                    <a href="/"><img src="/static/images/logo.jpg"></a>
+                </div>
+                <div class="container-fluid">
+                    {% if user.is_authenticated %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                                        <div class="HY">
+                                            {% if u_id == 1 %}
+                                            <a href="#" class="v_img" title="普通用户"><img src="/static/images/1.png"></a>
+                                            {% elif u_id == 2 %}
+                                            <a href="#" class="v_img" title="会员V1"><img src="/static/images/2.png"></a>    
+                                            {% elif u_id == 3 %}
+                                            <a href="#" class="v_img" title="会员V2"><img src="/static/images/3.png"></a>
+                                            {% elif u_id == 4 %}
+                                            <a href="#" class="v_img" title="会员V3"><img src="/static/images/4.png"></a>
+                                            {% endif %}
+                                        </div>
+                            <div class="header-right" style="position:relative">
+                                <div class="dightNumber">
+                                    <div>
+                                        <label for="digit">小数位</label>
+                                        <select name="digit" id="num_select" style="
+                                        width: 59px;
+                                        height: 25px;
+                                        outline: none;
+                                        border: 1px solid #dddd;
+                                        text-indent: 1em;
+                                        margin-left:17px;
+                                       ">
+                                            <option value ="1">1</option>
+                                            <option value ="2">2</option>
+                                            <option value="3" selected = "selected">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div style="margin:0;width:100%;height:1px;background-color:#ddd">
+                                        
+                                    </div>
+                            
+                                    <div id="global_style">
+                                        <input type="hidden" id="global_style_control" :value="curr_style.value" />
+                                        <div class="l">森林图样式</div>
+                                        <div class="r" @click="style_list_show = !style_list_show">
+                                            <div class="cur" :style="{'background-color':curr_style.color}"></div>
+                                            <div class="subs" v-show="style_list_show == true">
+                                                <div class="sub" v-for="item in style_list" 
+                                                :style="{'background-color':item.color}"
+                                                @click="curr_style = item;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                          
+                                </div>  
+                                <div class="navgition-header">
+                                    <a href="{{ url('index_qt:index_qt') }}" class="index">研究项目</a>
+                                    <a href="{{ url('index_qt:video_course') }}" target="_blank" class="index">视频教程</a>
+                                    <a href="{{ url('index_qt:community') }}" class="index" target="_blank">交流区</a>
+                                    <a href="{{ static('instructions.pdf')}}" target="_blank" class="help-control">帮助中心</a>
+                                    <a href="{{ url('verifications:recharge') }}" class="help-control">会员中心</a>
+                                </div>
+                                 <div class="numSelect" style="float:left;">
+                                    <img  style="height: 20px;" src="/static/images/number.png" alt="" />
+                                </div>
+                                <div style="float:left;margin-left:5px;">
+                                    <img  style="height: 20px;" src="/static/images/filter.png" alt="" id="show_filter"/>
+                                </div>
+                                <!-- <div class="switch" style="float:left;">-->
+                                <!--    <img  style="height: 20px;" src="/static/images/switch.png" alt="" />-->
+                                <!--</div>-->
+                                <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+                                    <li class="dropdown dropdown-profile">
+                                        <a href="javascript:void(0)" data-toggle="dropdown">
+                                            <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>
+                                            {% if user.userunionid %}
+                                                    <img class="img-avatar img-avatar-48"
+                                                             src="{{ user.image_tou }}"
+                                                             alt="User profile pic"/>
+                                            
+                                            {% else %}
+                                                {% if user.image_tou %}
+                                                    <img class="img-avatar img-avatar-48"
+                                                         src="/static/upload/user_images/{{ user.image_tou }}"
+                                                         alt="User profile pic"/>
+                                                {% else %}
+                                                    <img class="img-avatar img-avatar-48"
+                                                         src="{{ static('index/img/avatars/avatar3.jpg') }}"
+                                                         alt="User profile pic"/>
+                                                {% endif %}
+                                            {% endif %}
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <a href="{{ url("index_qt:user") }}">个人中心</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url("index_qt:logout") }}">退出</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <!--<span>V1</span>-->
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                          
+                            <!-- <a href="javascript:;" class="help-control">帮助中心</a>
+				<a href="{{ url('index_qt:login') }}">登录</a>
+				<span>|</span>
+                <a href="{{ url('index_qt:register') }}">注册</a> -->
+                            <div class="header-right">
+                                <!--<img style="height: 20px;" src="/static/images/number.png" alt="" />-->
+                                <div class="navgition-header">
+                                    <a href="javascript:;" class="help-control">帮助中心</a>
+                                </div>
+                                <div class="login-header">
+                                    <a href="{{ url('index_qt:login') }}">登录</a>
+                                    <span>|</span>
+                                    <a href="{{ url('index_qt:register') }}">注册</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- .navbar-right -->
+                </div>
+                <!-- .container-fluid -->
+            </nav>
+            <!-- .navbar-default -->
+        </header>
+        <!-- End header -->
+        <div class="user_con fr">
+            <iframe src="{{ url("advanced:wait")}}" frameborder="0"
+                    name="main_frame" class="main_frame"
+                    id="main_frame"
+                    style="width: 100%; height:100%;float: right;">
+            </iframe>
+        </div>
+    </div>
+    <!-- .app-layout-container -->
+</div>
+<!-- .app-layout-canvas -->
+<!-- Apps Modal -->
+<!-- Opens from the button in the header -->
+<div id="apps-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-sm modal-dialog modal-dialog-top">
+        <div class="modal-content">
+            <!-- Apps card -->
+            <div class="card m-b-0">
+                <div class="card-header bg-app bg-inverse">
+                    <h4>Apps</h4>
+                    <ul class="card-actions">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block">
+                    <div class="row text-center">
+                        <div class="col-xs-6">
+                            <a class="card card-block m-b-0 bg-app-secondary bg-inverse" href="index.html">
+                                <i class="ion-speedometer fa-4x"></i>
+                                <p>
+                                    Admin
+                                </p>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="card card-block m-b-0 bg-app-tertiary bg-inverse" href="frontend_home.html">
+                                <i class="ion-laptop fa-4x"></i>
+                                <p>
+                                    Frontend
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- .card-block -->
+            </div>
+            <!-- End Apps card -->
+        </div>
+    </div>
+</div>
+<div class="app-ui-mask-modal"></div>
+
+<div id="datafilter" style="display:none;" v-show="show" :filter_data="filter_data">
+    <div class="mcontainer">
+        <div class="head">筛选条件</div>
+        <div class="mrow" style="margin-bottom:25px;">
+            <select style="margin-left:0;" v-model="submit_data.s1" @change="changeS1">
+                <option value="或者">或者</option>
+                <option value="而且">而且</option>
+                <option value="无">无</option>
+            </select>
+        </div>
+        <div v-for="item,index in submit_data.list">
+            <div class="mrow">
+                
+                <select v-model="item.val1" style="margin-left:0;">
+                    <option v-for="item in list_1" :value="item" v-text="item"></option>
+                </select>
+                
+                <select v-model="item.val2">
+                    <option value="大于">大于</option>
+                    <option value="大于等于">大于等于</option>
+                    <option value="等于">等于</option>
+                    <option value="小于等于">小于等于</option>
+                    <option value="小于">小于</option>
+                </select>
+                
+                <input type="text" v-model="item.val3" />
+                
+                <select v-model="item.val4" @change="changeval4(index)">
+                <option value="或者">或者</option>
+                <option value="而且">而且</option>
+                <option value="无">无</option>
+                </select>
+                
+                <select v-model="item.val5" :class="{'disabled':item.val4 == '无'}" :disabled="item.val4 == '无' ? true : false">
+                    <option value="大于">大于</option>
+                    <option value="大于等于">大于等于</option>
+                    <option value="等于">等于</option>
+                    <option value="小于等于">小于等于</option>
+                    <option value="小于">小于</option>
+                </select>
+                
+                <input type="text" v-model="item.val6" :class="{'disabled':item.val4 == '无'}" :disabled="item.val4 == '无' ? true : false" />
+                
+            </div>
+            <div class="mrow addbtn">
+                <div @click="add_filter" style="margin-right:10px;">+</div>
+                <div @click="remove_filter(index)">-</div>
+            </div>
+        </div>
+        <div style="color:red;margin-top:20px;">最多四个筛选条件</div>
+        <div class="btns">
+            <div class="btn" @click="confirm_filter">确定筛选</div>
+            <div class="btn" @click="cancel_filter">取消筛选</div>
+        </div>
+    </div>
+</div>
+
+{{ csrf_input }}
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<script src="{{ static('index/js/all-common.js') }}"></script>
+<script src="{{ static('index/js/vue-2.5.16.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+<script>
+$(function () {
+    // Init page helpers (Slick Slider plugin)
+    App.initHelpers('slick');
+        
+        
+    // 1. 获取所有按钮元素
+    window.num_select=$('#num_select').val();
+    console.log(window.num_select);
+    var btns = document.getElementsByClassName('button_color');
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+            // 1. 先把所有的颜色先清空
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].style.backgroundColor = '';
+                btns[i].classList.remove('current')
+            }
+            // 2. 添加我们的样式
+            this.style.backgroundColor = '#1ca89d';
+            this.classList.add('current')
+        }
+    }
+
+    var options=document.querySelectorAll('.nav-item');
+    console.log(options,'options');
+    for(let item in options){
+        options[item].onclick=function(){
+            for (var i = 0; i < options.length; i++) {
+                btns[i].classList.remove('currents')
+            }
+            this.classList.add('currents')
+        }
+    }
+    
+    var numberSelect=false  
+    $('.numSelect').click(function(){
+        console.log('zz')
+        if(numberSelect){
+            $('.dightNumber').css('display','none')
+            numberSelect=false
+        }else{
+            $('.dightNumber').css('display','block')
+            numberSelect=true
+        }
+    })
+    
+    // 全局样式
+    var global_style_E = new Vue({
+        el: '#global_style',
+        data: {
+            style_list: [
+                {value: 1,color: '#5a5a5a'},
+                {value: 2,color: '#5e7bf5'}
+            ],
+            curr_style: {value: 1,color: '#5a5a5a'},
+            style_list_show: false
+        }
+    })
+    
+    // 会员可使用
+    function noright() {
+        alert('会员可使用')
+    }
+    
+    // 筛选器
+    var FILTER = new Vue({
+        el: '#datafilter',
+        data: {
+            show: false,
+            
+            submit_data: {
+                s1: '无',
+                list: [{ val1: '', val2: '', val3: '', val4: '无', val5: '', val6:'' }]
+            }, // 提交的list
+            
+            list_1: [], 
+            
+            csrf: null,
+            project_id: null,
+            button_id: null
+        },
+        created() {
+            this.csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            this.project_id = window.location.href.split('/').reverse()[1]
+            this.get_list_1()
+        },
+        methods: {
+            get_list_1() { // 获取 list_1
+                $.ajax({
+                    url: '/button/',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': this.csrf
+                    },
+                    data: JSON.stringify({
+                        project_id: this.project_id
+                    }),
+                    success: res => {
+                        if (res.code == 200) {
+                            this.button_id = res.context.button_id
+                            
+                            $.ajax({
+                                url: '/listing/',
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRFToken': this.csrf
+                                },
+                                data: JSON.stringify({
+                                    list: this.button_id,
+                                    project_id: this.project_id
+                                }),
+                                success: res2 => {
+                                    if (res2.code == 200) {
+                                        this.list_1 = res2.context.listing
+                                    }
+                                }
+                                
+                            })
+                        }
+                    }
+                })
+            },
+            add_filter() { //添加一行数据
+                if (this.submit_data.s1 == '无') alert('条件为 “' + this.submit_data.s1 + '” ,至多一条筛选条件')
+                else if (this.submit_data.list.length < 4) this.submit_data.list.push({ val1: '', val2: '', val3: '', val4: '无', val5: '', val6:'' })
+                else alert('最多四个筛选条件')
+            },
+            remove_filter(x) { // 移除指定数据
+                if (this.submit_data.list.length > 1) {
+                    var temp = []
+                    this.submit_data.list.forEach((item,index) => { if (index !== x) temp.push(item) })
+                    this.submit_data.list=temp              
+                }
+                else alert('最少一个筛选条件')
+            },
+            changeS1() {
+                if (this.submit_data.s1 == '无') this.submit_data.list = [this.submit_data.list[0]]
+            },
+            changeval4(x) {
+                if (this.submit_data.list[x].val4 == '无') {
+                    this.submit_data.list[x].val5 = ''
+                    this.submit_data.list[x].val6 = ''
+                }
+            },
+            confirm_filter() {
+                if (this.submit_data.s1 !== '无' && this.submit_data.list.length < 2) { // 判断 条数
+                    alert('条件为 “' + this.submit_data.s1 + '” ,至少需要两条筛选条件')
+                } else { // 判断条件是否为空
+                    for (let i=0;i<this.submit_data.list.length;i++) {
+                        let item = this.submit_data.list[i]
+                        if (
+                            (item.val1 == '' || item.val2 == '' || item.val3 == '') || 
+                            (item.val4 !== '无' && (item.val5 == '' || item.val6 == ''))
+                        ) {
+                           alert('条件不得为空')
+                           return false // 条件不全  退出函数
+                        }
+                    }
+                    this.show = false
+                    console.log(this.submit_data)
+                }
+            },
+            cancel_filter() {
+                this.submit_data.list = [{ val1: '', val2: '', val3: '', val4: '无', val5: '', val6:'' }]
+                this.show = false
+            }
+        },
+        computed: {
+            filter_data() {
+                return JSON.stringify(this.submit_data)
+            }
+        }
+    })
+    
+    // 打开 || 关闭 筛选器
+    $('#show_filter').click(function() {
+        FILTER.show = !FILTER.show
+    })
+    
+});
+</script>
+
+</body>
+</html>

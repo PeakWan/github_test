@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            后台管理系统
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="{{ static('admin/css/x-admin.css') }}" media="all">
+    </head>
+    <body>
+        <div class="x-body">
+            <div class="layui-form">
+
+                <div class="layui-form-item">
+                    <label for="username" class="layui-form-label">
+                        <span class="x-red"></span>视频教程标题
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="username" name="username" required="" lay-verify="required"
+                        autocomplete="off" class="layui-input">
+                    </div>
+
+                </div>
+                <div class="layui-form-item">
+                    <label for="phone" class="layui-form-label">
+                        <span class="x-red"></span>视频教程说明
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="phone" name="phone" required="" lay-verify="phone"
+                        autocomplete="off" class="layui-input">
+                    <div class="layui-form-mid layui-word-aux">
+
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <!--<label for="L_pass" class="layui-form-label">-->
+                    <!--    <span class="x-red"></span>视频教程图片-->
+                    <!--</label>-->
+                    <!--<div class="layui-input-inline">-->
+                    <!--    <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"-->
+                    <!--    autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上传图像：&nbsp;</label>
+                    <input type="file" id="uploadinput">
+                </div>
+                <div class="form-group">
+
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                        <span class="x-red"></span>视频教程链接
+                    </label>
+                    
+                    
+                    <div class="layui-input-inline">
+                        <input type="text" id="phone2" name="phone2" required="" lay-verify="phone2"
+                        autocomplete="off" class="layui-input">
+                    <div class="layui-form-mid layui-word-aux">
+
+                </div>
+
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    {{ csrf_input }}
+                    <button  class="layui-btn"  onclick="add()">
+                        增加
+                    </button>
+                </div>
+            </div>
+        </div>
+<!--<script src="./lib/layui/layui.js" charset="utf-8"></script>-->
+<script src="{{ static('admin/lib/layui/layui.js') }}" charset="utf-8"></script>
+<!--<script src="./js/x-layui.js" charset="utf-8"></script>-->
+<script src="{{ static('admin/js/x-layui.js') }}" charset="utf-8"></script>
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+
+<script>
+    layui.use(['form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form()
+            , layer = layui.layer;
+    });
+    
+        // 添加管理员会员
+    function add() {
+                // 获取参数
+                var formdata = new FormData();
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                var csrfmiddlewaretoke = $('input[name="csrfmiddlewaretoken"]').val();
+                var username = $('#username').val();
+                var phone = $('#phone').val();
+                var phone2 = $('#phone2').val();
+                
+                var img = document.getElementById('uploadinput').files[0]
+                console.log(img)
+                // password_one = $('#L_pass').val();
+                // password_two = $('#L_repass').val();
+                var param = {
+                    'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                    'username':username,
+                    'phone':phone,
+                    'phone2':phone2,
+                    // 'password_one':password_one,
+                    // 'password_two':password_two
+                };
+                formdata.append('csrfmiddlewaretoken',csrfmiddlewaretoken);
+                formdata.append('username',username);
+                formdata.append('phone',phone);
+                formdata.append('phone2',phone2);
+                formdata.append('img',img);
+                $.ajax({
+                url: '/admin/member/video/1/',
+                type: "post",
+                cache: false,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRFToken': csrfmiddlewaretoken
+                },
+                data: formdata,
+                success: function (data) {
+                    if(data.code == 200){
+                            //发异步，把数据提交给php
+                            layer.alert("增加成功", {icon: 6},function () {
+                                // 获得frame索引
+                                var index = parent.layer.getFrameIndex(window.name);
+                                //关闭当前frame
+                                parent.layer.close(index);
+                                window.parent.location.reload();
+                            });
+                    }
+                    else{
+                        alert(data.error);
+                    }
+                },
+                error: function (errorMsg) {
+                    //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    console.log(errorMsg)
+                }
+            });
+        
+    }
+</script>
+        
+        
+    </body>
+
+</html>

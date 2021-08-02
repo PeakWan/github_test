@@ -1,0 +1,147 @@
+{% extends 'index/base.html' %}
+{% block title %}
+正态性校验
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/ss_border.css') }}"/>
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+<style>
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .gj-checkout img{
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>变量选择</h1>
+        <div style="margin: 15px 0 15px 0;text-align: center;"><span style="font-size:21px;">选择要分析的列名</span></div>
+        {% endblock %}
+        
+        {% block main03 %}
+
+        <input type="hidden" name="normality" value="">    
+
+   {% endblock %}
+   {% block main04 %}
+<div id="middle-table">
+    
+{% endblock %}
+
+
+{% block description %}
+正态性检验用于分析数据是否呈现出正态性特质，是很多分析方法的基础前提。 常用方法有：夏皮罗维尔克检验法(Shapiro-Wilktest)，适用于样本数<5000，科尔莫戈罗夫检验法（Kolmogorov-Smirnov test），偏度-峰度检验法等，适用于样本数>5000。平台会自动选择检验方法，同时对峰度、偏度进行计算并给出转化建议。
+
+{% endblock %}
+{% block mian02 %}
+
+</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+{% endblock %}

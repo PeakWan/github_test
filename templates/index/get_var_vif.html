@@ -1,0 +1,112 @@
+{% extends 'index/base.html' %}
+{% block title %}
+相关性\共线性变量剔除
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/get_var_vif.css') }}" />
+
+{% endblock %}
+{% block main %}
+<!-- End header -->
+<main class="app-layout-content">
+<div id="rightmodel">
+    
+	<h1>变量选择</h1>
+
+{% endblock %}
+{% block main03 %}
+	<div class="select-options">
+		<form action="" method="post">
+		    <div class="posirelative select-out-div">
+				<span>选择所属变量：</span>
+				<select name="" id="s2" class="select var_if_html" style="width:200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;">
+					<option value="get_var_colinear" selected>剔除相关性过高变量</option>
+					<option value="get_var_vif">剔除共线性过高变量</option>
+				</select>
+            </div>
+            </form>
+            <div class="posirelative select-out-div">
+				<span>请输入阀值:</span>
+				<input type="text" id="get_var_vif_input" placeholder="请输入数字" value="0.3">
+			</div>	
+</div>
+{% endblock %}
+{% block  main04 %}
+<div id="middle-table">
+{% endblock %}
+{% block description %}可在右侧参数菜单栏中设置缺失值比例，选择需要分析的变量，平台会智能剔除相关性过高的变量，并给出相应剔除过程的相关系数。{% endblock %}
+{% block mian02 %}
+	<div class="table-left table-common">
+		<p id="front">
+		</p>
+		<div class="table-iu">
+			<table class="layui-hide" id="demo">
+			</table>
+		</div>
+	</div>
+	<!-- 表格二 -->
+	<div class="table-left1 table-common">
+		<p id="fronts">
+		</p>
+		<div class="table-iu">
+			<table class="layui-hide" id="demos">
+			</table>
+		</div>
+	</div>
+	<!-- 表格三 -->
+	<div class="table-right table-common" id="table-right">
+		<p id="original">
+		</p>
+		<table class="layui-hide" id="demo1">
+		</table>
+	</div>
+	<!-- 表格四 -->
+	<div class="table-right1 table-common" id="table-right1">
+		<p id="originals">
+		</p>
+		<table class="layui-hide" id="demo2">
+		</table>
+	</div>
+</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/all-common.js') }}" media="all"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            App.initHelpers('slick');
+        });
+				if($('.var_if_html')[1]){
+					$('.get_var_vif_input').val(10)
+				}
+</script>
+
+{% endblock %}

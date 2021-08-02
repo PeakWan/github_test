@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8" />
+<title>关于我们 - 智能分析平</title>
+<meta name="description" content="神策数据（官网），国内优秀的大数据分析工具，用户行为分析平台，支持私有化部署和SAAS，提供9大数据分析模型，提供在线数据分析Demo">
+<meta name="keywords" content="神策数据，数据采集，数据分析工具，数据分析模型，网站数据分析，用户行为分析，用户画像，神策分析">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
+<meta name="keywords" content="bootstrap 4, premium, marketing, multipurpose" />
+<meta content="Shreethemes" name="author" />  
+<!-- favicon -->
+<link rel="shortcut icon" href="{{ static('/new_index/images/favicon.ico') }}">
+<!-- Bootstrap css -->
+<link href="{{ static('/new_index/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<!-- 图标库 -->
+<link href="{{ static('/new_index/css/materialdesignicons.min.css') }}" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="{{ static('/new_index/css/unicons.css') }}" /> 
+<!-- Pe7 Icon -->
+<link rel="stylesheet" type="text/css" href="{{ static('/new_index/css/pe-icon-7.css') }}"> 
+<!-- Icons -->
+<link href="{{ static('/new_index/css/magnific-popup.css') }}" rel="stylesheet" type="text/css" /> 
+<!-- Main css File --> 
+<link href="{{ static('/new_index/css/style.css') }}" rel="stylesheet" type="text/css" /> 
+<link href="{{ static('/new_index/css/default.css') }}" rel="stylesheet" id="color-opt"> 
+<style>
+    /* login | register */
+
+.login-register {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    z-index: 999999;
+
+    background-color: rgba(0,0,0,.5);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+.login-register .container {
+
+    box-sizing: border-box;
+
+    width: 360px;
+
+    padding: 30px 40px;
+
+    background-color: white;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    position: relative;
+}
+.login-register .container .c {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    
+    flex-direction: column;
+
+    align-items: center;
+
+    position: relative;
+}
+.login-register .container .c.zc .form-control {
+    margin-bottom: 25px;
+}
+.login-register .container .c > .icon1 {
+    position: absolute;
+    right: -38px;
+    top: -32px;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    background-position: center;
+    background-size: cover;background-image: url("data:image/svg+xml,%3Csvg t='1614569175017' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='12425' width='60' height='60'%3E%3Cpath d='M687.13450213 830.47707234h-47.40902128L616.8576 718.36868085c-2.78876596-13.3860766-14.50158298-22.86788085-27.88765957-22.86788085H434.47230639c-13.3860766 0-25.09889362 9.48180426-27.88765958 22.86788085l-23.42563404 112.10839149h-46.2935149c-15.61708936 0-28.44541277 12.82832341-28.44541277 28.44541276s12.82832341 28.44541277 28.44541277 28.44541277h350.26900426c15.61708936-0.55775319 28.44541277-12.82832341 28.44541277-28.44541277s-12.82832341-28.44541277-28.44541277-28.44541276zM457.89794043 751.83387234h108.20411914l16.17484256 78.08544681H441.72309787l16.17484256-78.08544681zM916.37106383 601.79826383v-368.11710638a56.17729361 56.17729361 0 0 0-56.33307234-56.33307234H163.96200851a56.17729361 56.17729361 0 0 0-56.33307234 56.33307234v368.11710638h808.74212766z' fill='%23333333' p-id='12426'%3E%3C/path%3E%3Cpath d='M107.62893617 643.072v44.62025532a56.17729361 56.17729361 0 0 0 56.33307234 56.33307234h696.07598298A56.17729361 56.17729361 0 0 0 916.37106383 687.69225532v-44.62025532H107.62893617z' fill='%23333333' p-id='12427'%3E%3C/path%3E%3C/svg%3E");
+    -webkit-clip-path:polygon(0 0,60px 0,60px 60px,44px 60px, 0 16px);
+        clip-path:polygon(0 0,60px 0,60px 60px,44px 60px, 0 16px);
+}
+.login-register .container .c > .icon1:hover {
+    background-image: url("data:image/svg+xml,%3Csvg t='1614569175017' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='12425' width='60' height='60'%3E%3Cpath d='M687.13450213 830.47707234h-47.40902128L616.8576 718.36868085c-2.78876596-13.3860766-14.50158298-22.86788085-27.88765957-22.86788085H434.47230639c-13.3860766 0-25.09889362 9.48180426-27.88765958 22.86788085l-23.42563404 112.10839149h-46.2935149c-15.61708936 0-28.44541277 12.82832341-28.44541277 28.44541276s12.82832341 28.44541277 28.44541277 28.44541277h350.26900426c15.61708936-0.55775319 28.44541277-12.82832341 28.44541277-28.44541277s-12.82832341-28.44541277-28.44541277-28.44541276zM457.89794043 751.83387234h108.20411914l16.17484256 78.08544681H441.72309787l16.17484256-78.08544681zM916.37106383 601.79826383v-368.11710638a56.17729361 56.17729361 0 0 0-56.33307234-56.33307234H163.96200851a56.17729361 56.17729361 0 0 0-56.33307234 56.33307234v368.11710638h808.74212766z' fill='%23666666' p-id='12426'%3E%3C/path%3E%3Cpath d='M107.62893617 643.072v44.62025532a56.17729361 56.17729361 0 0 0 56.33307234 56.33307234h696.07598298A56.17729361 56.17729361 0 0 0 916.37106383 687.69225532v-44.62025532H107.62893617z' fill='%23666666' p-id='12427'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .container .c > .icon2 {
+    position: absolute;
+    right: -38px;
+    top: -27px;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    background-position: center;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg t='1614139950154' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='5120' width='60' height='60'%3E%3Cpath d='M117.36826016 487.44484823l371.92033829 2e-8L489.28859843 115.52540996 117.36826016 115.52540996 117.36826016 487.44484823zM210.34901972 208.50526953l185.95971915 0-1e-8 185.95971914L210.34901972 394.46498867 210.34901972 208.50526953zM535.77897823 115.52540996l0 371.92033829 371.92033828 0L907.69931562 115.52540996 535.77897823 115.52540996zM814.71855692 394.46498867L628.75883779 394.46498867 628.75883779 208.50526953l185.95971913 0L814.71855692 394.46498867zM256.83849951 347.97550887l92.97985956 2e-8L349.81835907 254.99474932 256.83849951 254.99474932 256.83849951 347.97550887zM117.36826016 905.85556631l371.92033829 0L489.28859843 533.93522803 117.36826016 533.93522803 117.36826016 905.85556631zM210.34901972 626.91508763l185.95971915-4e-8-1e-8 185.95971915L210.34901972 812.87480674 210.34901972 626.91508763zM768.22907626 254.99474932L675.24831758 254.99474932l0 92.97985955 92.97985955 0L768.22817716 254.99474932zM535.77897823 905.85556631l92.97985956 0L628.75883779 812.87570586 535.77897823 812.87570586 535.77897823 905.85556631zM628.75883779 626.91508763l0 185.95971911 92.97985958 0L721.73869737 626.91508763 628.75883779 626.91508763zM814.71855692 812.87570586L721.73869737 812.87570586 721.73869737 905.85556631l185.95971914 0L907.69841651 719.89494717 814.71855692 719.89494717 814.71855692 812.87570586zM814.71855692 626.91508763l92.97985959-4e-8L907.69841651 533.93522803 814.71855692 533.93522803 814.71855692 626.91508763zM535.77897823 533.93522803l0 92.97985956 92.97985956 4e-8L628.75883779 533.93522803 535.77897823 533.93522803zM256.83849951 766.38532695l92.97985956 0L349.81835907 673.40546738 256.83849951 673.40546738 256.83849951 766.38532695z' fill='%23333333' p-id='5121'%3E%3C/path%3E%3C/svg%3E");
+    -webkit-clip-path:polygon(0 0,60px 0,60px 60px,44px 60px, 0 16px);
+        clip-path:polygon(0 0,60px 0,60px 60px,44px 60px, 0 16px);
+}
+.login-register .container .c > .icon2:hover {
+    background-image: url("data:image/svg+xml,%3Csvg t='1614139950154' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='5120' width='60' height='60'%3E%3Cpath d='M117.36826016 487.44484823l371.92033829 2e-8L489.28859843 115.52540996 117.36826016 115.52540996 117.36826016 487.44484823zM210.34901972 208.50526953l185.95971915 0-1e-8 185.95971914L210.34901972 394.46498867 210.34901972 208.50526953zM535.77897823 115.52540996l0 371.92033829 371.92033828 0L907.69931562 115.52540996 535.77897823 115.52540996zM814.71855692 394.46498867L628.75883779 394.46498867 628.75883779 208.50526953l185.95971913 0L814.71855692 394.46498867zM256.83849951 347.97550887l92.97985956 2e-8L349.81835907 254.99474932 256.83849951 254.99474932 256.83849951 347.97550887zM117.36826016 905.85556631l371.92033829 0L489.28859843 533.93522803 117.36826016 533.93522803 117.36826016 905.85556631zM210.34901972 626.91508763l185.95971915-4e-8-1e-8 185.95971915L210.34901972 812.87480674 210.34901972 626.91508763zM768.22907626 254.99474932L675.24831758 254.99474932l0 92.97985955 92.97985955 0L768.22817716 254.99474932zM535.77897823 905.85556631l92.97985956 0L628.75883779 812.87570586 535.77897823 812.87570586 535.77897823 905.85556631zM628.75883779 626.91508763l0 185.95971911 92.97985958 0L721.73869737 626.91508763 628.75883779 626.91508763zM814.71855692 812.87570586L721.73869737 812.87570586 721.73869737 905.85556631l185.95971914 0L907.69841651 719.89494717 814.71855692 719.89494717 814.71855692 812.87570586zM814.71855692 626.91508763l92.97985959-4e-8L907.69841651 533.93522803 814.71855692 533.93522803 814.71855692 626.91508763zM535.77897823 533.93522803l0 92.97985956 92.97985956 4e-8L628.75883779 533.93522803 535.77897823 533.93522803zM256.83849951 766.38532695l92.97985956 0L349.81835907 673.40546738 256.83849951 673.40546738 256.83849951 766.38532695z' fill='%23666666' p-id='5121'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(0,calc(-100% - 10px));
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background-position: center;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg t='1613812111113' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='9718' width='32' height='32'%3E%3Cpath d='M514.5 989.6c-64.5 0-127.1-12.6-186.1-37.6-56.9-24.1-108-58.5-151.9-102.4-43.9-43.9-78.3-95-102.4-151.9-24.9-58.9-37.6-121.5-37.6-186.1s12.6-127.1 37.6-186.1c24.1-56.9 58.5-108 102.4-151.9s95-78.3 151.9-102.4c59-24.9 121.6-37.6 186.1-37.6s127.1 12.6 186.1 37.6c56.9 24.1 108 58.5 151.9 102.4 43.9 43.9 78.3 95 102.4 151.9 24.9 58.9 37.6 121.5 37.6 186.1s-12.6 127.1-37.6 186.1c-24.1 56.9-58.5 108-102.4 151.9-43.9 43.9-95 78.3-151.9 102.4-59 24.9-121.6 37.6-186.1 37.6z m0-896c-230.5 0-418 187.5-418 418s187.5 418 418 418 418-187.5 418-418c-0.1-230.5-187.6-418-418-418z' p-id='9719' fill='%23ffffff'%3E%3C/path%3E%3Cpath d='M329.7 726.1c-7.7 0-15.4-2.9-21.3-8.8-11.7-11.7-11.6-30.7 0.1-42.4L659 326.2c11.7-11.7 30.7-11.6 42.4 0.1s11.6 30.7-0.1 42.4L350.9 717.3c-5.9 5.9-13.5 8.8-21.2 8.8z' p-id='9720' fill='%23ffffff'%3E%3C/path%3E%3Cpath d='M688.3 725.4c-7.7 0-15.4-2.9-21.3-8.8L318.3 366c-11.7-11.7-11.6-30.7 0.1-42.4s30.7-11.6 42.4 0.1l348.7 350.5c11.7 11.7 11.6 30.7-0.1 42.4-5.8 5.9-13.4 8.8-21.1 8.8z' p-id='9721' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .close:hover {
+    background-image: url("data:image/svg+xml,%3Csvg t='1613812111113' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='9718' width='32' height='32'%3E%3Cpath d='M514.5 989.6c-64.5 0-127.1-12.6-186.1-37.6-56.9-24.1-108-58.5-151.9-102.4-43.9-43.9-78.3-95-102.4-151.9-24.9-58.9-37.6-121.5-37.6-186.1s12.6-127.1 37.6-186.1c24.1-56.9 58.5-108 102.4-151.9s95-78.3 151.9-102.4c59-24.9 121.6-37.6 186.1-37.6s127.1 12.6 186.1 37.6c56.9 24.1 108 58.5 151.9 102.4 43.9 43.9 78.3 95 102.4 151.9 24.9 58.9 37.6 121.5 37.6 186.1s-12.6 127.1-37.6 186.1c-24.1 56.9-58.5 108-102.4 151.9-43.9 43.9-95 78.3-151.9 102.4-59 24.9-121.6 37.6-186.1 37.6z m0-896c-230.5 0-418 187.5-418 418s187.5 418 418 418 418-187.5 418-418c-0.1-230.5-187.6-418-418-418z' p-id='9719' fill='%23ffffff'%3E%3C/path%3E%3Cpath d='M329.7 726.1c-7.7 0-15.4-2.9-21.3-8.8-11.7-11.7-11.6-30.7 0.1-42.4L659 326.2c11.7-11.7 30.7-11.6 42.4 0.1s11.6 30.7-0.1 42.4L350.9 717.3c-5.9 5.9-13.5 8.8-21.2 8.8z' p-id='9720' fill='%23ffffff'%3E%3C/path%3E%3Cpath d='M688.3 725.4c-7.7 0-15.4-2.9-21.3-8.8L318.3 366c-11.7-11.7-11.6-30.7 0.1-42.4s30.7-11.6 42.4 0.1l348.7 350.5c11.7 11.7 11.6 30.7-0.1 42.4-5.8 5.9-13.4 8.8-21.1 8.8z' p-id='9721' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .close::after {
+    content: '';
+    width: 2px;
+    height: 11px;
+    background-color: white;
+    position: absolute;
+    top: 31px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.login-register .logo {
+    margin: 0;
+}
+.login-register .p1 {
+    font-size: 18px;
+    line-height: 1;
+    color: white;
+}
+.login-register .p2 {
+    font-size: 14px;
+    color: #333;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.login-register .p2 > .icon3 {
+    height: 14px;
+    width: 14px;
+    margin-right: 6px;
+    background-position: center;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg t='1614568763125' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='3498' width='15' height='15'%3E%3Cpath d='M936.96 552.96H87.04c-20.48 0-35.84-20.48-35.84-40.96s15.36-35.84 35.84-35.84h844.8c20.48 0 40.96 15.36 40.96 35.84 0 20.48-15.36 40.96-35.84 40.96z' fill='%2303846a' p-id='3499'%3E%3C/path%3E%3Cpath d='M128 358.4V153.6c0-15.36 10.24-25.6 25.6-25.6h204.8V51.2H153.6c-56.32 0-102.4 46.08-102.4 102.4v204.8h76.8z m0 512v-204.8H51.2v204.8c0 56.32 46.08 102.4 102.4 102.4h204.8v-76.8H153.6c-15.36 0-25.6-10.24-25.6-25.6z m768-716.8v204.8H972.8V153.6c0-56.32-46.08-102.4-102.4-102.4h-204.8v76.8h204.8c15.36 0 25.6 10.24 25.6 25.6z m0 512v204.8c0 15.36-10.24 25.6-25.6 25.6h-204.8V972.8h204.8c56.32 0 102.4-46.08 102.4-102.4v-204.8h-76.8z' fill='%2303846a' p-id='3500'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .pp3 {
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    transform: translate(-50%, 2px);
+    width: auto;
+}
+.login-register .p3 {
+    font-size: 14px;
+    color: #03846a;
+    text-decoration: underline;
+    margin-left: 20px;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+}
+
+.login-register .p3:hover + .kfewm {
+    display: flex;
+}
+.login-register .kfewm {
+    box-sizing: border-box;
+    padding: 10px 10px 0;
+    line-height: 2;
+    margin-left: 24px;
+    background: #3a404c;
+    border-color: #3a404c;
+    border-radius: 4px;
+    color: #c0c2c6;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    box-shadow: 0 2px 20px 0 rgb(0 0 0 / 20%);
+}
+.login-register .kfewm img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+}
+.login-register .p3::after {
+    content: '';
+    height: 16px;
+    width: 16px;
+    background-position: center;
+    background-size: cover;
+    background-image: url("data:image/svg+xml,%3Csvg t='1614132774982' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='2119' width='16' height='16'%3E%3Cpath d='M870.1 562.4v-25.5c2-116.5-32.2-214.5-99.6-284-32.2-33.2-71-58.2-116-75.6-7.2-62.8-74.6-112.4-156.8-112.4-82.2 0-150.2 49.5-156.8 112.4-45 17.4-83.8 42.4-116 75.6-67.4 69.5-101.7 167-99.6 283.5v31.2c-17.4 17.9-31.2 44.4-20.9 82.2 7.7 28.1 28.1 48.5 53.1 57.7 12.8 8.2 27.6 12.8 43.9 12.8 32.2 141 148.1 237 299.9 237 151.7 0 267.7-96 299.9-237.5 1 0 2 0.5 3.1 0.5 19.9 0 38.3-7.2 53.1-18.9 18.9-10.7 33.7-29.1 39.8-52.1 10.7-41-7.2-69.1-27.1-86.9z m-88.9 77.1c0 18.9-1.5 36.8-4.1 54.1-49.5 79.7-131.3 131.8-232.9 143-7.7-10.2-23-16.9-40.9-16.9-25.5 0-46 13.8-46 31.2 0 16.9 20.4 31.2 46 31.2 23 0 41.4-11.2 45.5-26.1 32.7-3.6 63.9-11.7 93.5-23.5 41.9-16.9 78.7-41.9 109.8-73.6 5.1-5.1 9.7-10.2 14.3-15.8-36.8 113-135.4 185.5-263.6 185.5h-1c-165 0-279.9-119-279.9-289.1l-0.5-16.3c0-7.2 1-26.6 2-45 68.5-25 130.3-120.6 155.3-164.5 23 31.2 75.6 91.4 156.3 122.6 30.1 11.7 60.8 17.9 90.9 24.5 59.8 12.8 116.5 25 154.8 75.1l1.5 1.5-1 2.1z m0 0' p-id='2120' fill='%2303846a'%3E%3C/path%3E%3C/svg%3E");
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 2px);
+    transform: translateY(-50%);
+}
+.login-register .p3:hover {
+    color: #329afc;
+}
+.login-register .p3:hover::after {
+    background-image: url("data:image/svg+xml,%3Csvg t='1614132774982' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='2119' width='16' height='16'%3E%3Cpath d='M870.1 562.4v-25.5c2-116.5-32.2-214.5-99.6-284-32.2-33.2-71-58.2-116-75.6-7.2-62.8-74.6-112.4-156.8-112.4-82.2 0-150.2 49.5-156.8 112.4-45 17.4-83.8 42.4-116 75.6-67.4 69.5-101.7 167-99.6 283.5v31.2c-17.4 17.9-31.2 44.4-20.9 82.2 7.7 28.1 28.1 48.5 53.1 57.7 12.8 8.2 27.6 12.8 43.9 12.8 32.2 141 148.1 237 299.9 237 151.7 0 267.7-96 299.9-237.5 1 0 2 0.5 3.1 0.5 19.9 0 38.3-7.2 53.1-18.9 18.9-10.7 33.7-29.1 39.8-52.1 10.7-41-7.2-69.1-27.1-86.9z m-88.9 77.1c0 18.9-1.5 36.8-4.1 54.1-49.5 79.7-131.3 131.8-232.9 143-7.7-10.2-23-16.9-40.9-16.9-25.5 0-46 13.8-46 31.2 0 16.9 20.4 31.2 46 31.2 23 0 41.4-11.2 45.5-26.1 32.7-3.6 63.9-11.7 93.5-23.5 41.9-16.9 78.7-41.9 109.8-73.6 5.1-5.1 9.7-10.2 14.3-15.8-36.8 113-135.4 185.5-263.6 185.5h-1c-165 0-279.9-119-279.9-289.1l-0.5-16.3c0-7.2 1-26.6 2-45 68.5-25 130.3-120.6 155.3-164.5 23 31.2 75.6 91.4 156.3 122.6 30.1 11.7 60.8 17.9 90.9 24.5 59.8 12.8 116.5 25 154.8 75.1l1.5 1.5-1 2.1z m0 0' p-id='2120' fill='%23329afc'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .qrcode_box {
+    width: 215px;
+    height: 215px;
+    margin: 25px 0;
+    position: relative;
+    overflow: hidden;
+}
+.login-register .qrcode_box iframe {
+    transform: scale(0.5) translate(-50%, -50%);
+}
+.login-register .qrcode_box .mb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 215px;
+    height: 215px;
+    background-color: rgba(0,0,0,0.01);
+}
+.login-register .form-control {
+    box-sizing: border-box;
+    height: 40px;
+    width: 280px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.login-register .form-control .err_msg {
+    width: 100%;
+    margin: 0;
+    line-height: 1;
+    font-size: 12px;
+    color: red;
+    white-space: nowrap;
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 31px;
+}
+.login-register .form-control .get_yzm_btn {
+    line-height: 26px;
+    width: 86px;
+    text-align: center;
+    border-left: 1px solid #bbbbbb;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    right: 1px;
+    transform: translateY(-50%);
+    background-color: white;
+    cursor: pointer;
+    color: #2361ff;
+}
+.login-register .form-control .icon {
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.login-register .form-control.tel .icon {
+    background-image: url("data:image/svg+xml,%3Csvg t='1614577571533' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='2219' width='20' height='20'%3E%3Cpath d='M752.941176 0H271.058824C237.748706 0 210.823529 28.611765 210.823529 63.969882v896.060236C210.823529 995.388235 237.748706 1024 271.058824 1024h481.882352c33.249882 0 60.235294-28.672 60.235295-63.969882V63.969882C813.176471 28.611765 786.191059 0 752.941176 0zM512 963.764706a60.235294 60.235294 0 1 1 0-120.470588 60.235294 60.235294 0 0 1 0 120.470588z m240.941176-180.705882H271.058824V120.470588h481.882352v662.588236z' p-id='2220' fill='%23bbbbbb'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .form-control.yzm .icon {
+    background-image: url("data:image/svg+xml,%3Csvg t='1614577661733' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='3816' width='20' height='20'%3E%3Cpath d='M771.2 375l-275 266.3c-1.9 2.9-3.8 5.8-6.7 7.7-7.7 7.7-18.2 11.5-28.7 11.5-10.6 0-21.1-3.8-29.7-11.5-1.9-1.9-4.8-4.8-5.8-7.7L277.7 498.6c-15.3-15.3-15.3-39.3 0-54.6 15.3-15.4 41.2-15.4 56.5 0l126.5 121.7 253.9-245.3c16.3-15.3 41.2-15.3 56.5 0 16.4 14.4 16.4 39.3 0.1 54.6z m147.6-227.1c-12.5-11.5-28.8-17.3-45-17.3H869c-1 0-11.5 1-27.8 1-27.8 0-80.5-1.9-131.3-14.4-65.2-15.3-140.9-87.1-163-101.5-10.5-6.7-24-10.5-36.4-10.5S485.6 9 474.1 15.7C471.3 17.6 392.7 99 316 117.2c-50.8 12.4-105.4 14.4-132.2 14.4-17.3 0-27.8-1-28.7-1h-3.8c-17.3 0-32.6 5.8-45 17.3-13.4 11.5-21.1 28.7-21.1 46v159c0 586.4 397.6 662.1 413.9 665 3.8 1 7.7 1 11.5 1s7.7 0 11.5-1c17.2-2.9 416.8-78.6 416.8-665v-159c0-17.3-7.7-34.5-20.1-46z' p-id='3817' fill='%23bbbbbb'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .form-control.pwd .icon {
+    background-image: url("data:image/svg+xml,%3Csvg t='1614577702459' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='4757' width='20' height='20'%3E%3Cpath d='M771.09045312 471.64751562L252.89970312 471.64751562c-44.7575625 0-81.03670312 36.20432813-81.03670312 80.87625001l0 343.07339062c0 44.67290625 36.27914062 80.87625 81.03670312 80.87625l518.19173438 0c44.75854688 0 81.04753125-36.20334375 81.04753125-80.87625L852.13896875 552.52376563C852.13798437 507.85184375 815.849 471.64751562 771.09045312 471.64751562zM546.12434375 721.73979687l0 90.04964063c0 18.8409375-15.26864062 34.13123438-34.12926563 34.13123438-18.84979688 0-34.12926563-15.29029687-34.12926562-34.13123438l0-90.04964062c-20.37951562-11.804625-34.13025-33.80835938-34.13025-59.06348438 0-37.7015625 30.55795313-68.2605 68.25951562-68.2605s68.27034375 30.5589375 68.27034375 68.2605C580.26542188 687.9314375 566.52551562 709.93517188 546.12434375 721.73979687zM511.99507812 147.37175c-131.95251562 0-238.92946875 105.46889063-238.92946875 244.04034375l1e-8 105.98273437 477.87075 22.75284375L750.93635938 391.41209375C750.93635938 252.84064062 643.95940625 147.37175 511.99507812 147.37175zM341.36745312 491.406875L341.36745312 389.03876562c0-94.2204375 76.395375-170.627625 170.62664063-170.627625 94.24209375 0 170.627625 76.4071875 170.627625 170.627625l0 104.76309375L341.36745312 491.406875z' p-id='4758' fill='%23bbbbbb'%3E%3C/path%3E%3C/svg%3E");
+}
+.login-register .form-control input {
+    box-sizing: border-box;
+    display: block;
+    background-color: transparent;
+    border: 1px solid #bbb;
+    outline: 0;
+    width: 280px;
+    height: 40px;
+    padding-left: 30px;
+    transition: border-color .3s ease;
+    color: #333;
+    transform: translate(-13px, -7px);
+}
+.login-register .form-control:hover input {
+    border-color: #2997ff;
+    border-radius: 4px;
+}
+.login-register .p4 {
+    box-sizing: border-box;
+    width: 100%;
+    line-height: 26px;
+    font-size: 14px;
+    color: rgba(41,151,255,.8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.login-register .p4 span {
+    cursor: pointer;
+}
+.login-register .p4 span:hover {
+    color: rgba(41,151,255,1);
+}
+.login-register .btn {
+    width: 280px;
+    height: 42px;
+    margin: 15px 0 0;
+    border-radius: 4px;
+    color: white;
+    background-color: #03846a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.login-register .btn:hover {
+    background-color: #009e7f;
+}
+.fullimage {
+    height: 380px;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.about_top {
+    box-sizing: border-box;
+    width: 100%;
+    height: 380px;
+    padding-top: 80px;
+    position: relative;
+    color: white;
+    font-size: 16px;
+    line-height: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.about_title {
+    font-size: 40px;
+}
+.about_main {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 70px calc((100% - 1000px) / 2);
+    color: #333;
+    line-height: 2;
+    font-size: 16px;
+}
+.about_main p {
+    margin: 0;
+}
+.about_main .main_title {
+    font-size: 24px;
+    color: #222;
+    text-align: center;
+}
+.about_func {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 70px calc((100% - 1000px) / 2);
+    color: #333;
+    background-color: #EBEEF5;
+    line-height: 2;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.about_func .biaoti {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+}
+.about_func .gongneng {
+    box-sizing: border-box;
+    width: 310px;
+}
+.about_func .gongneng .tou,
+.about_func .gongneng .shenti {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.about_func .gongneng .tou {
+    height: 110px;
+    font-size: 18px;
+}
+.about_func .gongneng .shenti {
+    box-sizing: border-box;
+    background-color: white;
+    height: 330px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    padding: 0 35px;
+}
+.about_func .gongneng .shenti .sub {
+    display: none;
+}
+.about_func .gongneng .shenti:hover .sub {
+    display: block;
+}
+.indent2 {
+    text-indent: 2em;
+}
+.about_zizhi {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 70px calc((100% - 1000px) / 2);
+    color: #333;
+    line-height: 2;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.about_zizhi .biaoti {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.about_zizhi .xiang {
+    width: 310px;
+    display: flex;
+    flex-direction: column;
+}
+.about_zizhi .xiang .desc {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.about_zizhi .xiang .img {
+    box-sizing: content-box;
+    height: 190px;
+    padding: 5px 0;
+    width: 100%;
+    background: linear-gradient(180deg, #f1eeee 0%, #a29893 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.about_zizhi .xiang .img img {
+    height: 190px;
+    object-fit: contain;
+}
+#topnav {
+    position: absolute;
+}
+</style>
+</head>
+
+<body>
+<!-- header STart -->
+<header id="topnav" class="defaultscroll sticky">
+	<div class="container">
+		<!-- Logo container-->
+		<div>
+			<a class="logo" href="/">
+				<!-- Landkey -->
+				<img src="{{ static('/new_index/images/logo4.png') }}"/> 
+			</a>
+		</div>    
+        	<div class="buy-button" style="display:none;" id="jinruxt">
+        		<a href="{{ url("index_qt:index_qt") }}" class="btn btn-primary">进入系统</a>
+        	</div>
+        
+        	<div class="buy-button" style="display:none;" id="denglu">
+        		<!--<a href="{{ url("index_qt:login") }}" class="btn btn-primary">登录</a>-->
+        		<a id="login_btn" class="btn btn-primary">登录</a>
+        	</div>
+
+		<!--<div class="buy-button">-->
+		<!--	<a href="{{ url("index_qt:login") }}" class="btn btn-primary">登录</a>-->
+		<!--</div>-->
+		<!-- End Logo container-->
+		<div class="menu-extras">
+			<div class="menu-item">
+				<!-- Mobile menu toggle-->
+				<a class="navbar-toggle">
+					<div class="lines">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</a>
+				<!-- End mobile menu toggle-->
+			</div>
+		</div>
+
+		<div id="navigation">
+			<!-- Navigation Menu-->   
+			<ul class="navigation-menu nav-light">
+				<li class="has-submenu">
+					<a href="/">首页</a>
+				</li>
+				<li class="has-submenu unlogin">
+					<!--<a href="{{ url("index_qt:index_qt") }}">分析平台</a>-->
+					<a href="#">分析平台</a>
+				</li>
+				<li class="has-submenu">
+					<!--<a href="{{ url("model:index") }}" >临床研究模型库</a>-->
+					<a href="#price" id="href">临床研究模型库</a>
+					
+				</li>
+				<li class="has-submenu">
+					<a href="{{ url("index_qt:community") }}">交流区</a>
+				</li>
+				<li class="has-submenu active">
+					<a href="{{ url("index_qt:about") }}">关于我们</a>
+				</li>
+			</ul><!--end navigation menu-->
+		</div><!--end navigation-->
+	</div>
+</header>
+<!-- header End -->
+<div class="about_top">
+    <img class="fullimage" style="z-index:-1;" src="{{ static('/images/about_banner.jpg') }}" />
+    <div class="about_title">智能医学统计分析平台</div>
+    <div>针对临床研究人员的一站式医学统计分析平台-提供数据治</div>
+    <div>理、数据统计、机器学习分析、智能文章生成服务</div>
+</div>
+<div class="about_main">
+    <p class="main_title">极智分析</p>
+    </br>
+    <p style="text-indent:2em;">极智分析-智能医学统计分析云平台是集数据治理、医学统计学、机器学习建模于一体的全流程临床研究专业分析平台，我们希望通过该平台能帮助临床医生简化论文发表过程中的数据整理、分析及建模工作，极智平台是一个开放的，会不断迭代进化的平台，期待更多志同道合的伙伴加入我们，让平台能够更好的为临床研究服务，让临床研究变得没有门槛，提升临床研究工作者的研究效率。</p>
+</div>
+<div class="about_func">
+    <div class="biaoti">机智分析主要功能模块</div>
+    <div class="gongneng">
+        <div class="tou" style="background:linear-gradient(135deg, #eaf6f9 0%, #f1dcd1 100%);">
+            <span>数据治理</span>
+        </div>
+        <div class="shenti">
+            <span class="haizi">缺失数据剔除</span>
+            <span class="haizi">相关性\共线性变量剔除</span>
+            <span class="haizi">智能数据填补</span>
+            <span class="haizi">数据标准化</span>
+            <span class="haizi">PSM倾向性匹配</span>
+            <span class="haizi">样本均衡等十大功能模块</span>
+            </br>
+            <span class="haizi sub">针对临床研究研究设计的数据清洗模块。</span>
+        </div>
+    </div>
+    <div class="gongneng">
+        <div class="tou" style="background:linear-gradient(135deg, #eaf9f8 0%, #d1f1e5 100%);">
+            <span>智能基线分析</span>
+        </div>
+        <div class="shenti">
+            <span class="haizi">综合智能统计分析</span>
+            <span class="haizi">数据描述</span>
+            <span class="haizi">卡方\Fisher检验</span>
+            <span class="haizi">t检验</span>
+            <span class="haizi">非参数检验</span>
+            <span class="haizi">多重比较等12个分析模块</span>
+            </br>
+            <span class="haizi indent2 sub">智能基线分析能够快速的对数据的情况进行描述，让研究人员能够直观的了解不同分组的差异。</span>
+        </div>
+    </div>
+    <div class="gongneng">
+        <div class="tou" style="background:linear-gradient(135deg, #eaf9f8 0%, #d1f1ef 100%);">
+            <span>高级统计分析</span>
+        </div>
+        <div class="shenti">
+            <span class="haizi">Logistic回归</span>
+            <span class="haizi">生存分析</span>
+            <span class="haizi">Cox回归分析</span>
+            <span class="haizi">ROC曲线</span>
+            <span class="haizi">多模型(多应变量)回归分析</span>
+            <span class="haizi">分层回归分析</span>
+            <span class="haizi">趋势回归分析</span>
+            <span class="haizi">平滑曲线拟合分析</span>
+            <span class="haizi">智能分组分析等十大功能模块</span>
+            </br>
+            <span class="haizi indent2 sub">临床研究人员能够通过该平台实现快速统计建模分析，实现一键展示分析结果的描述，自动生成模型相关的三线表、森林图、Nomogram等信息。</span>
+        </div>
+    </div>
+    <div class="gongneng">
+        <div class="tou" style="background:linear-gradient(135deg, #eaf9f8 0%, #f1eed1 100%);">
+            <span>智能AI分析</span>
+        </div>
+        <div class="shenti">
+            <span class="haizi">利用机器学习及深度学习模型</span>
+            <span class="haizi">帮助探索影响因子并建立预测模型</span>
+            <span class="haizi" style="text-align:center;">该方法囊括了XGboost、SVM、KNN、随机森林等二十余种机器学习算法</span>
+            <span class="haizi" style="text-align:center;">智能描述模型效能并全面展示练集和验证集的学习曲线、ROC曲线、F1值等模型评价指标</span>
+        </div>
+    </div>
+    <div class="gongneng">
+        <div class="tou" style="background:linear-gradient(135deg, #eaf6f9 0%, #f1dcd1 100%);">
+            <span>智能图表</span>
+        </div>
+        <div class="shenti">
+            <span class="haizi indent2">根据临床研究的需要，该方法中包含了常用的分类饼图、柱状图、点线图、箱型图、小提琴图等多种常用图形生成方法。</span>
+        </div>
+    </div>
+    <div class="gongneng">
+        <div class="tou" style="background:linear-gradient(135deg, #eaf9f8 0%, #d1f1e5 100%);">
+            <span>智能文章</span>
+        </div>
+        <div class="shenti">
+            <span class="haizi indent2">展示保存后的分析结果，能够导出处理后的数据以及生成word文档的分析结果</span>
+        </div>
+    </div>
+</div>
+<div class="about_zizhi">
+    <div class="biaoti">荣誉资质</div>
+    <div class="xiang">
+        <div class="desc">软件著作权</div>
+        <div class="img">
+            <img src="/static/images/about_1.png" />
+        </div>
+    </div>
+    <div class="xiang">
+        <div class="desc">软件著作权</div>
+        <div class="img">
+            <img src="/static/images/about_2.png" />
+        </div>
+    </div>
+    <div class="xiang">
+        <div class="desc">软件著作权</div>
+        <div class="img">
+            <img src="/static/images/about_3.png" />
+        </div>
+    </div>
+</div>
+<!-- Start Footer -->
+<footer class="bg-dark">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-5 col-md-12">
+				<a class="logo-footer text-white" href="#">
+					<!--Landkey-->
+					<img src="/static/new_index/images/logo1.png" style=""> 
+				</a>
+				<p>版权所有@江西速临科技有限公司</p>
+				<p>Copyright  SuLing Technology Ltd 2021 All Right Reserved.</p>
+				<!--end icon-->
+			</div>
+
+			<div class="col-lg-7 col-12">
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-12 mt-4 pt-2 mt-lg-0 pt-lg-0">
+						<h5 class="text-light footer-head font-weight-normal mb-0">法律协议</h5>
+						<ul class="list-unstyled footer-list mt-4">
+							<li><a href="{{ url("index_qt:security") }}" target="_blank" class="text-foot"><i class="mdi mdi-chevron-right mr-1"></i>安全性</a></li>
+						</ul>
+						<ul class="list-unstyled footer-list mt-4">
+							<li><a href="{{ url("index_qt:legal_provisions") }}" target="_blank" class="text-foot"><i class="mdi mdi-chevron-right mr-1"></i>法律条款</a></li>
+						</ul>
+						<ul class="list-unstyled footer-list mt-4">
+							<li><a href="{{ url("index_qt:privacy") }}" target="_blank" class="text-foot"><i class="mdi mdi-chevron-right mr-1"></i>隐私</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-4 col-md-4 col-12 mt-4 pt-2 mt-lg-0 pt-lg-0">
+						<h5 class="text-light footer-head font-weight-normal mb-0">关于</h5>
+						<ul class="list-unstyled footer-list mt-4">
+							<li><a  class="text-foot" href="{{ url("index_qt:about") }}"><i class="mdi mdi-chevron-right mr-1"></i>关于我们</a></li>
+						</ul>
+					</div>
+					
+					<div class="col-lg-4 col-md-4 col-12 mt-4 pt-2 mt-lg-0 pt-lg-0">
+						<h5 class="text-light footer-head font-weight-normal mb-0">联系我们</h5>
+						<ul class="list-unstyled footer-list mt-4">
+							<li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin fea icon-sm mr-2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><a href="javascript:void(0)" class="text-foot">中国·江西</a></li>
+							<li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail fea icon-sm mr-2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><a href="mailto:contact@example.com" class="text-foot">slkj2021@163.com</a></li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<footer class="bg-dark footer-bar py-4">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12 text-center">
+				<p class="foot-color mb-0"><a target="_blank" href="https://beian.miit.gov.cn/">赣ICP备2021000880号-1</a></p>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- login-register -->
+<div class="login-register" id="login-register" style="display: none;">
+	<div class="container">
+	    <!-- 微信扫码登录 -->
+	    <div class="c" v-show="login_type == 'wx'">
+	        <div class="icon1" @click="login_type = 'pwd'"></div>
+			<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+			<div class="qrcode_box">
+				<iframe v-if="login_type == 'wx'" :src="code_url" frameborder="0" width="430px" height="430px" scrolling="no"></iframe>
+				<div class="mb" @click="get_wx_qrcode" style="cursor:pointer;" title="刷新二维码"></div>
+			</div>
+			<div class="p2">
+			    <div class="icon3"></div>
+			    <span>微信扫码登录/注册极智分析</span>
+			</div>
+	    </div>
+	    <!-- 手机登录 -->
+        <div class="c" v-show="login_type == 'pwd'" style="display:none;">
+	        <div class="icon2" @click="login_type = 'wx'"></div>
+			<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+			<div class="form-control tel">
+			    <div class="icon"></div>
+			    <input type="text" v-model="mobile" placeholder="请输入用户名/手机号" required="required" />
+			</div>
+			<div class="form-control pwd">
+			    <div class="icon"></div>
+			    <input type="password" v-model="password" placeholder="请输入密码" required="required" />
+			</div>
+			<div class="p4">
+			    <span @click="login_type = 'fgt'">忘记密码</span>
+			    <span @click="login_type = 'reg'">注册</span>
+			</div>
+			<div class="btn" @click="mobilelogin">登录</div>
+        </div>
+	    <!-- 忘记密码 -->
+        <div class="c" v-show="login_type == 'fgt'" style="display:none;">
+			<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+			<div class="form-control tel">
+			    <div class="icon"></div>
+			    <input type="text" v-model="mobile" placeholder="请输入手机号" required="required" />
+			</div>
+			<div class="form-control pwd">
+			    <div class="icon"></div>
+			    <input type="password" v-model="password" placeholder="请输入密码" required="required" />
+			</div>
+			<div class="form-control pwd">
+			    <div class="icon"></div>
+			    <input type="password" v-model="password2" placeholder="请再次输入密码" required="required" />
+			</div>
+			<div class="form-control yzm">
+			    <div class="icon"></div>
+			    <input type="text" v-model="sms2" placeholder="请输入验证码" required="required" />
+			    <div class="get_yzm_btn" v-text="get_sms_count" @click="get_editpwd_sms"></div>
+			</div>
+			<div class="p4">
+			    <span @click="login_type = 'pwd'">手机登录</span>
+			    <span @click="login_type = 'reg'">注册</span>
+			</div>
+			<div class="btn" @click="editpassword">更改密码</div>
+        </div>
+	    <!-- 手机注册 -->
+        <div class="c zc" v-show="login_type == 'reg'" style="display:none;">
+			<img class="logo" src="{{ static('/new_index/images/logo3.png') }}" alt="">
+			<div class="form-control tel">
+			    <div class="icon"></div>
+			    <input type="text" v-model="username" placeholder="请输入用户名" required="required" @blur="check_input('username')" />
+			    <p class="err_msg" v-text="username_err_msg"></p>
+			</div>
+			<div class="form-control tel">
+			    <div class="icon"></div>
+			    <input type="text" v-model="mobile" placeholder="请输入手机号" required="required" @blur="check_input('mobile')" />
+			    <p class="err_msg" v-text="mobile_err_msg"></p>
+			</div>
+			<div class="form-control pwd">
+			    <div class="icon"></div>
+			    <input type="password" v-model="password" placeholder="请输入密码" required="required" @blur="check_input('password')" />
+			    <p class="err_msg" v-text="password_err_msg"></p>
+			</div>
+			<div class="form-control pwd">
+			    <div class="icon"></div>
+			    <input type="password" v-model="password2" placeholder="请再次输入密码" required="required" @blur="check_input('password2')" />
+			    <p class="err_msg" v-text="password2_err_msg"></p>
+			</div>
+			<div class="form-control yzm">
+			    <div class="icon"></div>
+			    <input type="text" v-model="image_code" placeholder="请输入图片验证码" required="required" />
+			    <p class="err_msg" v-text="image_code_err_msg"></p>
+			    <img :src="image_code_url" class="get_yzm_btn"  @click="get_reg_image"/>
+			</div>
+			<div class="form-control yzm">
+			    <div class="icon"></div>
+			    <input type="text" v-model="sms" placeholder="请输入验证码" required="required" />
+			    <p class="err_msg" v-text="sms_err_msg"></p>
+			    <div class="get_yzm_btn" v-text="get_sms_count" @click="get_reg_sms"></div>
+			</div>
+			<div class="p4">
+			    <span @click="login_type = 'pwd'">已有账号，立即登录</span>
+			</div>
+			<div class="btn" @click="register">注册</div>
+        </div>
+        <div class="close" id="close_login"></div>
+	</div>
+</div>
+{{ csrf_input }}
+<!-- End Footer -->
+
+<!-- Back to top -->
+<a href="#" class="back-to-top rounded text-center" id="back-to-top"> 
+	<i class="mdi mdi-chevron-up d-block"> </i> 
+</a>
+<!-- Back to top -->
+
+<!-- javascript -->
+<script src="{{ static('/new_index/js/jquery.min.js') }}"></script> 
+<script src="{{ static('/new_index/js/bootstrap.bundle.min.js') }}"></script> 
+<script src="{{ static('/new_index/js/jquery.easing.min.js') }}"></script> 
+<script src="{{ static('/new_index/js/scrollspy.min.js') }}"></script> 
+<script src="{{ static('/js/vue-2.5.16.js') }}"></script> 
+<!-- Magnific popup -->
+<script>
+var a=$("#href").html();
+console.log(a);
+      $('#href').on('click', function () {
+          console.log("111")
+          window.location.href = 'model/index';
+    });
+    
+var b=$("#about").html();
+console.log(b);
+      $('#about').on('click', function () {
+        //   console.log("222")
+          window.location.href = 'about';
+    });
+    $('.kaifaing').on('click',function() {
+        alert('开发中');
+    });
+    
+
+    
+    function get_href_data() { // 获取url信息
+        var href_data = {}
+        if (window.location.href.indexOf('?') > -1) {
+            window.location.href.split('?')[1].split('&').forEach(item=>{ href_data[item.split('=')[0]] = item.split('=')[1] })
+        }
+        return href_data
+    }
+    function submit_code_state(code,state) {
+        var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+        $.ajax({
+            url: '/wx/',
+            headers: {
+                'X-CSRFToken': csrfmiddlewaretoken
+            },
+            data: {
+                code: code,
+                state: state
+            },
+            success: function(res) {
+                console.log(res)
+                document.cookie = "token=" + res.token + ";";
+                document.cookie = "username=" + res.username + ";";
+                document.cookie = "uuid=" + res.uuid + ";";
+                document.cookie = "avatar=" + res.avatar + ';';
+                window.location.href = '/index/'
+
+            }
+        })
+    }
+    var href_data = get_href_data();
+    // 存在 code & state
+    if (href_data.code && href_data.state) submit_code_state(href_data.code,href_data.state)
+    
+    
+</script>
+<script src="{{ static('/new_index/js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ static('/new_index/js/magnific.init.js') }}"></script> 
+<!-- Parallax -->
+<script src="{{ static('/new_index/js/parallax.js') }}"></script> 
+<!-- 图标库 -->
+<script src="{{ static('/new_index/js/bundle.js') }}"></script> 
+<script src="{{ static('/new_index/js/feather.min.js') }}"></script> 
+<!-- Contact -->
+<script src="{{ static('/new_index/js/contact.js') }}"></script> 
+<!-- Main Js -->
+<script src="{{ static('/new_index/js/app.js') }}"></script> 
+<script type="text/javascript" src="{{ static('js/host.js') }}"></script>
+<script>
+    var username_reg = /^[a-zA-Z0-9_]{5,20}$/
+    var mobile_reg = /^1[3-9]\d{9}$/
+    var password_reg = /^[0-9A-Za-z]{8,20}$/
+    
+    var LOGIN = new Vue({
+        el: '#login-register',
+        data: {
+            
+            code_url: '',
+            login_type: 'wx', // wx => 微信扫码登录
+                            // pwd => 手机登录
+                            // reg => 手机注册
+                            // fgt => 忘记密码
+                            
+            image_code_url: '', // 图片验证码地址
+                            
+            username: '', // 用户名 
+            username_err_msg: '',
+            
+            mobile: '', // 手机号
+            mobile_err_msg: '',
+            
+            password: '', // 密码
+            password_err_msg: '',
+            
+            password2: '', // 密码2
+            password2_err_msg: '',
+            
+            image_code: '', // 图片验证码
+            uuid: '',
+            image_code_err_msg: '',
+            
+            sms: '', // 短信验证码 注册
+            sms2: '', // 短信验证码 修改密码
+            get_sms_count: '发送验证码', // 获取短信验证码倒计时
+            sms_err_msg: ''
+            
+        },
+        created() {
+            this.get_wx_qrcode()
+            this.get_reg_image()
+        },
+        methods: {
+            get_wx_qrcode() { // 获取微信用户登录二维码
+                $.ajax({
+                    url: '/weixinlogin/',
+                    success: res => {
+                        this.code_url = res.weixin_url
+                    }
+                }) 
+            },
+            generateUUID() { // uuid生成
+                var d = new Date().getTime();
+                if (window.performance && typeof window.performance.now === "function") {
+                    d += performance.now(); //use high-precision timer if available
+                }
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+                return uuid;
+            },
+            check_input(type) {
+                if (type == 'username') {
+                    if (!(username_reg.test(this.username))) {
+                        this.username_err_msg = '用户名为5-20位的英文或数字'
+                    }
+                    else {
+                        this.username_err_msg = ''
+                        $.ajax({
+                            url: '/usernames/' + this.username + '/count/',
+                            success: res => {
+                                this.username_err_msg = res.count == 1 ? '用户名已注册' : ''
+                            }
+                        })
+                    }
+                } else if (type == 'mobile') {
+                    if (!(mobile_reg.test(this.mobile))) {
+                        this.mobile_err_msg = '手机号码格式不正确'
+                    }
+                    else {
+                        this.mobile_err_msg = ''
+                        $.ajax({
+                            url: '/mobiles/' + this.mobile + '/count/',
+                            success: res => {
+                                this.mobile_err_msg = res.count == 1 ? '手机号码已注册' : ''
+                            }
+                        })
+                    }
+                } else if (type == 'password') {
+                    if (!(password_reg.test(this.password))) {
+                        this.password_err_msg = '密码为8-20位的英文或数字'
+                    } else {
+                        this.password_err_msg = ''
+                    }
+                } else if (type == 'password2') {
+                    if (this.password !== this.password2) {
+                        this.password2_err_msg = '两次输入的密码不一致'
+                    } else {
+                        this.password2_err_msg = ''
+                    }
+                }
+            },
+            get_reg_image() { // 注册 获取图片验证码
+                this.uuid = this.generateUUID()
+                this.image_code_url = host + "/image_codes/" + this.uuid + "/";
+            },
+            get_reg_sms() { // 注册 获取短信验证码
+                if (this.get_sms_count == '发送验证码' && this.mobile !== '' && this.mobile_err_msg == '') {
+                    $.ajax({
+                        url: '/sms_codes/' + this.mobile + '/',
+                        success: res => {
+                            alert(res.errmsg)
+                            if (res.code == 0) {
+                                this.get_sms_count = 60
+                                let downcount = setInterval(()=>{
+                                    this.get_sms_count -= 1
+                                    if (this.get_sms_count == 0) {
+                                        this.get_sms_count = '发送验证码'
+                                        clearInterval(downcount)
+                                    }
+                                },1000)
+                            }
+                        }
+                    })
+                }
+            },
+            register() { // 注册
+                if (
+                    (this.username !== '' || this.username_err_msg == '') &&
+                    (this.mobile !=='' || this.mobile_err_msg == '') &&
+                    (this.password !=='' || this.password_err_msg == '') &&
+                    (this.password2 !=='' || this.password2_err_msg == '') &&
+                    this.image_code !== '' &&
+                    this.sms !== ''
+                ) {
+                    var csrf = document.querySelector("input[name=csrfmiddlewaretoken]").value;
+                    $.ajax({
+                        url: '/register/',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrf
+                        },
+                        data: JSON.stringify({
+                            'username': this.username,
+                            'mobile': this.mobile,
+                            'password': this.password,
+                            'password2': this.password2,
+                            'image_code': this.image_code,
+                            'uuid': this.uuid,
+                            'csrfmiddlewaretoken': csrf,
+                            'sms': this.sms
+                        }),
+                        success: res => {
+                            if (res.code == 200) {
+                                this.mobilelogin()
+                            }
+                        }
+                    })
+                }
+            },
+            mobilelogin() {
+                if (this.mobile == '') alert('请填写用户名或手机号码')
+                else if (this.password == '') alert('请填写密码')
+                else {
+                    var csrf = document.querySelector("input[name=csrfmiddlewaretoken]").value;
+                    $.ajax({
+                        url: '/login/',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrf
+                        },
+                        data: JSON.stringify({
+                            'csrfmiddlewaretoken': csrf,
+                            'username': this.mobile,
+                            'password': this.password
+                        }),
+                        success: res => {
+                            if (res.code) {
+                                alert(res.errmsg)
+                            } else {
+                                document.cookie = `logintime=${new Date().getTime()};path=/`
+                                window.location.reload()
+                            }
+                        }
+                    })
+                }
+            },
+            get_editpwd_sms() {
+                if (!(mobile_reg.test(this.mobile))) {
+                    alert('手机号码格式不正确')
+                } else if (this.get_sms_count == '发送验证码'){
+                    $.ajax({
+                        url: '/sms_codes/' + this.mobile + '/',
+                        success: res => {
+                            alert(res.errmsg)
+                            if (res.code == 0) {
+                                this.get_sms_count = 60
+                                let downcount = setInterval(()=>{
+                                    this.get_sms_count -= 1
+                                    if (this.get_sms_count == 0) {
+                                        this.get_sms_count = '发送验证码'
+                                        clearInterval(downcount)
+                                    }
+                                },1000)
+                            }
+                        }
+                    })
+                }
+            },
+            editpassword() {
+                if (!(mobile_reg.test(this.mobile))) {
+                    alert('手机号码格式不正确')
+                } else if (!(password_reg.test(this.password))) {
+                    alert('密码为8-20位的英文或数字')
+                } else if (this.password !== this.password2) {
+                    alert('两次输入的密码不一致')
+                } else if (this.sms2 == '') {
+                    alert('请输入验证码')
+                } else {
+                    var csrf = document.querySelector("input[name=csrfmiddlewaretoken]").value;
+                    $.ajax({
+                        url: '/forgetpassword/',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrf
+                        },
+                        data: JSON.stringify({
+                            'csrfmiddlewaretoken': csrf,
+                            'mobile': this.mobile,
+                            'password': this.password,
+                            'sms': this.sms2
+                        }),
+                        success: res => {
+                            if (res.code == 200) this.mobilelogin()
+                        }
+                        
+                    })
+                }
+            }
+        }
+    })
+
+    $('#login_btn').click(function() {
+        $('#login-register').css('display','flex')
+    })
+    $('#wxlogin_btn1').click(function() {
+        $('#login-register').css('display','flex')
+    })
+    $('#close_login').click(function() {
+        $('#login-register').css('display','none')
+    })
+    
+            
+    function get_cookies() { // 返回json格式cookie
+        let temp = {}
+        if (document.cookie !== '') {
+            document.cookie.split('; ').forEach(item => {
+                temp[item.split('=')[0]] = item.split('=')[1]
+            })
+        }
+        return temp
+    }
+    function check_login() { // 检测cookie是否存在用户名
+        let cookie_data = get_cookies()
+        if (cookie_data.username !== undefined && cookie_data.username !== '' && (new Date().getTime() - cookie_data.logintime) < 24*60*60*1000) {
+            // 已登录
+            $('#jinruxt').css('display','block')
+            $('#wxlogin_btn2').css('display','inline-block')
+            $('.unlogin').click(function() {
+                window.location.href = '/index/'
+            })
+        } else {
+            // 未登录
+            $('#denglu').css('display','block')
+            $('#wxlogin_btn1').css('display','inline-block')
+            $('.unlogin').click(function() {
+                alert('请先登录')
+            })
+        }
+    }
+    
+    check_login()
+    
+    
+</script>
+</body>
+</html>

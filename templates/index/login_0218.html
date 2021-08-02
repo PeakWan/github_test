@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8" />
+    <title>极智分析</title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="stylesheet" type="text/css" href="{{ static('/css/style_login.css') }}" tppabs="{{ static('/css/style_login.css') }}" />
+    <style>body{height:100%;background:#16a085;overflow:hidden;} canvas{z-index:-1;position:absolute;}</style>
+
+  </head>
+  
+  <body>
+    <img src="{{ static('/images/logo1.png') }}" alt="" style="display: block;margin: 10% auto 0;" />
+    <dl class="admin_login" id="app">
+      <dt>
+        <strong>极智分析</strong>
+        <em>EHTREME SMART</em>
+      </dt>
+      
+      <!--<dd class="user_icon">-->
+      <!--  <input type="text" placeholder="账号" class="login_txtbx" id="username" />-->
+      <!--</dd>-->
+      <!--<dd class="pwd_icon">-->
+      <!--  <input type="password" placeholder="密码" class="login_txtbx" id="password" />-->
+      <!--</dd>-->
+      <!--<dd>-->
+      <!--  <input type="button" value="立即登陆" class="submit_btn" />-->
+      <!--</dd>-->
+      <form method="post" id="login-form" @submit="on_submit" v-cloak="">{{ csrf_input }}
+      <dd class="user_icon">
+        <!--<input type="text" placeholder="账号" class="login_txtbx" id="username" />-->
+        <input type="text" placeholder="账号" v-model="username" @blur="check_username" name="username" class="login_txtbx" placeholder="请输入用户名或手机号" />
+      </dd>
+      <!--<div v-show="error_username" class="user_error">请输入正确的用户名或手机号</div>-->
+      <dd class="pwd_icon">
+          
+        <!--<input type="password" placeholder="密码" class="login_txtbx" id="password" />-->
+        <input type="password" placeholder="密码" v-model="password" @blur="check_password" name="password" class="login_txtbx" placeholder="请输入密码" />
+      </dd>
+      <!--<div v-show="error_password" class="pwd_error">密码最少8位，最长20位</div>-->
+      <dd>
+         <input type="submit" value="立即登陆" class="submit_btn" />
+        <!--<input type="button" value="立即登陆" class="submit_btn" />-->
+      </dd>
+      </form>
+      <dd>
+        <p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+        <!--<p>来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></p>-->
+      </dd>
+    </dl>
+    <!--<div class="form_con">-->
+      <!--<div class="form_input cur">-->
+        <!--<form method="post" id="login-form" @submit="on_submit" v-cloak="">{{ csrf_input }}-->
+        
+        <!--  <input type="text" v-model="username" @blur="check_username" name="username" class="" placeholder="请输入用户名或手机号" />-->
+          
+        <!--  <div v-show="error_username" class="user_error">请输入正确的用户名或手机号</div>-->
+        <!--  <input type="password" v-model="password" @blur="check_password" name="password" class="" placeholder="请输入密码" />-->
+        <!--  <div v-show="error_password" class="pwd_error">密码最少8位，最长20位</div>{% if account_errmsg %}-->
+        <!--  <span class="login_error" v-show="account_errmsg">{{ account_errmsg }}</span>{% endif %}-->
+        <!--  <div class="more_input clearfix">-->
+        <!--    <input type="checkbox" v-model="remembered" name="remembered" />-->
+        <!--    <label>记住登录</label>-->
+        <!--  </div>-->
+        <!--  <input type="submit" value="登 录" class="input_submit" />-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+    <script src="{{ static('/js/jquery_login.js') }}">
+    </script>
+    <script src="{{ static('/js/verificationNumbers.js') }}" tppabs="{{ static('/js/verificationNumbers.js') }}">
+    </script>
+    <script src="{{ static('/js/Particleground.js') }}" tppabs="{{ static('/js/Particleground.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ static('js/host.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ static('js/common.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ static('js/vue-2.5.16.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ static('js/login.js') }}">
+    </script>
+    <script>$(document).ready(function() {
+        //粒子背景特效
+        $('body').particleground({
+          dotColor: '#5cbdaa',
+          lineColor: '#5cbdaa'
+        });
+        //验证码
+        createCode();
+        //测试提交，对接程序删除即可
+        $(".submit_btn").click(function() {
+          location.href = "javascrpt:;"
+          /*tpa=http://***index.html*/
+          ;
+        });
+
+      });</script>
+    <script>
+    $('.submit_btn').click(function(e) {
+
+        // save=false;
+        // $('#save-jg').css('backgroundColor','#aaa')
+        // var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+
+        var username = $('#username').val();
+        var password = $('#password').val();
+        if (password == "" || username == "") {
+          alert("请填写用户名或密码")
+
+        }
+        // var password2 = $('.pwd_icon').text;
+        // alert(username,password)
+        var param = {
+          'username': username,
+          "password": password,
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+        };
+        $.ajax({
+          url: '/login/',
+          type: "POST",
+          dataType: 'json',
+          contentType: "application/json",
+          cache: false,
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          data: JSON.stringify(param),
+          success: function(data) {
+              console.log(data)
+            // alert(data)
+            // alert(data.error);
+            // save=true;
+            // $('#save-jg').css('backgroundColor','#4387f9')
+          },
+          error: function(error) {
+              console.log(error)
+            // alert(error)
+            //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            // alert(error.error);
+            //  save=true;
+            // $('#save-jg').css('backgroundColor','#4387f9')
+          }
+        })
+      })</script>
+  </body>
+
+</html>

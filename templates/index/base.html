@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+
+<html class="app-ui">
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>智能数据分析平台-{% block title %}{% endblock %}</title>
+    <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework" />
+    <meta name="author" content="rustheme" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="{{ static('index/iconfont/iconfont.css') }}">
+    <link rel="apple-touch-icon" href="{{ static('index/img/favicons/apple-touch-icon.png') }}" />
+    <link rel="icon" href="{{ static('index/img/favicons/favicon.ico') }}" />
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" id="css-font-awesome" href="{{ static('index/css/font-awesome.css') }}" />
+    <link rel="stylesheet" id="css-ionicons" href="{{ static('index/css/ionicons.css') }}" />
+    <link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}" />
+    {% block choice %}{% endblock %}
+    <link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}" />
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}" />
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/transfer.css') }}" />
+    {% block top_link %}{% endblock %}
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/table.css') }}" />
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/js/layer/theme/default/layer2.css') }}" />
+    {% block bottom %}{% endblock %}
+
+    <!-- 下拉 文字说明 -->
+
+    <!--<link rel="stylesheet" href="{{ static('index/css/components.css') }}">-->
+    <!--<link rel="stylesheet" href="{{ static('index/css/animations.css') }}">-->
+
+
+    <!-- End Stylesheets -->
+
+</head>
+
+{% block top_style %}{% endblock %}
+<style>
+    .click-button,.finnally-button {
+        position: static !important;
+    }
+    .click-button button {
+        visibility: hidden;
+    }
+
+    .click-button button[type="button"]+label {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .click-button button+label::before {
+        margin-top: 3px;
+        content: '';
+        position: absolute;
+        /*父元素为label，针对父元素进行绝对定位*/
+        left: -30px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #999;
+        border-radius: 50%;
+        background-color: #fff;
+        /*圆角边框*/
+    }
+
+    /* .click-button button.opacity+label::before {
+        box-shadow: 0 0 6px #24b7e5;
+    } */
+
+    .click-button button.opacity+label::after {
+        content: '';
+        position: absolute;
+        /*针对label进行绝对定位*/
+        left: -26px;
+        top: 7px;
+        border-radius: 50%;
+        /*设置圆角*/
+        width: 12px;
+        height: 12px;
+        background: #4e71f2;
+    }
+
+    .botton_style {
+        font-size: 17px;
+    }
+
+    .img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .edi-icon {
+
+        /* margin-left: 48px; */
+        width: 20px;
+        height: 20px;
+        font-size: 20p x;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: .2px;
+        -moz-osx-font-smoothing: grayscale;
+        *display: inline;
+        *zoom: 1;
+        cursor: pointer;
+        background-image: url(/static/images/提示.png);
+    }
+
+    .layui-layer-content {
+        /* width: 164px !important; */
+        /* height: 85px !important; */
+        position: relative !important;
+        line-height: 22px !important;
+        min-width: 12px !important;
+        padding: 8px 15px !important;
+        font-size: 12px !important;
+        border-radius: 2px !important;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, .2) !important;
+        color: #fff !important;
+        background-color: rgb(141, 179, 215) !important;
+    }
+
+    .layui-layer-TipsG {
+        border-bottom-color: rgb(141, 179, 215) !important;
+    }
+
+    .textSpan {
+        width: 20px;
+        height: 20px;
+        background-image: url(./111.png);
+        margin: 30px;
+    }
+
+    .txt_01 {
+        margin-left: 24px;
+    }
+
+    .line_01 {
+        list-style: none;
+    }
+
+    .layui-layer-tips {
+        top: 83px !important;
+    }
+
+    .layui-layer-close1 {
+        right: -8px !important;
+        top: -10px !important;
+    }
+
+    .layui-layer-shade {
+        background-color: #FFFFFF !important;
+    }
+
+    .gj-checkout{
+        position: relative!important;
+        margin: 20px 64px;
+        padding: 35px;
+    }
+
+    .gj-checkout img{
+        width: 50% !important;
+    }
+
+    .message-decimals{
+        width: 100%;
+        height: 80px;
+        display: flex;
+        /* justify-content: center; */
+        /* padding-left: 30px; */
+        align-items: center;
+        background-color: #efefef;
+    }
+
+    /* #middle-table .table-common {
+    margin: 0 64px;
+} */
+
+    #num_select{
+        width:100px;
+    height: 35px;
+    outline: none;
+    border: 1px solid #dddd;
+    text-indent: 1em;
+    }
+</style>
+
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!--<div class="message-decimals">-->
+<!--    <label for="digit">请选择需要保留的小数位:</label>-->
+<!--                                        <select name="digit" id="num_select">-->
+<!--                                            <option value ="1">1</option>-->
+<!--                                            <option value ="2">2</option>-->
+<!--                                            <option value="3">3</option>-->
+<!--                                            <option value="4">4</option>-->
+<!--                                            <option value="5">5</option>-->
+<!--                                          </select>-->
+<!--</div>-->
+    <div class="app-layout-canvas">
+        <div class="app-layout-container">
+
+            <!-- Drawer -->
+            
+            {% block main %}{% endblock %}
+            {{ csrf_input }}
+            <!-- 多选和单选 -->
+            {% if value=='None' %}
+            {% endif %}
+            {% if value == "All" %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% if name == 'bjt' %}
+                         <div class="transfer-single-one bjt-transfer" style="margin-top: 25px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% elif name == 'dxt' %}
+                        <div class="transfer-single-one bjt-transfer" style="margin-top: 25px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% endif %}
+                        <div class="transfer-little">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'xgx' %}
+                            <h1>分层变量：</h1>
+                            {% elif name == 'kfjy' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'tjy' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'fc' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'zwscy' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'logistic' %}
+                            <h1>因变量：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>状态变量：</h1>
+                            {% elif name == 'psm' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'jqxxjl' %}
+                            <h1>分类变量：</h1>
+
+                            {% elif name == 'logistic' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'xxhg' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'coxfx' %}
+                            <h1>状态变量</h1>
+                            {% elif name == 'blml' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'jqxxhg' %}
+                            <h1>连续变量：</h1>
+                            {% elif name == 'jqxxjl' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'jqxxfl' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'd_roc' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'd_dzb' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'bjt' %}
+                            <h1>分组：</h1>
+                            {% elif name == 'dxt' %}
+                            <h1>X轴变量：</h1>
+                            {% elif name == 'zydpx' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'blmx' %}
+                            <h1>分类变量：</h1>
+                            {% else %}
+                            <h1>匹配变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        {% if name == 'bjt' %}
+                        <div class="transfer-single bjt-single" style="margin-top: 20px;">
+                             <h1>分层变量：</h1>
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        {% elif name == 'dxt' %}
+                        <div class="transfer-single bjt-single" style="margin-top: 20px;">
+                             <h1 id="dxtt">分层变量（仅对单个自变量有效）：</h1>
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <div class="transfer-checkbox bjt-checkbox">
+                            {% if name == 'kfjy' %}
+                            <h1>定类变量：</h1>
+                            {% elif name == 'tjy' %}
+                            <h1>定量变量：</h1>
+                            {% elif name == 'fc' %}
+                            <h1>定量变量：</h1>
+                            {% elif name == 'zwscy' %}
+                            <h1>需分析变量（多选）：</h1>
+                            {% elif name == 'logistic' %}
+                            <h1>协变量（多选）：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>分析变量（多选）：</h1>
+                            {% elif name == 'psm' %}
+                            <h1>需分析变量（多选）：</h1>
+
+                            {% elif name == 'jqxxjl' %}
+                            <h1>特征（多选）：</h1>
+
+                            {% elif name == 'logistic' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'xxhg' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'coxfx' %}
+                            <h1>时间变量：</h1>
+                            {% elif name == 'blml' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'psm' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'jqxxhg' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'jqxxjl' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'd_roc' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'd_dzb' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'bjt' %}
+                            <h1>自变量（多选）：</h1>
+                            {% elif name == 'dxt' %}
+                            <h1>Y轴变量（多选）：</h1>
+                            {% elif name == 'zydpx' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'blmx' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'jqxxfl' %}
+                            <h1>特征（多选）：</h1>
+                            {% else %}
+                            <h1>需分析变量（多选）：</h1>
+                            {% endif %}
+                            <ul class="transfer-checkbox-ul ul">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            {% if value == "fourSingle" %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left" style="height: 433px;">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul" style="height: 392px;">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-one" style="margin-top: 47px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-two" style="margin-top: 45px;">
+                            <button class="single-two-right single-two-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-two-left single-two-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-three" style="margin-top: 45px;">
+                            <button class="single-three-right single-three-button" style="width: 32px;
+    height: 29px;
+    border: 1px solid #e5e5e5;
+    display: block;">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-three-left single-three-button" style="width: 32px;
+    height: 29px;
+    border: 1px solid #e5e5e5;
+    display: block;">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            <h1>x（单选）：</h1>
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 40px;">
+                             <h1>y（单选）：</h1>
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 40px;">
+                             <h1>组内分组（单选）：</h1>
+                            <ul class="ul single-ul-second">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                         <div class="transfer-single" style="margin-top: 40px;">
+                             <h1>col离散型变量 (单选) ：</h1>
+                            <ul class="ul single-ul-three">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            {% if value == "loghg" %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 20px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-dobule" style="margin-top: 80px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-third" style="margin-top:80px;">
+                            <button class="third-right third-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="third-left third-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'xgx' %}
+                            <h1>分层变量：</h1>
+                            {% elif name == 'kfjy' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'tjy' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'fc' %}
+                            <h1>因变量：</h1>
+                            {% elif name == 'zwscy' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'logistic' %}
+                            <h1>因变量：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>状态变量：</h1>
+                            {% elif name == 'psm' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'jqxxjl' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'xxhg' %}
+                            <h1>因变量：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'coxfx' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'blml' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'jqxxhg' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'jqxxjl' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'jqxxfl' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'd_roc' %}
+                            <h1>分类变量：</h1>
+                            {% elif name == 'd_dzb' %}
+                            <h1>分类变量：</h1>
+
+
+                            {% else %}
+                            <h1>匹配变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox">
+                            {% if name == 'kfjy' %}
+                            <h1>计数变量（多选）：</h1>
+                            {% elif name == 'tjy' %}
+                            <h1>计数变量（多选）：</h1>
+                            {% elif name == 'fc' %}
+                            <h1>需分析变量（多选）：</h1>
+                            {% elif name == 'zwscy' %}
+                            <h1>需分析变量（多选）：</h1>
+                            {% elif name == 'logistic' %}
+                            <h1>自变量(定量)：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>分析变量（多选）：</h1>
+                            {% elif name == 'psm' %}
+                            <h1>需分析变量（多选）：</h1>
+
+                            {% elif name == 'jqxxjl' %}
+                            <h1>特征（多选）：</h1>
+
+                            {% elif name == 'logistic' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'xxhg' %}
+                            <h1>自变量（定量）：</h1>
+                            {% elif name == 'roc' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'coxfx' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'blml' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'psm' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'jqxxhg' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'jqxxjl' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'd_roc' %}
+                            <h1>特征（多选）：</h1>
+                            {% elif name == 'd_dzb' %}
+                            <h1>特征（多选）：</h1>
+                            {% else %}
+                            <h1>匹配变量（多选）：</h1>
+                            {% endif %}
+                            
+                            <ul class="transfer-checkbox-ul ul" style="height: 90px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>自变量(定类):</h1>
+                            <ul class="transfer-dobule-ul ul" style="height: 90px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>交互变量:</h1>
+                            <ul class="transfer-third-ul ul" style="height: 90px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            
+            {% if value == "single_factor" %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left" style="height:525px;">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 20px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-dobule" style="margin-top: 80px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-third" style="margin-top:80px;">
+                            <button class="third-right third-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="third-left third-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            <h1>因变量：</h1>
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox">
+                            <h1>自变量(定量)：</h1>
+                            
+                            <ul class="transfer-checkbox-ul ul" style="height: 90px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>自变量(定类)：</h1>
+                            <ul class="transfer-dobule-ul ul" style="height: 90px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>调整变量:</h1>
+                            <ul class="transfer-third-ul ul" style="height: 90px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            
+            {% if value == 'much' %}
+            
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-little">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-checkbox" style="margin-top: 0;">
+                            {% if name == 'sjms' %}
+                            <h1>需分析变量（多选）：</h1>
+                            {% else %}
+                            <h1>需分析变量（多选）：</h1>
+                            {% endif %}
+                            <ul class="transfer-checkbox-ul ul" style="height: 489px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            {% if value == "single" %}
+            <div class="transfer-box" style="height: 380px">
+                <div class="transfer-content" style="height: 380px">
+                    <div class="transfer-left" style="height: 380px;">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul" style="height: 342px;">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much" style="margin-top: 177px;">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            <h1>分组变量（单选）：</h1>
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            {% if value == 'choice' %}
+            <div class="transfer-box">
+                <!-- <label for="digit">请选择需要保留的小数位</label> -->
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <!-- 全部变量结束 -->
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-dobule" style="margin-top: 27px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 152px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+
+                        
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'zhfx' %}
+                            <h1>分组变量：</h1>
+                            {% else %}
+                            <h1>分组变量（单选）：</h1>
+                            {% endif %}
+                            
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            {% if name == 'zhfx' %}
+                            <h1>定量变量：</h1>
+                            {% else %}
+                            <h1>连续变量（多选）：</h1>
+                            {% endif %}
+                            <ul class="transfer-dobule-ul ul" style="height: 165px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            {% if name == 'zhfx' %}
+                            <h1>定类变量：</h1>
+                            {% else %}
+                            <h1>分类变量（多选）：</h1>
+                            {% endif %}
+                            <ul class="transfer-checkbox-ul ul" style="height: 165px;">
+                                <p class="noBook">无数据</p>
+
+                            </ul>
+                        </div>
+                        
+
+                        
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'dobuleSingle' or value == 'nri' %}
+            <!-- <label for="digit">请选择需要保留的小数位</label> -->
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left" style="height: 318px;">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul" style="height: 276px;">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-one" style="margin-top: 47px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-two" style="margin-top: 45px;">
+                            <button class="single-two-right single-two-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-two-left single-two-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'scfx' %}
+                            <h1>时间变量：</h1>
+                            {% elif name == 'sdxt' %}
+                            <h1>x变量：</h1>
+                            {% elif name == 'nri' %}
+                            <h1>旧模型预测值：</h1>
+                            {% else %}
+                            <h1>暴露变量（定量）：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 40px;">
+                            {% if name == 'scfx' %}
+                            <h1>事件变量：</h1>
+                            {% elif name == 'sdxt' %}
+                            <h1>y变量：</h1>
+                            {% elif name == 'nri' %}
+                            <h1>新模型预测值：</h1>
+                            {% else %}
+                            <h1>因变量（定量）：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 40px;">
+                            {% if name == 'scfx' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'sdxt' %}
+                            <h1>组内分组：</h1>
+                            {% elif name == 'nri' %}
+                            <h1>事件（金标准）：</h1>
+                            {% else %}
+                            <h1>分层变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul-second">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'secondSingle' %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left" style="height: 318px;">
+                        <h1>全部变量12
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul" style="height: 276px;">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-one" style="margin-top: 170px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'spzt' %}
+                            <h1>名称列：</h1>
+                            {% else %}
+                            <h1>分组变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 161px;">
+                            {% if name == 'spzt' %}
+                            <h1>数据列：</h1>
+                            {% else %}
+                            <h1>分析变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'different' %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-one" style="margin-top:27px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top:23px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'xt' %}
+                            <h1>分组变量：</h1>
+                            {% elif name == 'phqx' %}
+                            <h1>暴露变量（定量）：</h1>
+                            {% else %}
+                            <h1>名称变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 20px;">
+                            {% if name == 'xt' %}
+                            <h1>组内分组：</h1>
+                            {% elif name == 'phqx' %}
+                            <h1>因变量（定量）：</h1>
+                            {% else %}
+                            <h1>数据变量：</h1>
+                            {% endif %}
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox">
+                            {% if name == 'xt' %}
+                            <h1>变量列（多选）：</h1>
+                            {% elif name == 'phqx' %}
+                            <h1>调整变量（多选）：</h1>
+                            {% else %}
+                            <h1>误差变量（多选）：</h1>
+                            {% endif %}
+                            <ul class="transfer-checkbox-ul ul" style="height: 296px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'Ret' %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-one" style="margin-top: 26px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 23px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% if name == 'fcfx' %}
+                        <div class="transfer-dobule" style="margin-top:119px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% elif name == 'coxfx' %}
+                        <div class="transfer-dobule" style="margin-top:82px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                            {% else %}
+                        <div class="transfer-dobule" style="margin-top:160px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- 12-29 cox分析 -->
+                        {% if name == 'coxfx' %}
+                        <div class="transfer-third" style="margin-top:78px;">
+                            <button class="third-right third-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="third-left third-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            {% if name == 'fcfx' %}
+                            <h1>暴露变量（定量）：</h1>
+                            {% else %}
+                            <!--<h1>时间变量：</h1>-->
+                            <h1>状态变量</h1>
+                            {% endif %}
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-single" style="margin-top: 20px;">
+                            {% if name == 'fcfx' %}
+                            <h1>因变量：</h1>
+                            {% else %}
+                            <!--<h1>事件变量：</h1>-->
+                            <h1>时间变量</h1>
+                            {% endif %}
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox">
+                            {% if name == 'coxfx' %}
+                            <h1>自变量(定量)：</h1>
+                            {% elif name == 'fcfx' %}
+                            <h1>调整变量（多选）：</h1>
+                            {% else %}
+                            <h1>分组变量（多选）：</h1>
+                            {% endif %}
+                            {% if name == 'fcfx' %}
+                            <ul class="transfer-checkbox-ul ul" style="height: 130px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                            {% elif name == 'coxfx' %}
+                            <ul class="transfer-checkbox-ul ul" style="height: 92px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                            {% else %}
+                            <ul class="transfer-checkbox-ul ul" style="height: 172px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            {% if name == 'coxfx' %}
+                            <h1>自变量(定类)：</h1>
+                            {% elif name == 'fcfx' %}
+                            <h1>分层变量（多选）：</h1>
+                            {% else %}
+                            <h1>变量（多选）：</h1>
+                            {% endif %}
+                            {% if name == 'fcfx' %}
+                            <ul class="transfer-dobule-ul ul" style="height: 130px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                            {% elif name == 'coxfx' %}
+                            <ul class="transfer-dobule-ul ul" style="height: 92px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                            {% else %}
+                            <ul class="transfer-dobule-ul ul" style="height: 172px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                            {% endif %}
+                        </div>  
+                        <!-- 12-29 cox分析 -->
+                        {% if name == 'coxfx' %} 
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>交互效应（多选）：</h1>
+                            <ul class="transfer-third-ul ul" style="height: 100px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'muchCheckbox' %}
+            <div class="transfer-box">
+                <!-- <label for="digit">请选择需要保留的小数位</label> -->
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 23px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-dobule" style="margin-top:89px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-third" style="margin-top:88px;">
+                            <button class="third-right third-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="third-left third-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            <h1>暴露变量（单选）：</h1>
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+
+                        <div class="transfer-checkbox">
+                            <h1>因变量（多选）：</h1>
+                            <ul class="transfer-checkbox-ul ul" style="height: 100px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>调整变量1（多选）：</h1>
+                            <ul class="transfer-dobule-ul ul" style="height: 100px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>调整变量2（多选）：</h1>
+                            <ul class="transfer-third-ul ul" style="height: 100px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'muchSingleCheckbox' %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-single-one" style="margin-top: 26px;">
+                            <button class="single-one-right single-one-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="single-one-left single-one-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 23px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-dobule" style="margin-top:69px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-third" style="margin-top:69px;">
+                            <button class="third-right third-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="third-left third-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            <h1>暴露变量（单选）：</h1>
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+
+                        <div class="transfer-single" style="margin-top: 20px;">
+                            <h1>分层变量（定类）：</h1>
+                            <ul class="ul single-ul-first">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+
+                        <div class="transfer-checkbox">
+                            <h1>因变量（多选）：</h1>
+                            <ul class="transfer-checkbox-ul ul" style="height: 80px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>调整变量1（多选）：</h1>
+                            <ul class="transfer-dobule-ul ul" style="height: 80px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;">
+                            <h1>调整变量2（多选）：</h1>
+                            <ul class="transfer-third-ul ul" style="height: 80px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% if value == 'muchCheckboxs' %}
+            <div class="transfer-box">
+                <div class="transfer-content">
+                    <div class="transfer-left">
+                        <h1>全部变量
+                            <i id="btn" class="edi-icon">&nbsp;&nbsp;&nbsp;</i>
+                        </h1>
+                        <ul class="transfer-ul ul">
+                            <p class="noBook">无数据</p>
+                        </ul>
+                    </div>
+                    <div class="transfer-middle">
+                        <div class="transfer-much">
+                            <button class="much-right much-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="much-left much-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-dobule" style="margin-top:23px;">
+                            <button class="dobule-right dobule-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="dobule-left dobule-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        <div class="transfer-little" style="margin-top: 50px;">
+                            <button class="little-right little-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="little-left little-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        
+
+                        
+                        <div class="transfer-third" style="margin-top:47px;">
+                            <button class="third-right third-button">
+                                <i class="iconfont icon-zuojiantou"></i>
+                            </button>
+                            <button class="third-left third-button">
+                                <i class="iconfont icon-zuojiantou1"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
+                    <div class="transfer-right">
+                        <div class="transfer-single">
+                            <h1>因变量：</h1>
+                            <ul class="ul single-ul">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        
+                        <div class="transfer-checkbox" style="margin-top: 20px;height:100px;">
+                            <h1>自变量（定量）：</h1>
+                            <ul class="transfer-dobule-ul ul" style="height: 70px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        <div class="transfer-checkbox" style="margin-top: 20px;height:100px;">
+                            <h1>自变量（定类）：</h1>
+                            <ul class="ul transfer-checkbox-ul" style="height: 70px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+
+
+                        
+                        
+                        <div class="transfer-checkbox" style="margin-top: 20px;100px">
+                            <h1>调整变量（多选） ：</h1>
+                            <ul class="transfer-third-ul ul" style="height: 70px;">
+                                <p class="noBook">无数据</p>
+                            </ul>
+                        </div>
+                        
+                        
+ 
+                    </div>
+                </div>
+
+            </div>
+            {% endif  %}
+            {% block main03 %}
+            {% endblock %}
+            {% if begin == 'begin' %}
+            <div class="click-button">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius btu_y" number=0></button>
+                <label for="likeL" class="botton_style" id="btu_y">原始数据</label>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" number=1
+                    onclick="threeFn()"></button>
+                <label for="likeD" class="botton_style" id="btu_c">处理数据</label>
+            </div>
+            <div class="finnally-button">
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="begin" name="{{ project_id }}">开始分析
+                </button>
+                <button type="button" class="layui-btn layui-btn-danger2 layui-btn-radius" id="save-jg">结果保存
+                </button>
+            </div>
+            {% elif begin == 'article' %}
+            {% elif begin == 'end' %}
+            <div class="click-button">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius btu_y" number=0></button>
+                <label for="likeL" class="botton_style" id="btu_y">原始数据</label>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" number=1
+                    onclick="threeFn()"></button>
+                <label for="likeD" class="botton_style" id="btu_c">处理数据</label>
+            </div>
+            <div class="finnally-button">
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="end"
+                    name="{{ project_id }}">开始分析
+                </button>
+                <button type="button" class="layui-btn layui-btn-danger2 layui-btn-radius" id="save-jg">结果保存
+                </button>
+            </div>
+            {% elif begin == 'chart' %}
+            <div class="click-button">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius btu_y" number=0></button>
+                <label for="likeL" class="botton_style" id="btu_y">原始数据</label>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" number=1
+                    onclick="threeFn()"></button>
+                <label for="likeD" class="botton_style" id="btu_c">处理数据</label>
+            </div>
+            <div class="finnally-button">
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="chart"
+                    name="{{ project_id }}">开始分析
+                </button>
+                <button type="button" class="layui-btn layui-btn-danger2 layui-btn-radius" id="save-jg">结果保存
+                </button>
+            </div>
+            {% elif begin == 'sample' %}
+            <div class="finnally-button">
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="sampleAnalysis"
+                    name="{{ project_id }}" onclick="sampleAnalysis()">开始分析
+                </button>
+            </div>
+            {% else %}
+            <!--   <div class="click-button">-->
+            <!--	<button type="button" class="layui-btn layui-btn-normal layui-btn-radius">原始的数据</button>-->
+            <!--	<button type="button" class="layui-btn layui-btn-normal layui-btn-radius">处理的数据</button>-->
+            <!--</div>-->
+            <div class="click-button">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius btu_y" number=0></button>
+                <label for="likeL" class="botton_style" id="btu_y" number=0>原始数据</label>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" 
+                    onclick="threeFn()" number=1></button>
+                <label for="likeD" class="botton_style" id="btu_c" number=1>处理数据</label>
+            </div>
+            <div class="finnally-button">
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" id="u_f"
+                    name="{{ project_id }}">开始分析
+                </button>
+                <button type="button" class="layui-btn layui-btn-danger2 layui-btn-radius" id="save-jg">结果保存
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        {% block main04 %}
+        {% endblock %}
+
+        {% if begin == 'article' %}
+        {% else %}
+
+        <!--<div id="page-1" class="current-page">-->
+        <!--	<button class="transition" data-to="page-2" data-transition="horizontal">&lt;&lt;</button>-->
+        <!--	<h1></h1>-->
+
+        <!--</div>-->
+
+        <!--<div id="page-2" class="page">-->
+        <!--	<button class="transition" data-to="page-1" data-transition="horizontal-easing"><<</button>-->
+        <!--	<h1>-->
+        <!--           </h1>-->
+
+        <!--</div>-->
+
+
+        <div class="box-detail" style="width: 100%;overflow:auto">
+            <div class="detail-content">
+                <p>
+                    {% block description %}
+
+                    {% endblock %}
+                </p>
+            </div>
+
+            <div class="detail-click" id="slide-toggle">
+                <i class="iconfont icon-shuangjiantoushang"></i>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% block mian02 %}{% endblock %}
+    </div>
+    <!-- .app-layout-container -->
+
+    </div>
+
+    <!-- .app-layout-canvas -->
+
+    <!-- Apps Modal -->
+
+    <!-- Opens from the button in the header -->
+
+    <div id="apps-modal" class="modal fade" tabindex="-1" role="dialog">
+
+        <div class="modal-sm modal-dialog modal-dialog-top">
+
+            <div class="modal-content">
+
+                <!-- Apps card -->
+
+                <div class="card m-b-0">
+
+                    <div class="card-header bg-app bg-inverse">
+
+                        <h4>Apps</h4>
+
+                        <ul class="card-actions">
+
+                            <li>
+
+                                <button data-dismiss="modal" type="button"><i class="ion-close"></i></button>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="card-block">
+
+                        <div class="row text-center">
+
+                            <div class="col-xs-6">
+
+                                <a class="card card-block m-b-0 bg-app-secondary bg-inverse" href="index.html">
+
+                                    <i class="ion-speedometer fa-4x"></i>
+
+                                    <p>
+
+                                        Admin
+
+                                    </p>
+
+                                </a>
+
+                            </div>
+
+                            <div class="col-xs-6">
+
+                                <a class="card card-block m-b-0 bg-app-tertiary bg-inverse" href="frontend_home.html">
+
+                                    <i class="ion-laptop fa-4x"></i>
+
+                                    <p>
+
+                                        Frontend
+
+                                    </p>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- .card-block -->
+
+                </div>
+
+                <!-- End Apps card -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="app-ui-mask-modal"></div>
+
+    {% block center_script %}{% endblock %}
+    <!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+
+    {% block js_center %}{% endblock %}
+    <!--<script src="{{ static('index/js/jquery-2.1.1.min.js') }}"></script>-->
+    <!--<script src="{{ static('index/js/page-transitions.js') }}"></script>-->
+    <!-- layer -->
+    <script src="{{ static('index/js/layer/layer.js') }}" type="text/javascript"></script>
+    <script src="{{ static('index/js/common.js') }}" media="all"></script>
+    <script src="{{ static('index/js/transfer.js') }}" media="all"></script>
+    <script src="{{ static('index/js/ajax.js') }}" media="all"></script>
+    <script src="{{ static('index/js/template.js') }}" media="all"></script>
+    <script src="{{ static('index/js/all-common.js') }}" media="all"></script>
+    <!-- 提示插件 -->
+    <script src="{{ static('index/js/script.js') }}" type="text/javascript"></script>
+
+    <script>
+        $('#btn').click(function () {
+            layer.open({
+                type: 4,
+                title: '数据类型展示',
+                content: ['<div class="line_01"><li title=""><img src="/static/images/定量.png" style="margin-right: 12px;">定量数据图标</li><li title=""><img src="/static/images/定类.png" style="margin-right: 12px;">定类数据图标</li><li title=""><img src="/static/images/时间.png" style="margin-right: 12px;">时间数据图标</li></div>', '#btn'],
+            })
+        })
+    </script>
+    <!-- 阻断jinjia2语法 -->
+    {% raw %}
+    <script type="text/html" id="listComment">
+    {{ each form as value index }}
+	<div id="tables" class="table-left table-common table-from" style="
+    box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 5px;
+    position:relative;
+    overflow-x: scroll;">
+    <div style="position:absolute;top:0;left:0px;font-size:24px"><i class="fa fa-table" aria-hidden="true"></i> 结果表</div>
+		<div class='copyTable' style='display:flex;justify-content:center;align-items:center'>
+            <p >
+                {{value.name}}
+            </p>
+        </div>
+		<div class="table-iu">
+			<table class="table-common-tr" >
+				<thead>
+					<tr>
+							{{each value.Listing as item i}}
+							        <th>{{item}}</th>
+								
+							{{/each}}
+					</tr>
+				</thead>
+				<tbody>
+				  {{each value.info as item1 ii}}
+        				<tr>
+                                {{each item1 as item2 a }}
+    							        <td>{{item2 | toFixed3}}</td>
+                                        
+                                {{/each}}
+        				</tr>
+				{{/each}}
+			</tbody>
+			</table>
+		</div>
+	</div>
+	
+	{{/each}}
+</script>
+ <script type="text/html" id="listComments">
+
+	<div id="tables" class="table-left table-common table-from" style="
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 5px;
+    position:relative;
+    overflow-x: scroll;">
+    <h4 style="font-weight: bold;font-size: 19px;">结果表</h4>
+		<div class='copyTable' style='display:flex;justify-content:center;align-items:center'>
+            <p >
+               
+            </p>
+        </div>
+		<div class="table-iu">
+			<table class="table-common-tr" >
+				<thead>
+					<tr>
+							{{each Listing as item i}}
+							        <th>{{item}}</th>
+								
+							{{/each}}
+					</tr>
+				</thead>
+				<tbody style="height:auto">
+				  {{each info as item1 ii}}
+        				<tr>
+                                {{each item1 as item2 a }}
+    							        <td>{{item2 | toFixed3}}</td>
+                                        
+                                {{/each}}
+        				</tr>
+				{{/each}}
+			</tbody>
+			</table>
+		</div>
+	</div>
+	
+
+	
+</script>
+    {% endraw %}
+    <!-- 阻断jinjia2语法 -->
+    {% block bottom_script %}{% endblock %}
+
+<script type="application/javascript">
+    function sampleAnalysis() {
+        // 此处可获取参数及其校验
+        var testArgs=$("#testArgs").val()
+        $.ajax({
+            url: '/sample/' + '1' + '/0/',
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json",
+            cache: false,
+            headers: {
+                'X-CSRFToken': ''
+            },
+            data: JSON.stringify({"hello": "world"}),
+            success: function (data) {
+                $('#chart').css('backgroundColor', '#4387f9')
+                forbid = true
+                if (data.code == 200) {
+                    alert("请开始你的表演")
+                }
+            },
+            error: function (errorMsg) {
+                $('#chart').css('backgroundColor', '#4387f9')
+                forbid = true
+            }
+        });
+    }
+
+</script>    
+</body>
+
+<!--样本量分析临时js处理函数-->
+
+
+</html>

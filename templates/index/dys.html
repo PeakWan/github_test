@@ -1,0 +1,297 @@
+{% extends 'index/base.html' %}
+{% block title %}
+多模型回归分析
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .gj-checkout img{
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+     #rightmodel{
+        padding-top: 10px;
+    }
+    .transfer-box{
+        margin-top: 15px;
+    }
+    .transfer-left{
+        height: 592px;
+    }
+    .transfer-left ul{
+        height: calc(100% - 42px);
+    } 
+    .select-options{
+        text-align: center;
+        margin-top: 10px;
+    }
+    .select-options select{
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+
+    <!-- <div class="select-options">
+        <span>小数位：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <select name="back_number" id="back_number">
+            <option value="{0:.3f}">0.001</option>
+            <option value="{0:.1f}">0.1</option>
+            <option value="{0:.2f}">0.01</option>
+        </select>
+    </div> -->
+
+    <div class="select-options">
+        <span>回归模型名称：</span>
+        <select name="back_name" id="back_name" onchange="select_change(this.options[this.options.selectedIndex].value)">
+            <!-- <option value="glm">广义线性回归</option> -->
+            <option value="logit">逻辑回归</option>
+            <option value="ols">线性回归</option>
+            <option value="rlm">泊松回归</option>
+            <option value="cox">cox回归</option>
+        </select>
+    </div>
+    <input type="hidden" id="dys" name="dys" value="">
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+单因素\多因素回归分析：单因素分析可以初步探索应变量Y与自变量X的关系，并且当样本量不是很大的时候可以通过单因素分析删除部分无关的自变量；而多因素分析可以进一步排出其它混杂因素的影响，从而确定预测变量与响应变量的相关性；此外，将单因素和多因素的结果进行比较更容易发现问题，如果单因素和多因素结果一致，结论就比较稳定且容易解释。右侧参数栏可选择回归模型，可选模型包括：逻辑回归、线性回归、COX回归、泊松回归。
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+    // select change
+    var transferLeft = $('.transfer-left')[0];
+    var transferRight = $('.transfer-right')[0];
+    var transferMiddle = $('.transfer-middle')[0];
+    
+    // 第三个单选 按钮
+    var single_three_button = document.createElement('div');
+    single_three_button.classList = "transfer-single-two";
+    single_three_button.style.marginTop = "67px";
+    single_three_button.innerHTML = '<button class="single-two-right single-two-button"><i class="iconfont icon-zuojiantou"></i></button><button class="single-two-left single-two-button"><i class="iconfont icon-zuojiantou1"></i></button>';
+    // 第三个单选 框
+    var single_three_box = document.createElement('div')
+    single_three_box.classList = "transfer-single";
+    single_three_box.style.marginTop = "20px";
+    single_three_box.innerHTML = '<h1>时间变量：</h1><ul class="ul single-ul-second"><p class="noBook">无数据</p></ul>';
+    
+    function select_change(v){
+        if (v == 'cox') { 
+            if ($('.single-ul-second')[0]) {
+                console.log('已存在,不添加');
+            } else { // 添加
+                console.log('不存在,添加');
+                transferLeft.style.height = '623px';
+                transferRight.appendChild(single_three_box);
+                transferMiddle.appendChild(single_three_button);
+                // 添加功能
+                $('.single-two-button').click(function (e) {
+                    e.stopPropagation();
+                    var that = $(this);
+                    littleTransfer3(that);
+                })
+                function littleTransfer3(that) {
+                    var orgin = '';
+                    var target = '';
+                    var checkLi = '';
+                    if ($(that).hasClass('single-two-right')) { //如果当前单选穿梭框允许穿梭了
+                        orgin = $('.transfer-ul');
+                        target = $('.single-ul-second');
+                    } else {
+                        orgin = $('.single-ul-second');
+                        target = $('.transfer-ul');
+                    }
+                    checkLi = orgin.find('li');
+                    for (var i = 0; i < checkLi.length; i++) {
+                        if ($(checkLi[i]).hasClass('changeColor')) {
+                            var cloneLi = $(checkLi[i]).clone();
+                            cloneLi.removeClass('changeColor');
+                            target.prepend(cloneLi);
+                            $(checkLi[i]).remove();
+            
+                        }
+                    }
+                    if (target.find('li').length == 1) {
+                        $(that).removeClass('fontColor');
+                        $(that).addClass('selectNone');
+                        target.find('p').remove();
+                        $('.much-right').removeClass('fontColor');
+                        $('.much-right').addClass('selectNone');
+                        $('.single-one-right').removeClass('fontColor');
+                        $('.single-one-right').addClass('selectNone');
+                    }
+                    if (orgin.find('li').length == 0) {
+                        $(that).removeClass('fontColor');
+                        $(that).addClass('selectNone');
+                        orgin.append("<p class='noBook'>无数据</p>");
+                    }
+                }
+            }
+
+            
+        } else { 
+            if ($('.single-ul-second')[0]) { // 删除
+                console.log('已存在,删除');
+                transferLeft.style.height = '525px';
+                transferRight.removeChild(single_three_box);
+                transferMiddle.removeChild(single_three_button);
+            } else {
+                console.log('不存在,无需删除');
+            }
+        }
+    };
+    
+</script>
+{% endblock %}

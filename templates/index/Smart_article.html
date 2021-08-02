@@ -1,0 +1,747 @@
+{% extends 'index/base.html' %}
+{% block title %}
+智能文章生成
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/miss_delete.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    .exportform {
+        width: 176px;
+        height: 35px;
+        margin: 11px 0 11px 24px;
+        border-radius: 4px;
+        border: 0px solid #000;
+        background-color: #178AEC;
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    /* 样式 */
+    .fx-details-text {
+        font-size: 10px;
+        text-indent: 4em;
+        color: #ff7f0e;
+        margin-bottom: 18px;
+        margin-top: 18px;
+    }
+    .fx-details-texts h4 {
+        color: #434343;
+        text-indent: 2em;
+    }
+    .fx-details-text img {
+        margin-left: -38px;
+        margin-top: -10px;
+    }
+    .fx-details-img h4{
+        text-indent: 2em;
+    }
+    .fx-text{
+        text-indent: 2.5em;
+    }
+    .app-layout-content {
+        padding-left: 10px;
+    }
+    */ #rightmodel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 300px;
+        background: #efefef;
+        ;
+    }
+    #z-nav>li>ul.nav-subnav {
+        /*display: flex;*/
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #header-navbar-collapse>.help-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20%;
+        color: #333333;
+    }
+    #header-navbar-collapse>.index {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 35%;
+        color: #333333;
+    }
+    #rightmodel {
+        padding-top: 5%;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    #rightmodel>.begin-button {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .select-options {
+        margin-top: 24px;
+    }
+    .select-options form {
+        width: 100%;
+        height: 100%;
+    }
+    .select-options form .select-input:first-child {
+        margin-top: 0;
+    }
+    .select-options form .select-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding: 0 20px;
+    }
+    .select-options form .select-input span {
+        font-size: 14px;
+    }
+    .select-options form .select-input select {
+        width: 107px;
+        height: 22px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .select-options form .select-input input[type='text'] {
+        outline: none;
+        display: block;
+        width: 107px;
+        height: 25px;
+        font-size: 14px;
+    }
+    .navbar-default>.left-aside {
+        float: left;
+        margin-left: 10px;
+        width: 34%;
+    }
+    .navbar-default>.container-fluid {
+        width: 58%;
+        float: right;
+    }
+    .navbar-default>.left-aside .upload {
+        position: relative;
+        padding: 4px 22px;
+        border: 1px solid #999;
+        text-decoration: none;
+        color: #666;
+        display: inline-block;
+        margin-top: 18px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .navbar-default>.left-aside .upload>.change {
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+    #middle-table {
+        width: 82.2%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
+    }
+    #middle-table>.table-left,
+    .table-right {
+        width: 45%;
+        height: 100%;
+        border: 1px solid #03a9f4;
+        box-sizing: border-box;
+        border-top: none;
+        padding: 30px 20px;
+    }
+    #middle-table>.table-right {
+        margin-left: 50px;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    #middle-table>.accrow {
+        margin-left: 29px;
+        font-size: 32px;
+    }
+    #u_f {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+    #u_f input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+    #u_f:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+    .layout-has-fixed-header .app-layout-content {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 50px 0 0 0;
+    }
+    /*分析步骤样式*/
+    .fx-step {
+        width: 100%;
+        padding: 0 24px;
+        box-sizing: border-box;
+        margin-top: 20px;
+        line-height: 56px;
+    }
+    .fx-step-son {
+        border: 1px solid #515151;
+        border-radius: 7px;
+        background-color: #fff;
+        padding: 5px 18px;
+        font-size: 15px;
+        color: #515151;
+        cursor: pointer;
+    }
+    .fx-step img {
+        margin: 0 10px;
+    }
+    /*分析详情样式*/
+    .fx-details {
+        margin: 30px 0;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-sizing: border-box;
+        width: 95%;
+        margin: 30px auto 0 auto;
+    }
+    .fx-details h4 {
+        font-weight: bold;
+        font-size: 19px;
+    }
+    .fx-details .fx-text {
+        color: #7f7f7f;
+        padding: 25px 0;
+    }
+    .fx-details-img .fx-image {
+        text-align: center;
+    }
+    .fx-details-img img {
+        padding: 25px 0;
+        height: auto;
+        width: 100%;
+    }
+    .fx-details-table {
+        padding-bottom: 25px;
+    }
+    .details-table {
+        padding: 25px 0;
+    }
+    .fx-table {
+        border: 1px solid #515151;
+    }
+    .fx-table td {
+        border: 1px solid #515151;
+        padding: 10px;
+    }
+    .fx-table th {
+        border: 1px solid #515151;
+        padding: 10px;
+    }
+    .fx-image0{
+        width: 50%;
+    }
+    .fx-image0 img{
+        width:100%!important;
+    }
+</style>
+{% endblock %}
+{% block main %}
+            <main class="app-layout-content">
+                {{ csrf_input }}
+                <!--分析步骤-->
+                <input class="exportform export" type="button" data-tableid="t1" value="导出原始的EXCEL表格" name="{{ project_id }}" id="original">
+                <input class="exportform export" type="button" data-tableid="t1" value="导出处理后的EXCEL表格" name="{{ project_id }}" id="process">
+                <input class="exportform export" type="button" data-tableid="t1" value="导出文章数据" name="{{ project_id }}" id="article">
+                <div class="fx-step">
+                    {% if data %}
+                    {% for key in data %}
+                    <span class="fx-step-son" style="position: relative;">
+                        <a href="#{{ key }}">{{ data[key].name }}</a>
+                        <div style="position: absolute;top: -28px;right: -5px;">
+                            <i class="fa fa-times" id="close" aria-hidden="true" value='{{data[key].id}}'></i>
+                        </div>
+                    </span>
+                    {% if key != data | list |last %}
+                    <img src="/static/images/right-jt.png" />
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <!--分析详情-->
+                {% if data %}
+                {% for key in data %}
+                <div id="{{ key }}" class="fx-details">
+                    <div class="fx-details-text fx-details-qtext">
+                        <h3>
+                            <img src="{{ static('images/dengpao.png') }}" alt="">
+                            {{ data[key].name }}</h3>
+                    </div>
+                    {% if data[key].str_result %}
+                    <div class="fx-details-texts">
+                        <h4 style="margin-left: -13px;">智能分析结果描述</h4>
+                        <div class="fx-text">
+                            {{ data[key].str_result }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if data[key].plt %}
+                    <div class="fx-details-img">
+                        <h4>图片结果</h4>
+                        <div style="display:flex;flex-wrap:wrap">
+                            <div class="fx-image0">
+                            <img src="{{ data[key].plt }}" style="width: 50%;" />
+                        </div>
+                        {% if data[key].plt2 %}
+                            <div class="fx-image0">
+                                <img src="{{ data[key].plt2 }}" style="width: 50%;" />
+                            </div>
+                        {% endif %}
+                        {% if data[key].plt3 %}
+                            <div class="fx-image0">
+                                <img src="{{ data[key].plt3 }}" style="width: 50%;" />
+                            </div>
+                        {% endif %}
+                        {% if data[key].plt4 %}
+                            <div class="fx-image0">
+                                <img src="{{ data[key].plt4 }}" style="width: 50%;" />
+                            </div>
+                        {% endif %}
+                        {% if data[key].plt5 %}
+                            <div class="fx-image0">
+                                <img src="{{ data[key].plt5 }}" style="width: 50%;" />
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </main>
+{% endblock %}
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+    <div class="app-layout-canvas">
+        <div class="app-layout-container">
+            <aside class="app-layout-drawer">
+                <div class="app-layout-drawer-scroll">
+                    <div id="logo" class="drawer-header">
+                    </div>
+                    <!-- Drawer navigation -->
+                <nav class="drawer-main">
+                        <ul class="nav nav-drawer" id="z-nav">
+                            <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="ion-ios-calculator-outline"></i> 数据整理</a>
+                            <ul class="nav nav-subnav">
+                                    <li>
+                                        <a
+                                            href="{{ url("upload:miss_delete",kwargs={"project_id": project_id}) }}">缺失值剔除</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('upload:miss_filling',kwargs={"project_id": project_id,"data_id":0}) }}">数据填补</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ url("upload:colinear",kwargs={"project_id": project_id}) }}">获取相关性过高变量</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ url("upload:vif",kwargs={"project_id": project_id}) }}">获取共线性过高变量</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:matchin",kwargs={"project_id": project_id,"data_id":0}) }}">PSM倾向性匹配</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:balance",kwargs={"project_id": project_id,"data_id":0}) }}">数据均衡</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:recoding",kwargs={"project_id": project_id,"data_id":0}) }}">哑变量重编码</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:group",kwargs={"project_id": project_id,"data_id":0}) }}">分组重编码</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ url("upload:standardization",kwargs={"project_id": project_id,"data_id":0}) }}">数据标准化</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ url("upload:numerical",kwargs={"project_id": project_id,"data_id":0}) }}">非数值异常值处理</a>
+                                    </li>
+                                    <li>
+                                    <a
+                                            href="{{ url("upload:abnormal",kwargs={"project_id": project_id,"data_id":0}) }}">异常偏离值处理</a>
+                                </li>
+                                </ul>
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="ion-ios-speedometer-outline"></i> 智能统计分析</a>
+                                <ul class="nav nav-subnav">
+                                    <li>
+                                        <a href="{{ url("smart:sjms",kwargs={"project_id": project_id, "data_id": 0}) }}">数据描述</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ url('upload:normality',kwargs={"project_id": project_id, "data_id": 0}) }}">正太性校验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('smart:fxqx',kwargs={"project_id": project_id, "data_id": 0}) }}">方差齐性</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('smart:xgx',kwargs={"project_id": project_id, "data_id": 0}) }}">相关性分析</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">卡方检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">Fisher检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:statistic",kwargs={"project_id": project_id, "data_id": 0}) }}">两组独立样本
+                                            t 检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:statistic_u",kwargs={"project_id": project_id, "data_id": 0}) }}">两组独立样本
+                                            U 检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("smart:statistic_w",kwargs={"project_id": project_id, "data_id": 0}) }}">两组独立样本
+                                            Wilcoxon检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("smart:d_fc",kwargs={"project_id": project_id, "data_id": 0}) }}">多组独立单因素方差分析</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("smart:d_k_w",kwargs={"project_id": project_id, "data_id": 0}) }}">多组独立Kruskal-Wallis
+                                            检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("smart:d_f",kwargs={"project_id": project_id, "data_id": 0}) }}">多组配对样本Friedeman检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url("upload:statistic_u",kwargs={"project_id": project_id, "data_id": 0}) }}">多组配对样本cochrans_q检验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">中位数差异分析</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">百分位数多组分析</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">两组智能统计</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">多组智能统计</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="ion-ios-compose-outline"></i> 高级分析</a>
+                                <ul class="nav nav-subnav">
+                                    <li>
+                                        <a
+                                            href="{{ url('upload:normality',kwargs={"project_id": project_id, "data_id": 0}) }}">正太性校验</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">coX</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="ion-ios-list-outline"></i> 图表制作</a>
+                                <ul class="nav nav-subnav">
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">树林图</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('index_qt:boon') }}">分组占比图</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('upload:article',kwargs={"project_id": project_id}) }}"><i
+                                        class="ion-ios-monitor-outline"></i> 智能文章生成</a>
+                            </li>
+                        </ul>
+                </nav>
+                    <!-- End drawer navigation -->
+                    <div class="drawer-footer">
+                        <p class="copyright">Copyright &copy; 2019 ncdefs2.hk.8dfish.site name All rights reserved.</p>
+                    </div>
+                </div>
+                <!-- End drawer scroll area -->
+            </aside>
+            <!-- End drawer -->
+            <!-- Header -->
+            <header class="app-layout-header">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        {% if user.is_authenticated %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                            <a href="{{ url('index_qt:index_qt') }}" class="index">首页</a>
+                            <a href="javascript:;" class="help-control">帮助中心</a>
+                            <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+                                <li class="dropdown dropdown-profile">
+                                    <a href="javascript:void(0)" data-toggle="dropdown">
+                                        <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>
+                                        {% if user.image_tou %}
+                                        <img class="img-avatar img-avatar-48"
+                                            src="/static/upload/user_images/{{ user.image_tou }}"
+                                            alt="User profile pic" />
+                                        {% else %}
+                                        <img class="img-avatar img-avatar-48"
+                                            src="{{ static('index/img/avatars/avatar3.jpg') }}"
+                                            alt="User profile pic" />
+                                        {% endif %}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="{{ url("index_qt:user") }}">个人中心</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url("index_qt:logout") }}">退出</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                            <a href="javascript:;" class="help-control">帮助中心</a>
+                            <a href="{{ url('index_qt:login') }}">登录</a>
+                            <span>|</span>
+                            <a href="{{ url('index_qt:register') }}">注册</a>
+                        </div>
+                        {% endif %}
+                        <!-- .navbar-right -->
+                    </div>
+                    <!-- .container-fluid -->
+                </nav>
+                <!-- .navbar-default -->
+            </header>
+            <!-- End header -->
+        </div>
+        <!-- .app-layout-container -->
+    </div>
+    <!-- .app-layout-canvas -->
+    <!-- Apps Modal -->
+    <!-- Opens from the button in the header -->
+{% block js_center %}
+    <!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+    <script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+    <script src="{{ static('index/js/app.js') }}"></script>
+    <script src="{{ static('index/js/app-custom.js') }}"></script>
+    <!-- Page Plugins -->
+    <script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+    <script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+    <script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+    <script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+    <script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+    <script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+    <!-- Page JS Code -->
+    <script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+    <script>
+        $(function () {
+            function getSmart(){
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                project = $('#process').attr('name')
+                $.ajax({
+                        url: '/smart_article/'+project+'/',
+                        type: "POST",
+                        contentType: "application/json",
+                        cache: false,
+                        headers: {
+                            'X-CSRFToken': csrfmiddlewaretoken
+                        },
+                        success: function (data) {
+                            // console.log(JSON.parse(data))
+                            template.helper('toFixed3', function (value, format) {
+                                return  value
+                          
+                            });     
+                            let datas=data.context
+                            console.log(datas)
+                            for(let item in datas){
+                                if(datas[item].df_result_2){
+                                    let list=datas[item].df_result_2
+                                    let html1= template('listComments',list);
+                                    $('#'+datas[item].id+' .fx-details-texts').after(html1)
+                                }
+                                if(datas[item].df_result_2_2){
+                                    let list=datas[item].df_result_2_2
+                                    let html1= template('listComments',list);
+                                    $('#'+datas[item].id+' .fx-details-texts').after(html1)
+                                }
+                                if(datas[item].df_result_2_2_2){
+                                    let list=datas[item].df_result_2_2_2
+                                    let html1= template('listComments',list);
+                                    $('#'+datas[item].id+' .fx-details-texts').after(html1)
+                                }
+                            }
+                            [...document.querySelectorAll('.fx-text')].forEach(item => {
+                                console.log(item.innerText)
+                                item.innerHTML = item.innerText
+                            })
+                            // let list=JSON.parse(data).context['6704'].df_result_2
+                            // console.log(list)
+                            // var html1 = template('listComments',list);
+                            // console.log(html1)
+                            // $('.app-layout-content').html(html1)
+                        }, error: function (errorMsg) {
+                            //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                        }
+                    })
+                }
+            getSmart();
+            
+            $('#process').click(function () {
+                // 获取id
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                project = $('#process').attr('name')
+                /*
+                提交表单
+                */
+                $.ajax({
+                    url: '/download/'+project+'/',
+                    type: "POST",
+                    cache: false,
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken
+                    },
+                    success: function (data) {
+                        if(data.code == 200){
+                            window.location.href=data.context.path
+                        }else{
+                            alert(data.error)
+                        }
+                    }, error: function (errorMsg) {
+                        //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    }
+                })
+            });
+            $('#original').click(function () {
+                // 获取id
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                project = $('#original').attr('name')
+                /*
+                提交表单
+                */
+                $.ajax({
+                    url: '/orifinal/'+project+'/',
+                    type: "POST",
+                    cache: false,
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken
+                    },
+                    success: function (data) {
+                        if(data.code == 200){
+                            window.location.href=data.context.path
+                        }else{
+                            alert(data.error)
+                        }
+                    }, error: function (errorMsg) {
+                        //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    }
+                })
+            });
+            $('#article').click(function () {
+                // 获取id
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                project = $('#article').attr('name')
+                /*
+                提交表单
+                */
+                $.ajax({
+                    url: '/article_download/'+project+'/',
+                    type: "POST",
+                    cache: false,
+                    headers: {
+                        'X-CSRFToken': csrfmiddlewaretoken
+                    },
+                    success: function (data) {
+                        if(data.code == 200){
+                            window.location.href=data.context.path
+                        }else{
+                            alert(data.error)
+                        }
+                    }, error: function (errorMsg) {
+                        //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    }
+                })
+            });
+            $('.fx-image0 img').on('click',function(){
+                //自定页
+                layer.open({
+                    // title:
+                    area: ['800px', '800px'],
+                    type: 1,
+                    closeBtn: 0, //不显示关闭按钮
+                    anim: 2,
+                    shadeClose: true, //开启遮罩关闭
+                    content: `<img src=${$(this).prop('src')} style="width:100%;height:auto"/>`
+                });
+            })
+
+            // Init page helpers (Slick Slider plugin)
+            App.initHelpers('slick');
+        });
+    </script>
+{% endblock %}

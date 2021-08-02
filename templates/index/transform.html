@@ -1,0 +1,115 @@
+{% extends 'index/base.html' %}
+{% block title %}
+数据转化
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+{% endblock %}
+{% block top_style %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/ss_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/all-common.css') }}" />
+{% endblock %}
+{% block main %}
+<style>
+     .common_input{
+       text-align: center;
+       margin-top: 10px;
+    }
+    .common_input span{
+        margin-right: 10px;
+    }
+    .common_input input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+</style>
+<main class="app-layout-content">
+<div id="rightmodel">
+			<h1>变量选择</h1>
+			
+{% endblock %}
+{% block main03 %}
+<!-- 下拉框 -->
+<div class="select-input">
+	<span>选择转化类型:</span>&nbsp;&nbsp;&nbsp;
+	<select name="" id="data_transform" style="  width: 200px;
+	height: 35px;
+	outline: none;
+	border: 1px solid #dddd;
+	text-indent: 1em;"
+	onchange="switch_input(this.options[this.options.selectedIndex].value)"
+	>
+		<option value="1" selected>定量转定类</option>
+		<option value="2">定类转定量</option>
+		<option value="3">自动转化(多选可以为空)</option>
+		<!-- <option value="Mean">均数填补</option>
+		<option value="most_frequent">众数填补</option>
+		<option grade="gradeThree" value="constant">常数填补</option> -->
+	</select>
+</div>
+
+<div class="common_input" style="display:none;">
+        <span>最大分类阈值:</span>
+        <input type="text" id="transform_input"  placeholder="" value="" onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+ </div>
+
+<!-- input输入框 -->
+<div id="inputDiv">
+</div>
+{% endblock %}
+{% block main04 %}
+<div id="middle-table">
+{% endblock %}
+{% block description %}数据转化可以改变数据类别，可以选择自动转化，用户自行选择分类阈值，平台将自动进行类别转化。{% endblock %}
+
+
+{% block main02 %}
+
+</div>
+</main>
+{% endblock %}
+
+{% block center_script %}
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            App.initHelpers('slick');
+
+        });
+                    
+        function switch_input(x) {
+            console.log(x)
+            if (x == 3) {
+                $('.common_input').show()
+            } else {
+                $('.common_input').hide()
+            }
+        }
+</script>
+{% endblock %}

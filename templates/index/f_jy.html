@@ -1,0 +1,180 @@
+{% extends 'index/base.html' %}
+{% block title %}
+Fisher检验
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}"/>
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    .input_fu {
+        position: relative;
+        top: 180px;
+        height: 20px;
+        left: -180px;
+    }
+    #input_f {
+        height: 45px;
+        float: right;
+        border-radius: 29px;
+        border: transparent;
+        float: right;
+        margin-top: 360px;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    .click-button {
+        position: relative;
+        top: 440px;
+        margin-bottom: 28px;
+        text-align: center;
+    }
+    .finnally-button {
+        position: relative;
+        top: 430px;
+        text-align: center;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <div class="select-options">
+            <div class="select-suo">
+                <h1>选择要分析的列名</h1>
+            </div>
+        </div>
+        {% endblock %}
+        {% block main03 %}
+</div>
+   {% endblock %}
+   {% block main04 %}
+<div class="middle-table">
+{% endblock %}
+{% block description %}
+Fisher检验（小样本两组计数资料比较）：又称Fisher精确检验，是用于分析列联表统计显著性检验方法，用于检查两个二进制变量（变量的值域只有两个值，例如：性别为男或女）的相关性，实际中常用于小数据情况。   与卡方检验的区别；如果期望频数有其中之一小于5，那么就应该使用Fisher精确检验。
+
+{% endblock %}
+{% block mian02 %}
+</div>
+<!--  -->
+<!-- input 输入框 -->
+<div class="input_fu">
+    <input type="text" id="input_f" placeholder="请输入数字形式以逗号隔开">
+</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+        $(function () {
+            // Init page helpers (Slick Slider plugin)
+            App.initHelpers('slick');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" maximun-scale=1.0,user-scalable=no"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Document</title>
+<link rel="stylesheet" href="{{ static('css/reset_s.css') }}">
+<link rel="stylesheet" href="{{ static('css/index.css') }}">
+</head>
+<body>
+<!-- 大盒子 -->
+<div class="box">
+	<!-- 导航栏 -->
+	<div class="bar">
+		<!-- 公共部分 -->
+		<div class="middle clearfix">
+			<!-- 导航栏左边 -->
+			<div class="bar_left">
+				<!-- login 图片 -->
+				<img src="{{ static('images/logo.jpg') }}">
+			</div>
+			<!-- 导航右边 -->
+			<div class="bar_right">
+                {% if user.is_authenticated %}
+				<a href="{{ url('index_qt:index_qt') }}" style="font-size: 18px; border-top: 20px">
+                        进入系统
+				</a>
+                {% else %}
+				<a href="{{ url('index_qt:login') }}">
+				<li class="login">登录</li>
+				</a>
+				<a href="{{ url('index_qt:register') }}">
+				<li class="register">注册</li>
+				</a>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="back_li">
+		<img src="{{ static('images/1.jpg') }}" alt="">
+	</div>
+	<div class="back_li">
+		<img src="{{ static('images/1.jpg') }}" alt="">
+	</div>
+	<div class="back_li">
+		<img src="{{ static('images/1.jpg') }}" alt="">
+	</div>
+	<div class="back_li">
+		<img src="{{ static('images/1.jpg') }}" alt="">
+	</div>
+	<!-- 文字 -->
+	<!-- <div class="back_wen">
+	<h1>在线智能分析软件</h1>
+	<p>
+		免费体验
+	</p>
+</div>
+ -->
+</div>
+<script src="{{ static('index/js/flexible.js') }} "></script>
+</body>
+</html>

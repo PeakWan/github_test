@@ -1,0 +1,264 @@
+{% extends 'index/base.html' %}
+{% block title %}
+机器学习回归
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .gj-checkout img{
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+    .common_input{
+       text-align: center;
+       margin-top: 10px;
+    }
+    .common_input span{
+        margin-right: 10px;
+    }
+    .common_input input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff;
+    }
+    .select-options{
+        text-align: center;
+        margin-top: 10px;
+    }
+    .select-options select{
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+    #rightmodel{
+        padding-top: 10px;
+    }
+    .transfer-box{
+        margin-top: 15px;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+
+    <div class="select-options">
+        <span>请选择评价指标：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <select name="jqxxhg" id="jqxxhg">
+            <option value="r2">R方</option>
+            <option value="neg_mean_squared_error">均方误差</option>
+            <option value="explained_variance">解释方差</option>
+        </select>
+    </div>
+    <div class="common_input">
+        <!--<span>测试集比例:</span>-->
+        <span>测试集比例:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <input type="text" id="float1_input"  placeholder="请输入数字" value="0.15"  onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >
+    </div>
+    <div class="common_input">
+        <span>交叉验证折数:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <select  id="machine1_input" style="width:200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+        <!--<input type="text" id="machine1_input"  placeholder="请输入数字" value="5"  onkeyup="value=value.replace(/[^\0-9\.]/g,'')" >-->
+    </div>
+
+    <div class="select-options">
+        <span>请选择回归方法：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <select name="machine1" id="machine1">
+            <option value="LinearRegression">线性回归</option>
+            <option value="XGBRegressor">XGBoost回归</option>
+            <option value="RandomForestRegressor">随机森林回归</option>
+            <option value="LinearSVR">线性支持向量机回归</option>
+            <option value="KNeighborsRegressor">K近邻回归</option>
+        </select>
+    </div>
+
+    <div class="single_radio" id="jqxxhg_radio" style="    display: flex;
+    margin-left: 63px;">
+           
+        <span class="span_f" style="font-size:18px">是否自动寻参</span>
+        
+       <ul>
+           <li>
+               
+               <input type="radio"  name="Radio" id="trueRadio" class="radio" value="True" >
+               <label for="trueRadio">是</label>
+           </li>
+           <li>
+            
+            <input type="radio" name="Radio" id="falseRadio" class="radio" value="False" checked="true">
+            <label for="falseRadio">否</label>
+           </li>
+       </ul>
+   </div>
+
+    <input type="hidden" name="jqxxhg" value="">
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+    
+机器学习回归：这一分析模块为回归型问题的建模提供了多种机器学习模型，包括：1. 线性回归；2. XGBoost回归；3. 随机森林回归；4. 线性支持向量机回归；5. K近邻回归。建模过程对研究者提供的数据进行了训练/验证/测试的分割，以检验模型的预测能力同时避免过拟合。右栏参数说明：“测试集比例”代表测试集占所有数据样本的比例，大多数情况下取值范围在0到0.2之间；“交叉验证折数”，如“10折分割”意味着测试集外的样本等分为10份进行10次训练，每次以其中9份作为训练集、1份作为验证集；“评价指标”用于在交叉验证中进行模型评估；“自动寻参”，如不进行寻参则直接使用默认参数进行拟合，否则将进行自动寻参并选出最佳参数。
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+{% endblock %}

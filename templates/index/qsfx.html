@@ -1,0 +1,325 @@
+{% extends 'index/base.html' %}
+{% block title %}
+趋势回归分析
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+<!-- Latest compiled and minified CSS -->
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    /* 高级分析 */
+    .gj-checkout {
+        width: 100%;
+        margin: 61px 64px;
+        box-shadow: 0px 3px 20px 0px rgba(183, 182, 182, 0.6);
+        padding: 25px;
+        position: relative;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .gj-checkout img{
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+    #middle-table .table-common{
+        width: 100%;
+        margin: 30px 64px 30px 64px;
+    }
+    @media screen and (max-width:1400px) {
+        .table-iu .table-common-tr tr>td{
+            width: 54px;
+        }
+    }
+     #rightmodel{
+        padding-top: 10px;
+    }
+    .transfer-box{
+        margin-top: 15px;
+    }
+    .transfer-left{
+        height: 448px;
+    }
+    .transfer-left ul{
+        height: calc(100% - 42px);
+    }
+    .select-options{
+        text-align: center;
+        margin-top: 10px;
+    }
+    .select-options select{
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;
+    }
+    .select-options input{
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+
+    <div class="select-options">
+        
+        <!--<span>请输入数字以逗号隔开:</span>-->
+        <!--<input type="text" id="qsfx_input" placeholder="请输入数字以逗号隔开">-->
+        
+    </div>
+    
+    
+    <div class="select-options">
+        <span>回归模型名称：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <select name="back_name" id="back_name" onchange="select_change(this.options[this.options.selectedIndex].value)">
+            <option value="logit">逻辑回归</option>
+            <!-- <option value="glm">广义线性回归</option> -->
+            <option value="ols">线性回归</option>
+            <option value="rlm">泊松回归</option>
+            <option value="cox">cox回归</option>
+        </select>
+    </div>
+    <input type="hidden" name="qsfx" value="">
+
+    <!-- 分析成功 -->
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+趋势回归：分析多个自变量X1、X2...的趋势变化与应变量Y之间的关系（若X是定类变量：系统会尝试转化为数值后进行趋势检验，如无法转换为数字则不进行趋势检验；若X是定量变量：系统会自动转化为哑变量进行趋势检验），该分析可以设置模型的调整变量，同时分析会自动绘制OR森林图。
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+<!-- Latest compiled and minified JavaScript -->
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+        $('#back_name').selectpicker({
+        'selectedText': 'cat'
+        });
+    });
+    
+    // select change
+    var transferLeft = $('.transfer-left')[0];
+    var transferRight = $('.transfer-right')[0];
+    var transferMiddle = $('.transfer-middle')[0];
+    
+    // 第二个单选 按钮
+    var single_two_button = document.createElement('div');
+    single_two_button.classList = "transfer-single-one";
+    single_two_button.style.marginTop = "59px";
+    single_two_button.innerHTML = '<button class="single-one-right single-one-button"><i class="iconfont icon-zuojiantou"></i></button><button class="single-one-left single-one-button"><i class="iconfont icon-zuojiantou1"></i></button>';
+    // 第二个单选 框
+    var single_two_box = document.createElement('div')
+    single_two_box.classList = "transfer-single";
+    single_two_box.style.marginTop = "20px";
+    single_two_box.innerHTML = '<h1>时间变量：</h1><ul class="ul single-ul-first"><p class="noBook">无数据</p></ul>';
+    
+    function select_change(v){
+        if (v == 'cox') { 
+            if ($('.single-ul-first')[0]) {
+                console.log('已存在,不添加');
+            } else { // 添加
+                console.log('不存在,添加');
+                transferLeft.style.height = '546px';
+                transferRight.appendChild(single_two_box);
+                transferMiddle.appendChild(single_two_button);
+                // 添加功能
+                $('.single-one-button').click(function (e) {
+                    e.stopPropagation();
+                    var that = $(this);
+                    littleTransfer2(that);
+                })
+                function littleTransfer2(that) {
+                    var orgin = '';
+                    var target = '';
+                    var checkLi = '';
+                    var current=$(".current" , parent.document).attr('title')
+                    var changeVal= $('.transfer-ul').find('.changeColor').val()
+                    if ($(that).hasClass('single-one-right')) { //如果当前单选穿梭框允许穿梭了
+                        if(changeVal==2&&current=='多重比较'){
+                            alert('单选框只能传入定量数据类型')
+                            return
+                        }
+                        // if(changeVal==1&&current=='多模型回归分析'){
+                        //     alert('单选框只能传入定类数据类型')
+                        //     return
+                        // }
+                        orgin = $('.transfer-ul');
+                        target = $('.single-ul-first');
+                    } else {
+                        orgin = $('.single-ul-first');
+                        target = $('.transfer-ul');
+                    }
+                    checkLi = orgin.find('li');
+                    for (var i = 0; i < checkLi.length; i++) {
+                        if ($(checkLi[i]).hasClass('changeColor')) {
+                            var cloneLi = $(checkLi[i]).clone();
+                            cloneLi.removeClass('changeColor');
+                            target.prepend(cloneLi);
+                            $(checkLi[i]).remove();
+                        }
+                    }
+                    if (target.find('li').length == 1) {
+                        $(that).removeClass('fontColor');
+                        $(that).addClass('selectNone');
+                        target.find('p').remove();
+                        $('.much-right').removeClass('fontColor');
+                        $('.much-right').addClass('selectNone');
+                        $('.single-two-right').removeClass('fontColor');
+                        $('.single-two-right').addClass('selectNone');
+                        $('.little-right').removeClass('fontColor');
+                        $('.little-right').addClass('selectNone');
+                        $('.dobule-right').removeClass('fontColor');
+                        $('.dobule-right').addClass('selectNone');
+                        $('.third-right').removeClass('fontColor');
+                        $('.third-right').addClass('selectNone');
+                    }
+                    if (orgin.find('li').length == 0) {
+                        $(that).removeClass('fontColor');
+                        $(that).addClass('selectNone');
+                        orgin.append("<p class='noBook'>无数据</p>");
+                    }
+                }
+            }
+
+            
+        } else { 
+            if ($('.single-ul-first')[0]) { // 删除
+                console.log('已存在,删除');
+                transferLeft.style.height = '448px';
+                transferRight.removeChild(single_two_box);
+                transferMiddle.removeChild(single_two_button);
+            } else {
+                console.log('不存在,无需删除');
+            }
+        }
+    };
+</script>
+{% endblock %}

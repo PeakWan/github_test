@@ -1,0 +1,100 @@
+{% extends 'index/base.html' %}
+{% block title %}
+缺失数据剔除
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/miss_delete.css') }}" />
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+	<div id="rightmodel">
+		<h1>变量选择</h1>
+		<div class="select-options">
+			<form action="" method="post">
+				<div class="select-input">
+					<span>缺失率(精确到一位小数)</span>
+					<input type="text" maxlength="20" name="" id="username" placeholder="" style="width:100px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;">
+				</div>
+				<div class="select-input">
+					<span>选择要缺失的行和列</span>
+					<select name="" id="s1" style="width:100px;
+					height: 35px;
+					outline: none;
+					border: 1px solid #dddd;
+					text-indent: 1em;">
+						<option value="1" selected>行</option>
+						<option value="0">列</option>
+					</select>
+				</div>
+			</form>
+
+			{% endblock %}
+			{% block main03 %}
+		</div>
+
+		{% endblock %}
+		{% block main04 %}
+		<div id="middle-table">	
+			{% endblock %}
+			{% block description %}右侧菜单可设置缺失值的比例，可以选择剔除行或者列，平台会智能剔除缺失值过高的行或列，并给出剔除的过程及说明。{% endblock %}
+			{% block mian02 %}
+
+		</div>
+</main>
+{% endblock %}
+{% block js_center %}
+<!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<!-- Page Plugins -->
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+	$(function () {
+		// Init page helpers (Slick Slider plugin)
+		App.initHelpers('slick');
+	});
+</script>
+<style>
+	#ta div{
+		float: left;
+	}
+	/* .fx-details-texts button{
+		width: 92px;
+		color: white;
+		font-size: 14px;
+		background-color: #4387f9;
+		border-radius:10px;
+	} */
+</style>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

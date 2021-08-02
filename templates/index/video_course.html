@@ -1,0 +1,313 @@
+    <!DOCTYPE html>
+<html lang="zh-CN" class="app-ui">
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>视频资源</title>
+    <meta name="description" content="AppUI - Admin Dashboard Template & UI Framework"/>
+    <meta name="author" content="rustheme"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="stylesheet" href="{{ static('index/iconfont/iconfont.css') }}">
+    <link rel="apple-touch-icon" href="{{ static('index/img/favicons/apple-touch-icon.png') }}"/>
+    <link rel="icon" href="{{ static('index/img/favicons/favicon.ico') }}"/>
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ static('index/js/plugins/slick/slick.min.css') }}"/>
+    <link rel="stylesheet" id="css-font-awesome" href="{{ static('index/css/font-awesome.css') }}"/>
+    <link rel="stylesheet" id="css-ionicons" href="{{ static('index/css/ionicons.css') }}"/>
+    <link rel="stylesheet" id="css-bootstrap" href="{{ static('index/css/bootstrap.css') }}"/>
+    <link rel="stylesheet" id="css-app" href="{{ static('index/css/app.css') }}"/>
+    <link rel="stylesheet" id="css-app-custom" href="{{ static('index/layui/layui//css/layui.css') }}"/>
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+    <link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/miss_delete.css') }}" />
+    
+    <style>
+        body {
+            width: 100%;
+        }
+        .HY
+        {
+            float: right;
+        
+            margin-top: 40px;
+        }
+        .main {
+            width: 100%;
+            margin-top: 64px;
+            padding-top: 30px;
+        }
+        .main .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 25px 0;
+        }
+        .main .title {
+            box-sizing: border-box;
+            width: 100%;
+            padding-left: 14px;
+            line-height: 2;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .main .items {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: left;
+        }
+        .main .item {
+            box-sizing: border-box;
+            padding: 10px;
+            width: 350px;
+            margin: 0 12.5px 25px;
+            background-color: #f8faff;
+            box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+            display: flex;
+            justify-content: left;
+            flex-wrap: wrap;
+        }
+        .main .item:hover {
+            background-color: #ccc;
+        }
+        .main .item:hover .item_title,
+        .main .item:hover .item_desc {
+            color: white;
+        }
+        .main .item_img {
+            width: 350px;
+            height: 218.75px;
+            margin-bottom: 8px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .main .item_title {
+            display: block;
+            font-size: 20px;
+            padding-left: 10px;
+            margin-bottom: 8px;
+            color: #000;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .main .item_desc {
+            display: block;
+            padding-left: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #aaa;
+            line-height: 1.2;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .main .item_link {
+            width: 100%;
+            display: flex;
+            justify-content: left;
+        }
+        .main .item_link p {
+            font-size: 20px;
+            color: red;
+            cursor: pointer;
+        }
+        .main .item_link p:hover {
+            text-decoration: underline;
+        }
+        .main .page_list_container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+<header class="app-layout-header">
+            <nav class="navbar navbar-default">
+                <div id="logo" class="drawer-header" >
+                    <a href="/"><img src="/static/images/logo.jpg"></a>
+                </div>
+                <div class="container-fluid">
+                    {% if user.is_authenticated %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                                        <div class="HY">
+                                            {% if u_id == 1 %}
+                                            <a href="#" class="v_img" title="普通用户"><img src="/static/images/1.png"></a>
+                                            {% elif u_id == 2 %}
+                                            <a href="#" class="v_img" title="会员V1"><img src="/static/images/2.png"></a>                                           
+                                            {% elif u_id == 3 %}
+                                            <a href="#" class="v_img" title="会员V2"><img src="/static/images/3.png"></a>
+                                            {% elif u_id == 4 %}
+                                            <a href="#" class="v_img" title="会员V3"><img src="/static/images/4.png"></a>
+                                            {% endif %}
+                                            <!--<a href="/" class="v_img"><img src="/static/images/3.png"></a> -->
+                                        </div>
+                            <div class="header-right" style="position:relative">
+                                <div class="navgition-header">
+                                    <a href="{{ url('index_qt:index_qt') }}" class="index">研究项目</a>
+                                    <a href="{{ url('index_qt:video_course') }}" class="index">视频教程</a>
+                                    <a href="javascript:;" class="help-control">帮助中心</a>
+                                    <a href="{{ url('verifications:recharge') }}" class="help-control">会员中心</a>
+                                </div>
+                                <!-- <div class="switch" style="float:left;">-->
+                                <!--    <img  style="height: 20px;" src="/static/images/switch.png" alt="" />-->
+                                <!--</div>-->
+                                <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+                                    <li class="dropdown dropdown-profile">
+                                        <a href="javascript:void(0)" data-toggle="dropdown">
+                                            <span class="m-r-sm">{{ user.username }}<span class="caret"></span></span>
+                                            {% if user.userunionid %}
+                                            <img class="img-avatar img-avatar-48"
+                                                         src="{{ user.image_tou }}"
+                                                         alt="User profile pic"/>
+                                            {% else %}
+                                                {% if user.image_tou %}
+                                                    <img class="img-avatar img-avatar-48"
+                                                         src="/static/upload/user_images/{{ user.image_tou }}"
+                                                         alt="User profile pic"/>
+                                                {% else %}
+                                                    <img class="img-avatar img-avatar-48"
+                                                         src="{{ static('index/img/avatars/avatar3.jpg') }}"
+                                                         alt="User profile pic"/>
+                                                {% endif %}
+                                            {% endif %}
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <a href="{{ url("index_qt:user") }}">个人中心</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url("index_qt:logout") }}">退出</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <!--<span>V1</span>-->
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                          
+                            <!-- <a href="javascript:;" class="help-control">帮助中心</a>
+				<a href="{{ url('index_qt:login') }}">登录</a>
+				<span>|</span>
+                <a href="{{ url('index_qt:register') }}">注册</a> -->
+                            <div class="header-right">
+                                <!--<img style="height: 20px;" src="/static/images/number.png" alt="" />-->
+                                <div class="navgition-header">
+                                    <a href="javascript:;" class="help-control">帮助中心</a>
+                                </div>
+                                <div class="login-header">
+                                    <a href="{{ url('index_qt:login') }}">登录</a>
+                                    <span>|</span>
+                                    <a href="{{ url('index_qt:register') }}">注册</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- .navbar-right -->
+                </div>
+                <!-- .container-fluid -->
+            </nav>
+            <!-- .navbar-default -->
+        </header>
+    <!---->
+    <main class="main" id="main">
+        <div class="container">
+            <div class="title">视频教程</div>
+            <div class="items">
+                <div class="item" v-for="item in item_list" @click="refer(item.video_link)">
+                    <div class="item_img" :style="'background-image:url(' + item.video_info + ');'"></div>
+                    <div>
+                        <p class="item_title" v-text="item.video_name"></p>
+                        <p class="item_desc" v-text="item.video_background"></p>                        
+                    </div>
+                </div>
+            </div>
+            <div class="page_list_container">
+                <div id="page_list"></div>
+            </div>
+        </div>
+
+    </main>
+    <!---->
+    {{ csrf_input }}
+
+    <script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+    <script src="{{ static('index/layui/layui/layui.js') }}"></script>
+    <script src="{{ static('index/js/vue/vue.js') }}"></script>
+    <script>
+        var MAIN = new Vue({
+            el: '#main',
+            data: {
+              item_list: [],
+              img_list: [],
+            },
+            methods: {
+              refer: function(url) {
+                  window.open(url)
+              }  
+            },
+            created() {
+                var csrf = $('input[name=csrfmiddlewaretoken]').val()
+                $.ajax({
+                    url: './',
+                    type: 'POST',
+                    beforeSend: function(xml) {
+                        xml.setRequestHeader('X-CSRFToken',csrf);
+                    },
+                    data: JSON.stringify({
+                        'page': 1,
+                        'csrfmiddlewaretoken': csrf
+                    }),
+                    success: function(data1) {
+                        console.log(data1)
+                        layui.use(['laypage', 'layer'], function(){
+            				var laypage = layui.laypage;
+            				var layer = layui.layer;
+            				laypage.render({
+            					elem: 'page_list'
+            					,count: data1.context.length
+            					,limit: 8
+            					,layout: [ 'prev', 'page', 'next', 'skip']
+            					,jump: function(obj) {
+            						console.log('跳转至' + obj.curr + '页')
+            						$.ajax({
+            						    url: './',
+            						    type: 'POST',
+                                        beforeSend: function(xml) {
+                                            xml.setRequestHeader('X-CSRFToken',csrf);
+                                        },
+                                        data: JSON.stringify({
+                                            'page': obj.curr,
+                                            'csrfmiddlewaretoken': csrf
+                                        }),
+                                        success: function(data2) {
+                                            console.log(data2.context.info)
+                                            MAIN.item_list = data2.context.info
+                                            
+                                        }
+            						})
+            					}
+            				});
+            			})
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>

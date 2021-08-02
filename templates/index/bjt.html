@@ -1,0 +1,240 @@
+{% extends 'index/base.html' %}
+{% block title %}
+比较图
+{% endblock %}
+{% block top_link %}
+<link rel="stylesheet" id="css-app-custom" href="{{ static('index/css/s_border.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_header.css') }}" />
+<link rel="stylesheet" id="css-app-heder" href="{{ static('index/css/common_common.css') }}" />
+{% endblock %}
+{% block top_style %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+    }
+    #z-nav>li>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav>li>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav>li>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav {
+        font-size: 0;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li {
+        width: 48%;
+        display: inline-block;
+        text-align: center;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li:hover a {
+        background: #03a9f4;
+        color: #fff;
+        border: 1px solid #03a9f4;
+    }
+    #z-nav:nth-child(2)>ul.nav-subnav li a {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        margin: 0 5px 12px;
+        border-radius: 10px;
+    }
+    #header-navbar-collapse {
+        position: relative;
+    }
+    #rightmodel>h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    .click-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 7%;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .finnally-button {
+        margin-top: 24px;
+        text-align: center;
+        position: absolute;
+        bottom: 3%;
+        width: 100%;
+    }
+    .app-layout-canvas,
+    .app-layout-container {
+        height: 100%;
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+    .opacity {
+        opacity: 0.2;
+    }
+    .plt-img{
+        width: 100%;
+        height: auto;
+    }
+    .plt-img img{
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .common_input{
+       text-align: center;
+       margin-top: 10px;
+    }
+    .common_input span{
+        margin-right: 10px;
+    }
+    .common_input input{
+        width: 200px;
+        height: 35px;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        text-indent: 1em;
+        background-color: #fff
+    }
+    .form-control-1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .form-control-1 select {
+        width: 200px;
+        height: 35px;
+        outline: none;
+        border: 1px solid #dddd;
+        text-indent: 1em
+    }
+    .form-control-1 input[type=radio] {
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+        margin-left: 23px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-control-1 label {
+        margin: 0;
+        margin-left: 10px;
+        font-size: 16px;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<main class="app-layout-content">
+    <div id="rightmodel">
+        <h1>选择要分析的列名</h1>
+        
+    {% endblock %}
+    
+    {% block main03 %}
+    
+    <div class="form-control-1">
+        <div >绘图：</div>
+        <select name="ht" id="s1" style="width:200px;margin-right: 11px;">
+            <option value="bar" selected>柱状图</option>
+            <option value="box">箱形图</option>
+            <option value="violin">小提琴图</option>
+        </select>
+    </div>
+    
+    <div class="form-control-1">
+        <div >组合方式：</div>
+        <select name="ht" id="s2" style="width:200px;margin-right: 39px;">
+            <option value="Free" selected>不同坐标系</option>
+            <option value="Samedia">相同坐标系</option>
+        </select>
+    </div>
+    
+    <div class="common_input imgY_input" style="display:none">
+        <span>图片中Y轴的显示名:</span>
+        <input type="text" id="imgY_input"  placeholder="" value="" >
+    </div>
+    
+    <div class="common_input bjthang_input">
+        <span>行:</span>
+        <input type="text" id="bjthang_input"  placeholder="" value="" >
+    </div>
+    
+    <div class="common_input bjtlie_input">
+        <span>列:</span>
+        <input type="text" id="bjtlie_input"  placeholder="" value="" >
+    </div>
+    <div class="form-control-1">
+        <div >图片风格：</div>
+        <select name="radio" id="s3" style="width:200px;    margin-right: 39px;">
+            <option value="nejm">NEJM</option>
+            <option value="lancet">LANCET</option>
+            <option value="jama">JAMA</option>
+            <option value="npg">NPG</option>
+        </select>
+    </div>
+    <input type="hidden" name="spzt" value="">
+
+    {% endblock %}
+    {% block main04 %}
+    <div id="middle-table">
+    {% endblock %}
+    {% block description %}
+比较图主要用于研究多组资料间的差异。
+选择分组变量、分层变量以及需要分析的变量，右侧菜单栏可以选择比较图类型：柱状图、箱型图、小提琴图，也能选择图片组合的布局。
+    {% endblock %}
+    {% block mian02 %}
+    </div>
+</main>
+{% endblock %}
+{% block js_center %}
+<script src="{{ static('index/js/core/jquery.min.js') }}"></script>
+<script src="{{ static('index/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.scrollLock.min.js') }}"></script>
+<!--图标调用-->
+<script src="{{ static('./js/iconfot.js') }}"></script>
+<script src="{{ static('index/js/core/jquery.placeholder.min.js') }}"></script>
+<script src="{{ static('index/js/app.js') }}"></script>
+<script src="{{ static('index/js/app-custom.js') }}"></script>
+<script src="{{ static('index/js/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ static('index/js/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<script src="{{ static('index/img/avatars/avatar3.jpg') }}"></script>
+<!-- Page JS Code -->
+<script src="{{ static('index/layui/layui/layui.js') }}" media="all"></script>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+{% endblock %}

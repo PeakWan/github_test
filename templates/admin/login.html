@@ -1,0 +1,138 @@
+<!--A Design by xmoban.cn
+Author: xmoban.cn
+Author URL: http://xmoban.cn
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <title>登录</title>
+    <!-- Meta-Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords"
+          content="Clear login Form a Responsive Web Template, Bootstrap Web Templates, Flat Web Templates, Android Compatible Web Template, Smartphone Compatible Web Template, Free Webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design">
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- //Meta-Tags -->
+    <!-- Stylesheets -->
+    <link href="{{ static('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ static('css/style.css') }}" rel='stylesheet' type='text/css'/>
+    <!--// Stylesheets -->
+    <!--fonts-->
+    <!-- title -->
+    <!-- body -->
+    {#	<link href="{{ static('fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext') }}" rel="stylesheet">#}
+    <!--//fonts-->
+</head>
+
+<body>
+<div class="w3ls-login box box--big center_all">
+    <!-- form starts here -->
+    <form action="{{ url('index:login') }}" method="post">
+        {{ csrf_input }}
+        <div class="agile-field-txt">
+
+
+            <label>
+                <i class="fa fa-user" aria-hidden="true"></i> 用户名 </label>
+            <input type="text" name="name" placeholder="输入你的用户名" required="" id="username"/>
+        </div>
+        <div class="agile-field-txt">
+            <label>
+                <i class="fa fa-envelope" aria-hidden="true"></i> 密码 </label>
+            <input type="password" name="password" placeholder="输入你的密码 " required="" id="myInput"/>
+            <div class="agile_label">
+                <input id="check3" name="check3" type="checkbox" value="show password" onclick="myFunction()">
+                <label class="check" for="check3">显示密码</label>
+            </div>
+        </div>
+        <!-- script for show password -->
+        {#        <script>#}
+        {#            function myFunction() {#}
+        {#                var x = document.getElementById("myInput");#}
+        {#                if (x.type === "password") {#}
+        {#                    x.type = "text";#}
+        {#                } else {#}
+        {#                    x.type = "password";#}
+        {#                }#}
+        {#            }#}
+        {#        </script>#}
+        <!-- //script ends here -->
+        <div class="w3ls-bot">
+
+            <div class="form-end">
+                {{ csrf_input }}
+                <input type="submit" value="登录" >
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </form>
+</div>
+<!-- //form ends here -->
+<!--copyright-->
+<div class="copy-wthree">
+     <script type="text/javascript" src="{{ static('js/jquery-1.12.4.min.js') }}"></script>
+    <script>
+        (function () {
+            $('.submit').click(function () {
+                var username = $("#username").val();
+                var password = $("#myInput").val();
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+                if (!username) {
+                    alert('用户名输入错误')
+                    return;
+                }
+                if (!password) {
+                    alert('密码输入错误')
+                    return;
+                }
+                var param = {
+                    'username': username,
+                    'password': password,
+                    'csrfmiddlewaretoken': csrfmiddlewaretoken,
+                };
+                /*
+
+                提交表单
+                */
+                $.ajax({
+                    url: '/admin/login/',
+                    type: "post",
+                    dataType: 'json',
+                    contentType: "application/json",
+                    cache: false,
+                    data: JSON.stringify(param),
+                    headers: {
+                        'X-CSRFToken': $.cookie('csrftoken')
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            alert('登录成功');
+                        } else {
+                            alert(data.error);
+                        }
+                    }, error: function (errorMsg) {
+                        //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+                    }
+                })
+
+
+            });
+        })();
+    </script>
+
+
+    <!--//copyright-->
+</body>
+
+</html>
