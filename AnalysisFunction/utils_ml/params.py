@@ -149,6 +149,10 @@ ToShow['MLPClassifier'] = {
     'max_iter' : '迭代次数',
 }
 
+ToShow['GaussianNB'] = {
+    'priors' : '先验概率',
+    'var_smoothing' : 'var_smoothing',
+}
 
 
 ############################################################################
@@ -467,6 +471,10 @@ GridDefaultRange['MLPClassifier'] = {
     'warm_start': [False,], 
 }
 
+GridDefaultRange['GaussianNB'] = {
+## fixed part
+    'var_smoothing': [0.0000001,],
+}
 
 
 RandDefaultRange = GridDefaultRange

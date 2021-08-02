@@ -42,7 +42,7 @@ warnings.filterwarnings('ignore')
 
 imputation_method = {'mean': '均值', 'median': '中位数', 'most_frequent': '众数', 'zero': '零值',
                      'nan': '空值', 'randomforest': '随机森林', 'interpolate': '插值法', 'KNN': 'KNN'}
-balance_method = {'SMOTE': 'SMOTE(合成少数类过采样技术)', 'ADASYN': 'ADASYN(自适应过采样)',
+balance_method = {'SMOTE': 'SMOTE(合成少数类过采样技术)', 'ADASYN': 'ADASYN(自适应过采样)','BorderlineSMOTE': 'SMOTE(边界线合成少数类过采样技术)',
                   'RandomOverSampler': 'RandomOverSampler(随机过采样)',
                   'RandomUnderSampler': 'RandomUnderSampler(随机下采样)',
                   'ClusterCentroids': 'ClusterCentroids(用K-Means算法的中心点来进行合成的下采样)'
@@ -383,13 +383,14 @@ def get_var_low_vif(df_input, features=None, thres=10.0):
         continuous_features, categorical_features, time_features = _feature_classification(df_input)
         features = continuous_features
     df_input_temp = df_input[features].dropna()
+    df_input_temp[df_input_temp.shape[1]] = 1
     col = list(range(df_input_temp.shape[1]))
     col_del = []
     dropped = True
     str_result = ''
     while dropped:
         dropped = False
-        vif = [variance_inflation_factor(df_input_temp.iloc[:, col].values, ix)
+        vif = [variance_inflation_factor(df_input_temp.iloc[:, col+[df_input_temp.shape[1]-1]].values, ix)
                for ix in range(df_input_temp.iloc[:, col].shape[1])]
         maxvif = max(vif)
         maxix = vif.index(maxvif)
@@ -882,7 +883,7 @@ method:str方法
 
 
 def data_balance(df_input, group, ratio, method='SMOTE'):
-    from imblearn.over_sampling import SMOTE, ADASYN, RandomOverSampler
+    from imblearn.over_sampling import SMOTE, ADASYN, RandomOverSampler,BorderlineSMOTE
     from imblearn.under_sampling import ClusterCentroids, RandomUnderSampler
     df_input=df_input.dropna(subset=[group])
     Ratio = ratio
@@ -903,6 +904,8 @@ def data_balance(df_input, group, ratio, method='SMOTE'):
             X_resampled, Y_resampled = ADASYN(sampling_strategy=Ratio).fit_sample(X, Y)
         elif method == 'RandomOverSampler':
             X_resampled, Y_resampled = RandomOverSampler(sampling_strategy=Ratio).fit_sample(X, Y)
+        elif method == 'BorderlineSMOTE':
+            X_resampled, Y_resampled = BorderlineSMOTE(sampling_strategy=Ratio,kind='borderline-1').fit_resample(X, Y)   
     except  Exception as e:
         return {'error': '过采样数据量必须大于原始数据量，无法匹配所需数量的数据'}
     try:
